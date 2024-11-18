@@ -37,7 +37,6 @@ export default ({ mode }: any) => {
         "@redux": path.resolve(__dirname, "src/infrastructure/redux"),
         "@api": path.resolve(__dirname, "src/infrastructure/api"),
         "@services": path.resolve(__dirname, "src/infrastructure/services"),
-        "@firebaseService": path.resolve(__dirname, "src/infrastructure/firebaseService"),
         "@components": path.resolve(__dirname, "src/presentation/components"),
         "@viewModels": path.resolve(__dirname, "src/presentation/viewModels"),
         "@containers": path.resolve(__dirname, "src/presentation/containers"),

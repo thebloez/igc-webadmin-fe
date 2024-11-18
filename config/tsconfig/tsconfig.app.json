@@ -13,7 +13,6 @@
       "@api/*": ["../../src/infrastructure/api/*"],
       "@lib/*": ["../../src/infrastructure/lib/*"],
       "@services/*": ["../../src/infrastructure/services/*"],
-      "@firebaseService/*": ["../../src/infrastructure/firebaseService/*"],
       "@components/*": ["../../src/presentation/components/*"],
       "@viewModels/*": ["../../src/presentation/viewModels/*"],
       "@pages/*": ["../../src/presentation/pages/*"],
