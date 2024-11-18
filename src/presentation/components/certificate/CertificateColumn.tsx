@@ -44,18 +44,20 @@ const CertificateColumn = (
       return (
         <div className="tw-flex tw-flex-wrap tw-gap-4 tw-w-full tw-justify-center">
           <Button
-            onClick={() => props.onEdit && props.onEdit(record)}
             type="primary"
+            onClick={() => props.onPrint && props.onPrint(record)}
             className="!tw-h-[40px] tw-rounded-md tw-shadow !tw-w-[80px] tw-font-semibold  !tw-bg-green-500 !tw-border-green-500 hover:!tw-bg-green-600"
           >
-            Edit
+            Print
           </Button>
+
           <Button
+            onClick={() => props.onDelete && props.onDelete(record)}
             type="primary"
-            onClick={() => props.onDetail && props.onDetail(record)}
+            danger
             className="!tw-h-[40px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold "
           >
-            Detail
+            Delete
           </Button>
         </div>
       );

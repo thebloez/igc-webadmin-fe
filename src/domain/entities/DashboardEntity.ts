@@ -42,6 +42,7 @@ export interface IColumn<T> {
   onDelete?: (row: T) => void;
   onRestore?: (row: T) => void;
   onDestroy?: (row: T) => void;
+  onPrint?: (row: T) => void;
 }
 
 export interface IDataTable<T> extends IBaseState {
