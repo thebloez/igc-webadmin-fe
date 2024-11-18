@@ -86,7 +86,7 @@ const MemoPage = () => {
               onClick={memoViewModel.handleModalOpen}
               type="primary"
               icon={<PlusSquareIcon />}
-              className="!tw-h-[40px] !tw-w-[150px] tw-font-semibold tw-text-white"
+              className="!tw-h-[45px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
             >
               Add new data
             </Button>
