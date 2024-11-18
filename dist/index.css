@@ -1,0 +1,125 @@
+:root {
+  --spinner-color: #2d3944;
+}
+
+#body {
+  overflow-y: hidden;
+}
+
+#root-spinner {
+  position: fixed;
+  background-color: white;
+  width: 100%;
+  max-height: 100vh;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  overflow-y: hidden;
+  align-items: center;
+  z-index: 9999999999;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 500ms ease, visibility 500ms ease-out;
+}
+
+#root-spinner.hidden-spinner {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#root-body {
+  overflow-y: hidden;
+  min-height: 100vh;
+}
+
+.spinner-content {
+  -webkit-animation: spinner-turn 1s linear infinite;
+  animation: spinner-turn 1s linear infinite;
+  max-width: 40px;
+  width: 100%;
+}
+
+@-webkit-keyframes spinner-turn {
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes spinner-turn {
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(720deg);
+  }
+}
+
+.spinner-value {
+  -webkit-animation: spinner-stroke 6s linear infinite;
+  animation: spinner-stroke 6s linear infinite;
+  fill: none;
+  stroke-dasharray: 63;
+  stroke-dashoffset: 63;
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+.spinner-value:nth-child(1) {
+  stroke: var(--spinner-color);
+}
+
+.spinner-value:nth-child(2) {
+  stroke: var(--spinner-color);
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
+.spinner-value:nth-child(3) {
+  stroke: var(--spinner-color);
+  -webkit-animation-delay: 2s;
+  animation-delay: 2s;
+}
+
+.spinner-value:nth-child(4) {
+  stroke: var(--spinner-color);
+  -webkit-animation-delay: 3s;
+  animation-delay: 3s;
+}
+
+.spinner-value:nth-child(5) {
+  stroke: var(--spinner-color);
+  -webkit-animation-delay: 4s;
+  animation-delay: 4s;
+}
+
+.spinner-value:nth-child(6) {
+  stroke: var(--spinner-color);
+  -webkit-animation-delay: 5s;
+  animation-delay: 5s;
+}
+
+@-webkit-keyframes spinner-stroke {
+  8.3333333333% {
+    stroke-dashoffset: 0;
+  }
+  16.6666666667%,
+  100% {
+    stroke-dashoffset: 63;
+  }
+}
+
+@keyframes spinner-stroke {
+  8.3333333333% {
+    stroke-dashoffset: 0;
+  }
+  16.6666666667%,
+  100% {
+    stroke-dashoffset: 63;
+  }
+}
