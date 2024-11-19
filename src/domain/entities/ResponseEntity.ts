@@ -45,3 +45,12 @@ export interface IResponsePaginationEntity<T> {
   meta: IMetaPagination;
   data: T[];
 }
+
+export interface IGet {
+  token: string;
+}
+
+export interface IPost {
+  token: string;
+  data: any;
+}
