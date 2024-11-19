@@ -21,7 +21,13 @@ const Sidebar = ({
   const { sidebars, location } = useSidebar();
   const { language } = useLanguage();
   
-  console.log(location)
+  const isActive = (url: string) => {
+    const arrayUrl = location.pathname.split("/");
+    if (arrayUrl.includes("add") || arrayUrl.includes("edit")) {
+      return arrayUrl.includes(url.replace("/", ""));
+    }
+    return url === location.pathname;
+  };
 
   return (
     <div
@@ -62,7 +68,7 @@ const Sidebar = ({
                 key={index}
                 link={menu.url}
                 pathName={location.pathname}
-                isActive={menu.url === location.pathname}
+                isActive={isActive(menu.url)}
                 name={menu.menuName[language]}
                 isHasChild={!!menu.menu?.length}
                 child={menu.menu}
