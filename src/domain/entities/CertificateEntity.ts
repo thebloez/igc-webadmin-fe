@@ -46,9 +46,6 @@ export interface ICertificateCreateResponse
 
 export interface ICertificateFormProps {
   control: Control<ICertificateData, any>;
-  onSubmit: () => void;
-  isFormLoading: boolean;
-  onReset: () => void;
   errors: FieldErrors<ICertificateData>;
   suggestions: ISuggestionsState;
   customers: ICustomerOption;
