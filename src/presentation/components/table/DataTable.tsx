@@ -18,7 +18,7 @@ const DataTable: React.FC<IDataTable<any>> = (props) => (
       fullscreen: false,
       indicator: (
         <div className="tw-flex tw-h-full tw-flex-col tw-justify-center tw-items-center tw-w-full">
-          <SpinnerLoading width={18} height={18} type={"primary-spinner"} />
+          <SpinnerLoading width={32} height={32} type={"primary-spinner"} />
         </div>
       ),
     }}

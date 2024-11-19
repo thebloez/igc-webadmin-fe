@@ -1,7 +1,7 @@
 {
   "login": {
     "form": {
-      "title": "Nice to see you again",
+      "title": "Nice to meet you again",
       "description": "Welcome back! Please enter your details.",
       "password": {
         "label": "Password",
@@ -9,43 +9,143 @@
         "not_null": "Password cannot be empty",
         "requirement": {
           "info": "Password must be a combination of:",
-          "requirement_1": "At least 8 characters long.",
-          "requirement_2": "Contains lowercase, uppercase letters, and numbers.",
-          "requirement_3": "Contains special characters (e.g., @,#,$)."
+          "requirement_1": "Minimum of 8 characters.",
+          "requirement_2": "Contains lowercase, uppercase, and numbers.",
+          "requirement_3": "Contains special characters (Ex: @,#,$)."
         }
       },
       "email": {
         "label": "Email",
         "placeholder": "Enter your email",
         "not_null": "Email cannot be empty",
-        "invalid": "Invalid email"
+        "invalid": "Email is invalid"
       },
       "login_button": "Login",
-      "error_message": "System error"
+      "error_message": "System is experiencing issues"
     },
     "banner": {
       "title": "The right Digital Payment Solution for Your Business",
-      "description": "With us, enjoy the ease of digital payments from receiving payments, sending payouts, and transferring funds online, easily and quickly."
+      "description": "With us, enjoy the convenience of digital payments from receiving payments, sending payouts, and transferring funds online, easily and quickly."
     }
   },
   "dashboard": {
     "title": "Summary",
-    "description": "View a summary of your transactions and business activities."
+    "description": "View your business transactions and activities summary."
   },
   "certificate": {
-    "title": "Certificate",
-    "description": "List of certificates that have been created"
+    "list": {
+      "title": "Certificate List",
+      "description": "List of created certificates",
+      "button": {
+        "add": "Create Certificate",
+        "print": "Print",
+        "delete": "Delete"
+      }
+    },
+    "add": {
+      "title": "Create Certificate",
+      "description": "Create new certificate",
+      "button": {
+        "preview": "Preview",
+        "submit": "Save"
+      }
+    }
   },
   "memo": {
-    "title": "Memo",
-    "description": "List of memos that have been created"
+    "list": {
+      "title": "Memo List",
+      "description": "List of created memos",
+      "button": {
+        "add": "Create Memo",
+        "edit": "Edit",
+        "delete": "Delete"
+      }
+    },
+    "add": {
+      "title": "Create Memo",
+      "description": "Create new memo",
+      "button": {
+        "preview": "Preview",
+        "submit": "Save"
+      }
+    },
+    "form": {
+      "object_image": {
+        "label": "Object Image",
+        "placeholder": "Object Image",
+        "required": "Object Image is required"
+      },
+      "customer": {
+        "label": "Customer",
+        "placeholder": "Select your customer",
+        "required": "Customer is required"
+      },
+      "object_name": {
+        "label": "Object Name",
+        "placeholder": "Select your object name",
+        "required": "Object name is required"
+      },
+      "measurement": {
+        "label": "Measurement",
+        "placeholder": "10 x 20 x 30cm",
+        "required": "Measurement is required"
+      },
+      "clarity": {
+        "label": "Clarity",
+        "placeholder": "Select your clarity",
+        "required": "Clarity is required"
+      },
+      "transparency": {
+        "label": "Transparency",
+        "placeholder": "Select your transparency",
+        "required": "Transparency is required"
+      },
+      "cut": {
+        "label": "Cut",
+        "placeholder": "Select your cut",
+        "required": "Cut is required"
+      },
+      "shape": {
+        "label": "Shape",
+        "placeholder": "Select your shape",
+        "required": "Shape is required"
+      },
+      "color": {
+        "label": "Color",
+        "placeholder": "Select your color",
+        "required": "Color is required"
+      },
+      "weight": {
+        "label": "Weight",
+        "placeholder": "10 carats",
+        "required": "Weight is required"
+      },
+      "origins": {
+        "label": "Origin",
+        "placeholder": "Select your origin",
+        "required": "Origin is required"
+      },
+      "comments": {
+        "label": "Comments",
+        "placeholder": "Select your comments",
+        "required": "Comments are required"
+      },
+      "additional_comment": {
+        "label": "Additional Comment",
+        "placeholder": "Additional Comment",
+        "required": "Additional Comment is required"
+      },
+      "status": {
+        "label": "Status"
+      }
+    }
   },
   "customer": {
-    "title": "Customer",
-    "description": "List of customers that have been created"
+    "title": "Customers",
+    "description": "List of created customers"
   },
   "trash": {
     "title": "Trash",
-    "description": "List of data that has been deactivated"
+    "description": "List of deactivated data"
   }
 }

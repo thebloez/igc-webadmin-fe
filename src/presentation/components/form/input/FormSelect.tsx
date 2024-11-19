@@ -5,6 +5,8 @@ import { Control, Controller, FieldError } from "react-hook-form";
 const { Option } = Select;
 
 import "./FormSelect.style.css";
+import ArrowDownIcon from "@components/icon/ArrowDownIcon";
+import SpinnerLoading from "@components/loader/SpinnerLoading";
 
 interface FormSelectProps {
   name: string;
@@ -44,6 +46,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
           showSearch
           loading={loading}
           {...field}
+          suffixIcon={loading ? <SpinnerLoading width={12} height={12} type="primary-spinner" /> : <ArrowDownIcon height={12} width={12} />}
           placeholder={placeholder}
         >
           {options.map((option) => (

@@ -50,7 +50,7 @@ const CustomerPage = () => {
             <Button
               type="primary"
               icon={<PlusSquareIcon />}
-              className="!tw-h-[40px] !tw-w-[150px] tw-font-semibold tw-text-white"
+              className="!tw-h-[35px] !tw-w-[150px] tw-font-semibold tw-text-white"
             >
               Add new data
             </Button>

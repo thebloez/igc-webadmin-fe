@@ -1,6 +1,7 @@
 import CertificateService from "@services/CertificateService";
 import isNullOrEmpty from "../../infrastructure/lib/utils/isNullOrEmpty";
 import logger from "@lib/utils/logger";
+import { ICertificateData } from "@domain/entities/CertificateEntity";
 
 export default class CertificateUseCase {
   private certificateService = new CertificateService();
@@ -25,9 +26,25 @@ export default class CertificateUseCase {
       return null;
     }
   }
-  async post(props: { token: string; data: any }) {
+  async post(props: { token: string; data: ICertificateData }) {
     try {
-      const result = await this.certificateService.post(props);
+      const certData = new FormData();
+
+      certData.append("member_phone_number", props.data.member_phone_number);
+      certData.append("additional_comment", props.data.additional_comment);
+      certData.append("status", props.data.status ? "active" : "inactive");
+      certData.append("type", "Sertifikat");
+
+      Object.entries(props.data.attributes).forEach(([key, value]) => {
+        certData.append(`attributes[${key}]`, value as any);
+      });
+
+      logger("CertificateUseCase.payload | response =>", certData);
+
+      const result = await this.certificateService.post({
+        token: props.token,
+        data: certData,
+      });
 
       logger("CertificateUseCase.post | response =>", result);
 
@@ -37,12 +54,13 @@ export default class CertificateUseCase {
 
       return result;
     } catch (error: any) {
+      logger("CertificateUseCase.post | error =>", error);
+
       if (error.response?.status === 401) {
         window.location.href = "/login";
-      } else {
-        logger("CertificateUseCase.post | error =>", error);
+        return;
       }
-      return null;
+      throw error;
     }
   }
 }

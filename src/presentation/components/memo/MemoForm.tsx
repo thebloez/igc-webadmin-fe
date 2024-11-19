@@ -1,136 +1,172 @@
-import { Button, Form, Input, Select } from "antd";
-import {
-  UseFormHandleSubmit,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
-import { ICertificateData } from "@domain/entities/CertificateEntity";
+import { Control, FieldErrors } from "react-hook-form";
+import FormUpload from "@components/form/input/FormUpload";
+import FormSelect from "@components/form/input/FormSelect";
+import { ICustomerOption } from "@domain/entities/CustomerEntity";
+import { ISuggestionsState } from "@domain/entities/SuggestionEntity";
+import { IMemoData } from "@domain/entities/MemoEntity";
+import FormInput from "@components/form/input/FormInput";
+import FormToggle from "@components/form/input/FormToggle";
+import { useTranslation } from 'react-i18next';
 
-const customers = [
-  { value: "Asep", label: "Asep" },
-  { value: "Budi", label: "Budi" },
-  { value: "Citra", label: "Citra" },
-];
-
-interface MemoFormProps {
-  onSubmit: (data: ICertificateData) => void;
-  onReset: () => void;
-  setValue: UseFormSetValue<ICertificateData>;
-  errors: any;
-  register: UseFormRegister<ICertificateData>;
-  handleSubmit: UseFormHandleSubmit<ICertificateData, undefined>;
+export interface IMemoFormProps {
+  control: Control<IMemoData, any>;
+  errors: FieldErrors<IMemoData>;
+  suggestions: ISuggestionsState;
+  customers: ICustomerOption;
 }
 
-const MemoForm: React.FC<MemoFormProps> = ({
-  onSubmit,
-  onReset,
-  setValue,
+const MemoForm: React.FC<IMemoFormProps> = ({
   errors,
-  register,
-  handleSubmit,
+  control,
+  suggestions,
+  customers,
 }) => {
+  const { t } = useTranslation();
+
   return (
-    <Form
-      layout="vertical"
-      onFinish={handleSubmit(onSubmit)}
-      className="tw-space-y-4"
-    >
-      <Form.Item
-        label="Customer"
-        validateStatus={errors.member_phone_number ? "error" : ""}
-        help={errors.member_phone_number?.message}
-      >
-        <Select
-          className="tw-w-full tw-h-10"
-          showSearch
-          onChange={(value) => setValue("member_phone_number", value)}
-          options={customers}
+    <div className="tw-h-full tw-overflow-auto tw-px-4 tw-flex tw-justify-between tw-items-start tw-gap-4">
+      {/* create image */}
+      <div className="tw-w-full">
+        <FormUpload
+          name="attributes.object_image"
+          label={t('memo.form.object_image.label')}
+          placeholder={t('memo.form.object_image.placeholder')}
+          control={control}
+          rules={{ required: t('memo.form.object_image.required') }}
+          error={errors.attributes?.object_image}
         />
-      </Form.Item>
-
-      <Form.Item
-        label="Object Name"
-        validateStatus={errors.attributes?.object_name ? "error" : ""}
-        help={errors.attributes?.object_name?.message}
-      >
-        <Input
-          className="tw-py-2"
-          {...register("attributes.object_name", {
-            required: "Object Name is required",
-          })}
+        <FormSelect
+          name="member_phone_number"
+          label={t('memo.form.customer.label')}
+          placeholder={t('memo.form.customer.placeholder')}
+          options={customers.data}
+          control={control}
+          loading={customers.isLoading}
+          rules={{ required: t('memo.form.customer.required') }}
+          error={errors.member_phone_number}
         />
-      </Form.Item>
 
-      <Form.Item
-        label="Measurement"
-        validateStatus={errors.attributes?.measurement ? "error" : ""}
-        help={errors.attributes?.measurement?.message}
-      >
-        <Input
-          className="tw-py-2"
-          {...register("attributes.measurement", {
-            required: "Measurement is required",
-          })}
+        <FormSelect
+          name="attributes.object_name"
+          label={t('memo.form.object_name.label')}
+          placeholder={t('memo.form.object_name.placeholder')}
+          options={suggestions.data.object_name}
+          loading={suggestions.isLoading}
+          control={control}
+          rules={{ required: t('memo.form.object_name.required') }}
+          error={errors.attributes?.object_name}
         />
-      </Form.Item>
 
-      <Form.Item
-        label="Clarity"
-        validateStatus={errors.attributes?.clarity ? "error" : ""}
-        help={errors.attributes?.clarity?.message}
-      >
-        <Input
-          className="tw-py-2"
-          {...register("attributes.clarity", {
-            required: "Clarity is required",
-          })}
+        <FormInput
+          name="attributes.measurement"
+          label={t('memo.form.measurement.label')}
+          placeholder={t('memo.form.measurement.placeholder')}
+          control={control}
+          rules={{ required: t('memo.form.measurement.required') }}
+          error={errors.attributes?.measurement}
         />
-      </Form.Item>
 
-      <Form.Item
-        label="Transparency"
-        validateStatus={errors.attributes?.transparency ? "error" : ""}
-        help={errors.attributes?.transparency?.message}
-      >
-        <Input
-          className="tw-py-2"
-          {...register("attributes.transparency", {
-            required: "Transparency is required",
-          })}
+        <FormSelect
+          name="attributes.clarity"
+          label={t('memo.form.clarity.label')}
+          placeholder={t('memo.form.clarity.placeholder')}
+          options={suggestions.data.clarity}
+          loading={suggestions.isLoading}
+          control={control}
+          rules={{ required: t('memo.form.clarity.required') }}
+          error={errors.attributes?.clarity}
         />
-      </Form.Item>
-
-      <Form.Item
-        label="Cut"
-        validateStatus={errors.attributes?.cut ? "error" : ""}
-        help={errors.attributes?.cut?.message}
-      >
-        <Input
-          className="tw-py-2"
-          {...register("attributes.cut", { required: "Cut is required" })}
+        <FormSelect
+          name="attributes.transparency"
+          label={t('memo.form.transparency.label')}
+          placeholder={t('memo.form.transparency.placeholder')}
+          options={suggestions.data.transparency}
+          loading={suggestions.isLoading}
+          control={control}
+          rules={{ required: t('memo.form.transparency.required') }}
+          error={errors.attributes?.transparency}
         />
-      </Form.Item>
-
-      <div className="tw-flex tw-justify-end tw-gap-2">
-        <Button
-          key="reset"
-          type="primary"
-          danger
-          onClick={onReset}
-          className="tw-h-[40px] tw-font-semibold"
-        >
-          Reset
-        </Button>
-        <Button
-          key="submit"
-          type="primary"
-          className="tw-h-[40px] tw-font-semibold"
-          htmlType="submit"
-        >
-          Submit
-        </Button>
+        <FormSelect
+          name="attributes.cut"
+          label={t('memo.form.cut.label')}
+          placeholder={t('memo.form.cut.placeholder')}
+          options={suggestions.data.cut}
+          loading={suggestions.isLoading}
+          control={control}
+          rules={{ required: t('memo.form.cut.required') }}
+          error={errors.attributes?.cut}
+        />
       </div>
-    </Form>
+      <div className="tw-w-full">
+        <FormSelect
+          name="attributes.shape"
+          label={t('memo.form.shape.label')}
+          placeholder={t('memo.form.shape.placeholder')}
+          options={suggestions.data.shape}
+          loading={suggestions.isLoading}
+          control={control}
+          rules={{ required: t('memo.form.shape.required') }}
+          error={errors.attributes?.shape}
+        />
+        <FormSelect
+          name="attributes.color"
+          label={t('memo.form.color.label')}
+          placeholder={t('memo.form.color.placeholder')}
+          options={suggestions.data.color}
+          loading={suggestions.isLoading}
+          control={control}
+          rules={{ required: t('memo.form.color.required') }}
+          error={errors.attributes?.color}
+        />
+
+        <FormInput
+          name="attributes.weight"
+          label={t('memo.form.weight.label')}
+          placeholder={t('memo.form.weight.placeholder')}
+          control={control}
+          rules={{ required: t('memo.form.weight.required') }}
+          error={errors.attributes?.weight}
+        />
+
+        <FormSelect
+          name="attributes.origins"
+          label={t('memo.form.origins.label')}
+          placeholder={t('memo.form.origins.placeholder')}
+          options={suggestions.data.origin}
+          loading={suggestions.isLoading}
+          control={control}
+          rules={{ required: t('memo.form.origins.required') }}
+          error={errors.attributes?.origins}
+        />
+
+        <FormSelect
+          name="attributes.comments"
+          label={t('memo.form.comments.label')}
+          placeholder={t('memo.form.comments.placeholder')}
+          options={suggestions.data.comment}
+          loading={suggestions.isLoading}
+          control={control}
+          rules={{ required: t('memo.form.comments.required') }}
+          error={errors.attributes?.comments}
+        />
+
+        <FormInput
+          name="additional_comment"
+          label={t('memo.form.additional_comment.label')}
+          placeholder={t('memo.form.additional_comment.placeholder')}
+          control={control}
+          rules={{ required: t('memo.form.additional_comment.required') }}
+          error={errors.additional_comment}
+        />
+
+        <FormToggle
+          name="status"
+          label={t('memo.form.status.label')}
+          control={control}
+          error={errors.status}
+        />
+      </div>
+    </div>
   );
 };
 

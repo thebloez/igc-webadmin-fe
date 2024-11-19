@@ -41,9 +41,7 @@ const MenuItem = ({
       const indexChosen = listMenu.findIndex((res) => res.menuId === menuId);
       swapMenu(indexChosen);
     } else {
-      navigate(link, {
-        replace: false,
-      });
+      navigate(link, { replace: false, state: { refreshed: true } });
     }
   };
 
@@ -63,8 +61,9 @@ const MenuItem = ({
   };
 
   const onNavigate = (link: string | Partial<Path>) => {
-    navigate(link, {
+    navigate(link + "?refresh=" + new Date().getTime(), {
       replace: false,
+      flushSync: true,
     });
   };
 

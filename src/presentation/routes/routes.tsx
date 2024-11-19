@@ -1,7 +1,9 @@
+import CertificateAddPage from "@pages/certificate/CertificateAddPage";
 import CertificatePage from "@pages/certificate/CertificatePage";
 import CustomerPage from "@pages/customer/CustomerPage";
 import DashboardPage from "@pages/dashboard/DashboardPage";
 import LoginPage from "@pages/login/LoginPage";
+import MemoAddPage from "@pages/memo/MemoAddPage";
 import MemoPage from "@pages/memo/MemoPage";
 import TrashPage from "@pages/trash/TrashPage";
 
@@ -29,9 +31,19 @@ const routes: TRoutes = [
     element: <CertificatePage />,
   },
   {
+    path: "/certificate/add",
+    isAuth: true,
+    element: <CertificateAddPage />,
+  },
+  {
     path: "/memo",
     isAuth: true,
     element: <MemoPage />,
+  },
+  {
+    path: "/memo/add",
+    isAuth: true,
+    element: <MemoAddPage />,
   },
   {
     path: "/customer",

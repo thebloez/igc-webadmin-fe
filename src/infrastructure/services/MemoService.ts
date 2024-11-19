@@ -1,36 +1,39 @@
 import apiEndpoints from "@api/apiEndpoints";
-import logger from "../lib/utils/logger";
 import { API } from "@api/APIInstance";
 import { AxiosResponse } from "axios";
-import { IMemoResponse } from "@domain/entities/MemoEntity";
+import {
+  IMemoCreateResponse,
+  IMemoResponse,
+  IMemoService,
+} from "@domain/entities/MemoEntity";
+import { IGet, IPost } from "@domain/entities/ResponseEntity";
 
-interface IGet {
-  token: string;
-}
+class MemoService implements IMemoService {
+  async getAll(props: IGet): Promise<IMemoResponse> {
+    const response: AxiosResponse<IMemoResponse> = await API.get(
+      apiEndpoints.master + "?type=Memo",
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    );
 
-class MemoService {
-  async get(props: IGet): Promise<IMemoResponse | null> {
-    try {
-      logger("MemoService.get | token => ", props.token);
+    return response.data;
+  }
+  async createMemo(props: IPost): Promise<IMemoCreateResponse> {
+    const response: AxiosResponse<IMemoCreateResponse> = await API.post(
+      apiEndpoints.master,
+      props.data,
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+          "Content-Type": "Multipart/form-data",
+        },
+      }
+    );
 
-      const response: AxiosResponse<IMemoResponse> = await API.get(
-        apiEndpoints.master + "?type=Memo",
-        {
-          headers: {
-            Authorization: `Bearer ${props.token}`,
-          },
-        }
-      );
-
-      logger("MemoService.get | response => ", response.data);
-
-      return response.data
-        ? { meta: response.data.meta, data: response.data.data }
-        : null;
-    } catch (error: any) {
-      logger("MemoService.get | error => ", error);
-      throw error;
-    }
+    return response.data;
   }
 }
 

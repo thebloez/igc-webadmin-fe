@@ -46,7 +46,7 @@ const TrashColumn = (
           <Button
             onClick={() => props.onRestore && props.onRestore(record)}
             type="primary"
-            className="!tw-h-[40px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold "
+            className="!tw-h-[35px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold "
           >
             Restore
           </Button>
@@ -54,7 +54,7 @@ const TrashColumn = (
             type="primary"
             danger
             onClick={() => props.onDestroy && props.onDestroy(record)}
-            className="!tw-h-[40px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold "
+            className="!tw-h-[35px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold "
           >
             Destroy
           </Button>

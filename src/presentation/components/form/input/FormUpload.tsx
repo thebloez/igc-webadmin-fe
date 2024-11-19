@@ -28,7 +28,6 @@ const FormUpload: React.FC<FormUploadProps> = ({
   // const getValue = control._formValues[name];
 
   const handlePreview = (file: any) => {
-    console.log(file)
     setPreviewImage(URL.createObjectURL(file));
   };
 
@@ -43,7 +42,7 @@ const FormUpload: React.FC<FormUploadProps> = ({
         control={control}
         rules={rules}
         render={({ field }) => (
-          <div className="tw-w-full tw-flex tw-justify-start tw-items-start tw-gap-4">
+          <div className="tw-w-full tw-flex tw-justify-start tw-items-start tw-gap-6">
             <Upload
               accept=".jpg,.png"
               showUploadList={false}
@@ -54,18 +53,21 @@ const FormUpload: React.FC<FormUploadProps> = ({
               }}
               maxCount={1}
             >
-              <Button
-                className="tw-border tw-w-[110px] tw-border-primary-500 tw-text-primary-500 tw-font-semibold tw-px-4 tw-py-5 tw-mb-2 tw-rounded-md"
-                icon={<UploadOutlined className="tw-text-primary-500" />}
-              >
-                Upload
-              </Button>
-              {previewImage && (
-                <img
-                  alt="Preview"
-                  className="tw-w-[180px] tw-h-[180px] tw-object-contain tw-rounded-md"
-                  src={previewImage}
-                />
+              {previewImage ? (
+                <div className="tw-relative tw-h-[180px] tw-border tw-rounded tw-w-full tw-cursor-pointer tw-overflow-hidden">
+                  <img
+                    alt="Preview"
+                    className="tw-w-full tw-h-full tw-object-fill tw-rounded-md "
+                    src={previewImage}
+                  />
+                </div>
+              ) : (
+                <Button
+                  className="tw-border tw-w-[110px] tw-border-primary-500 tw-text-primary-500 tw-font-semibold tw-px-4 tw-py-5 tw-mb-2 tw-rounded-md"
+                  icon={<UploadOutlined className="tw-text-primary-500" />}
+                >
+                  Upload
+                </Button>
               )}
             </Upload>
           </div>

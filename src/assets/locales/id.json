@@ -33,12 +33,112 @@
     "description": "Lihat ringkasan transaksi dan aktivitas bisnis Anda."
   },
   "certificate": {
-    "title": "Sertifikat",
-    "description": "List sertifikat yang telah di buat"
+    "list": {
+      "title": "Daftar Sertifikat",
+      "description": "List sertifikat yang telah di buat",
+      "button": {
+        "add": "Buat Sertifikat",
+        "print": "Cetak",
+        "delete": "Hapus"
+      }
+    },
+    "add": {
+      "title": "Buat Sertifikat",
+      "description": "Buat sertifikat baru",
+      "button": {
+        "preview": "Pratinjau",
+        "submit": "Simpan"
+      }
+    }
   },
   "memo": {
-    "title": "Memo",
-    "description": "List memo yang telah di buat"
+    "list": {
+      "title": "Daftar Memo",
+      "description": "List memo yang telah di buat",
+      "button": {
+        "add": "Buat Memo",
+        "edit": "Ubah",
+        "delete": "Hapus"
+      }
+    },
+    "add": {
+      "title": "Buat Memo",
+      "description": "Buat memo baru",
+      "button": {
+        "preview": "Pratinjau",
+        "submit": "Simpan"
+      }
+    },
+    "form": {
+      "object_image": {
+        "label": "Gambar Objek",
+        "placeholder": "Gambar Objek",
+        "required": "Gambar Objek wajib diisi"
+      },
+      "customer": {
+        "label": "Pelanggan",
+        "placeholder": "Pilih pelanggan Anda",
+        "required": "Pelanggan wajib diisi"
+      },
+      "object_name": {
+        "label": "Nama Objek",
+        "placeholder": "Pilih nama objek Anda",
+        "required": "Nama objek wajib diisi"
+      },
+      "measurement": {
+        "label": "Ukuran",
+        "placeholder": "10 x 20 x 30cm",
+        "required": "Ukuran wajib diisi"
+      },
+      "clarity": {
+        "label": "Kejernihan",
+        "placeholder": "Pilih kejernihan Anda",
+        "required": "Kejernihan wajib diisi"
+      },
+      "transparency": {
+        "label": "Transparansi",
+        "placeholder": "Pilih transparansi Anda",
+        "required": "Transparansi wajib diisi"
+      },
+      "cut": {
+        "label": "Potongan",
+        "placeholder": "Pilih potongan Anda",
+        "required": "Potongan wajib diisi"
+      },
+      "shape": {
+        "label": "Bentuk",
+        "placeholder": "Pilih bentuk Anda",
+        "required": "Bentuk wajib diisi"
+      },
+      "color": {
+        "label": "Warna",
+        "placeholder": "Pilih warna Anda",
+        "required": "Warna wajib diisi"
+      },
+      "weight": {
+        "label": "Berat",
+        "placeholder": "10 karat",
+        "required": "Berat wajib diisi"
+      },
+      "origins": {
+        "label": "Asal",
+        "placeholder": "Pilih asal Anda",
+        "required": "Asal wajib diisi"
+      },
+      "comments": {
+        "label": "Komentar",
+        "placeholder": "Pilih komentar Anda",
+        "required": "Komentar wajib diisi"
+      },
+      "additional_comment": {
+        "label": "Komentar Tambahan",
+        "placeholder": "Komentar Tambahan",
+        "required": "Komentar Tambahan wajib diisi"
+      },
+      "status": {
+        "label": "Status"
+      }
+    }
   },
   "customer": {
     "title": "Pelanggan",

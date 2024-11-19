@@ -1,4 +1,3 @@
-import { Button, Form } from "antd";
 import { ICertificateFormProps } from "@domain/entities/CertificateEntity";
 import FormInput from "@components/form/input/FormInput";
 import FormSelect from "@components/form/input/FormSelect";
@@ -6,22 +5,15 @@ import FormToggle from "@components/form/input/FormToggle";
 import FormUpload from "@components/form/input/FormUpload";
 
 const CertificateForm: React.FC<ICertificateFormProps> = ({
-  onSubmit,
-  onReset,
   errors,
-  isFormLoading,
   control,
   suggestions,
   customers,
 }) => {
   return (
-    <Form
-      layout="vertical"
-      onFinish={onSubmit}
-      className="tw-h-[calc(95vh-32px)] tw-pb-[20px] tw-overflow-hidden tw-flex tw-flex-col tw-justify-between"
-    >
-      <div className="tw-h-full tw-overflow-auto tw-px-4 tw-flex-1">
-        {/* create image */}
+    <div className="tw-h-full tw-overflow-auto tw-px-4 tw-flex tw-justify-between tw-items-start tw-gap-4">
+      {/* create image */}
+      <div className="tw-w-full">
         <FormUpload
           name="attributes.object_image"
           label="Object Image"
@@ -91,6 +83,8 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           rules={{ required: "Cut is required" }}
           error={errors.attributes?.cut}
         />
+      </div>
+      <div className="tw-w-full">
         <FormSelect
           name="attributes.shape"
           label="Shape"
@@ -159,29 +153,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           error={errors.status}
         />
       </div>
-
-      <div className="tw-flex tw-px-4 tw-border-t tw-py-2 tw-justify-end tw-gap-2">
-        <Button
-          key="reset"
-          type="primary"
-          loading={isFormLoading}
-          danger
-          onClick={onReset}
-          className="tw-h-[40px] tw-font-semibold"
-        >
-          Reset
-        </Button>
-        <Button
-          key="submit"
-          loading={isFormLoading}
-          type="primary"
-          className="tw-h-[40px] tw-font-semibold"
-          htmlType="submit"
-        >
-          Submit
-        </Button>
-      </div>
-    </Form>
+    </div>
   );
 };
 

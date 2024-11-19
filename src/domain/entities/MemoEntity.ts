@@ -1,4 +1,9 @@
-import { IResponsePaginationEntity } from "./ResponseEntity";
+import {
+  IGet,
+  IPost,
+  IResponseEntity,
+  IResponsePaginationEntity,
+} from "./ResponseEntity";
 import { IBaseState } from "./SharedEntity";
 
 export interface IMemoData {
@@ -18,7 +23,7 @@ export interface IMemoData {
   attributes: {
     id_master: string;
     object_name: string;
-    object_image: any;
+    object_image: File | string;
     measurement: string;
     shape: string;
     clarity: string;
@@ -34,5 +39,13 @@ export interface IMemoData {
 export interface IMemoTableState extends IBaseState {
   data: IMemoData[];
 }
+export interface IMemoCreateResponse extends IResponseEntity<IMemoData> {}
 
 export interface IMemoResponse extends IResponsePaginationEntity<IMemoData> {}
+
+export interface IMemoService {
+  getAll(props: IGet): Promise<IMemoResponse>;
+  createMemo(props: IPost): Promise<IMemoCreateResponse>;
+}
+
+export interface IMemoUseCase extends IMemoService {}

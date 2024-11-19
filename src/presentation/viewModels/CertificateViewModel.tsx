@@ -1,82 +1,74 @@
-import { ICertificateTableState } from "@domain/entities/CertificateEntity";
+import {
+  ICertificateData,
+  ICertificateTableState,
+} from "@domain/entities/CertificateEntity";
 import CertificateUseCase from "@domain/useCases/CertificateUseCase";
 import logger from "@lib/utils/logger";
 import { SetStateAction } from "react";
+import { UseFormReset } from "react-hook-form";
 
 class CertificateViewModel {
   private certificateUseCase: CertificateUseCase;
-  private setTable: (value: SetStateAction<ICertificateTableState>) => void;
-  private setIsModalOpen: (value: SetStateAction<boolean>) => void;
-  private resetForm: () => void;
+  private token: string;
 
-  constructor(
-    certificateUseCase: CertificateUseCase,
-    setTable: (value: SetStateAction<ICertificateTableState>) => void,
-    setIsModalOpen: (value: SetStateAction<boolean>) => void,
-    resetForm: () => void
-  ) {
+  constructor(certificateUseCase: CertificateUseCase, token: string) {
     this.certificateUseCase = certificateUseCase;
-    this.setTable = setTable;
-    this.setIsModalOpen = setIsModalOpen;
-    this.resetForm = resetForm;
+    this.token = token;
   }
 
-  async getCertificate(token: string) {
+  async getCertificate(
+    setTable: (value: SetStateAction<ICertificateTableState>) => void
+  ) {
     try {
-      this.setTable((prevState) => ({
+      setTable((prevState) => ({
         ...prevState,
         isLoading: true,
       }));
 
-      const response = await this.certificateUseCase.get({ token });
+      const response = await this.certificateUseCase.get({ token: this.token });
 
       logger("CertificateViewModel.getCertificate | response => ", response);
 
       if (response) {
-        this.setTable((prevState) => ({
+        setTable((prevState) => ({
           ...prevState,
           data: response.data,
           total: response.meta?.pagination?.total,
         }));
       }
 
-      this.setTable((prevState) => ({
+      setTable((prevState) => ({
         ...prevState,
         isLoading: false,
       }));
     } catch (error: any) {
       logger("CertificateViewModel.getCertificate | error => ", error);
-      this.setTable((prevState) => ({
+      setTable((prevState) => ({
         ...prevState,
         isLoading: false,
       }));
     }
   }
 
-  handleModalOpen = () => {
-    this.setIsModalOpen(true);
-  };
+  createCertificate = async (
+    token: string,
+    data: ICertificateData,
+    message: any,
+    reset: UseFormReset<ICertificateData>
+  ) => {
+    try {
+      const response = await this.certificateUseCase.post({ token, data });
 
-  handleModalClose = () => {
-    this.setIsModalOpen(false);
-    this.resetForm();
-  };
+      logger("CertificateViewModel.createCertificate | response => ", response);
 
-  createCertificate = async (token: string, data: any) => {
-    const certData = new FormData();
-
-    certData.append("member_phone_number", data.member_phone_number);
-    certData.append("additional_comment", data.additional_comment);
-    certData.append("status", data.status ? "active": "inactive");
-    certData.append("type", "Sertifikat");
-
-
-    Object.entries(data.attributes).forEach(([key, value]) => {
-      certData.append(`attributes[${key}]`, value as any);
-    });
-
-    // set loading react hook form
-    await this.certificateUseCase.post({ token, data: certData });
+      if (response) {
+        message.success("Sertifikat berhasil dibuat");
+        reset();
+      }
+    } catch (error: any) {
+      logger("CertificateViewModel.createCertificate | error => ", error);
+      message.error("Gagal membuat sertifikat");
+    }
   };
 }
 
