@@ -59,7 +59,7 @@ class MemoViewModel {
     } catch (error: any) {
       logger("MemoViewModel.createMemo | error => ", error);
 
-      message.error("Failed to create memo");
+      message.error(error.message  || "Failed to create memo");
     }
   }
 }

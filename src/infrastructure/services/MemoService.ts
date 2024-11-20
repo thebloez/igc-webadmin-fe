@@ -15,6 +15,7 @@ class MemoService implements IMemoService {
       {
         headers: {
           Authorization: `Bearer ${props.token}`,
+          "Content-Type": "application/json",
         },
       }
     );

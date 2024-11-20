@@ -78,8 +78,10 @@ const MemoAddPage = () => {
   };
 
   const onSubmit: SubmitHandler<IMemoData> = async (data) => {
+    
     await memoViewModel.createMemo(token, data, message, reset);
   };
+  
   const goBack = () => {
     window.history.back();
   };

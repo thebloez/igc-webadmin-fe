@@ -6,6 +6,7 @@ import idTranslation from "../../assets/locales/id.json";
 import { store } from "../redux/store"; // Import Redux store
 
 const currentLanguage = store.getState().language.value || "en";
+console.log("currentLanguage", currentLanguage);
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -23,4 +24,15 @@ i18n.use(initReactI18next).init({
   },
 });
 
+// Subscribe to language changes
+store.subscribe(() => {
+  const currentLanguage = store.getState().language.value;
+  if (i18n.language !== currentLanguage) {
+    i18n.changeLanguage(currentLanguage);
+  }
+});
+
+
 export default i18n;
+
+

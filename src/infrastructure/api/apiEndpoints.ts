@@ -10,6 +10,7 @@ const APIEndpoints = {
   members: "api/members",
   suggestions: "api/suggestion/all",
   trash: "api/masters/thrash",
+  delete : (id: string) => `api/masters/delete?id=${id}`,
 };
 
 export default APIEndpoints;

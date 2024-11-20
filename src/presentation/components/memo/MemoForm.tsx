@@ -6,7 +6,7 @@ import { ISuggestionsState } from "@domain/entities/SuggestionEntity";
 import { IMemoData } from "@domain/entities/MemoEntity";
 import FormInput from "@components/form/input/FormInput";
 import FormToggle from "@components/form/input/FormToggle";
-import { useTranslation } from 'react-i18next';
+import { useLanguage } from "@lib/hooks/useLanguage";
 
 export interface IMemoFormProps {
   control: Control<IMemoData, any>;
@@ -21,7 +21,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
   suggestions,
   customers,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   return (
     <div className="tw-h-full tw-overflow-auto tw-px-4 tw-flex tw-justify-between tw-items-start tw-gap-4">
