@@ -3,11 +3,12 @@ import isNullOrEmpty from "@lib/utils/isNullOrEmpty";
 import logger from "@lib/utils/logger";
 import {
   IMemoCreateResponse,
+  IMemoData,
   IMemoResponse,
   IMemoService,
   IMemoUseCase,
 } from "@domain/entities/MemoEntity";
-import { IGet, IPost } from "@domain/entities/ResponseEntity";
+import { IGetRequest, IPostRequest } from "@domain/entities/ResponseEntity";
 
 export default class MemoUseCase implements IMemoUseCase {
   private memoService: IMemoService;
@@ -16,7 +17,7 @@ export default class MemoUseCase implements IMemoUseCase {
     this.memoService = memoService;
   }
 
-  async getAll(props: IGet): Promise<IMemoResponse> {
+  async getAll(props: IGetRequest): Promise<IMemoResponse> {
     try {
       const result = await this.memoService.getAll({ token: props.token });
 
@@ -37,7 +38,9 @@ export default class MemoUseCase implements IMemoUseCase {
     }
   }
 
-  async createMemo(props: IPost): Promise<IMemoCreateResponse> {
+  async createMemo(
+    props: IPostRequest<IMemoData>
+  ): Promise<IMemoCreateResponse> {
     try {
       const memoData = new FormData();
 

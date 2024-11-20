@@ -1,56 +1,52 @@
-/**
- * Interface representing metadata.
- * @property {string} code - Status code of the response
- * @property {string} message - Message associated with the response
- */
-interface IMeta {
-  code: string;
+// types/http/status.ts
+export enum HttpStatusCode {
+  OK = "200",
+  CREATED = "201",
+  BAD_REQUEST = "400",
+  UNAUTHORIZED = "401",
+  FORBIDDEN = "403",
+  NOT_FOUND = "404",
+  INTERNAL_SERVER_ERROR = "500",
+}
+
+// types/common/meta.ts
+export interface IMeta {
+  code: HttpStatusCode;
   message: string;
 }
 
-/**
- * Interface representing metadata with pagination details.
- * Extends the basic IMeta interface.
- * @property {Object} pagination - Pagination details
- * @property {number} pagination.page - Current page number
- * @property {number} pagination.total - Total number of items
- * @property {number} pagination.limit - Number of items per page
- */
-interface IMetaPagination extends IMeta {
-  pagination: {
-    page: number;
-    total: number;
-    limit: number;
-  };
+export interface IPagination {
+  page: number;
+  total: number;
+  limit: number;
 }
 
-/**
- * Interface representing a response entity.
- * @template T - Type of the data in the response
- * @property {IMeta} meta - Metadata of the response
- * @property {T} data - Data of the response
- */
+export interface IMetaPagination extends IMeta {
+  pagination: IPagination;
+}
+
+// types/http/request.ts
+export interface IBaseRequest {
+  token: string;
+}
+
+export interface IGetRequest extends IBaseRequest {}
+
+export interface IPostRequest<T> extends IBaseRequest {
+  data: T;
+}
+
+export interface IDeleteRequest extends IBaseRequest {
+  id: string;
+}
+
+// types/http/response.ts
 export interface IResponseEntity<T> {
   meta: IMeta;
   data: T;
 }
 
-/**
- * Interface representing a paginated response entity.
- * @template T - Type of the data in the response
- * @property {IMetaPagination} meta - Metadata with pagination details
- * @property {T} data - Data of the response
- */
 export interface IResponsePaginationEntity<T> {
   meta: IMetaPagination;
   data: T[];
-}
-
-export interface IGet {
-  token: string;
-}
-
-export interface IPost {
-  token: string;
-  data: any;
 }

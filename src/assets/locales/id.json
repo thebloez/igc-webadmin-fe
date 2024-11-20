@@ -40,6 +40,19 @@
         "add": "Buat Sertifikat",
         "print": "Cetak",
         "delete": "Hapus"
+      },
+      "modal": {
+        "delete": {
+          "description": "Apakah Anda yakin ingin menghapus sertifikat ini?",
+          "warning": {
+            "title": "Peringatan",
+            "description": "Sertifikat yang dihapus dapat dipulihkan kembali."
+          },
+          "button": {
+            "no": "Tidak",
+            "yes": "Ya"
+          }
+        }
       }
     },
     "add": {
@@ -59,6 +72,19 @@
         "add": "Buat Memo",
         "edit": "Ubah",
         "delete": "Hapus"
+      },
+      "modal": {
+        "delete": {
+          "description": "Apakah Anda yakin ingin menghapus memo ini?",
+          "warning": {
+            "title": "Peringatan",
+            "description": "Memo yang dihapus dapat dipulihkan kembali."
+          },
+          "button": {
+            "no": "Tidak",
+            "yes": "Ya"
+          }
+        }
       }
     },
     "add": {

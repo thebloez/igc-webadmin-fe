@@ -5,7 +5,7 @@ import { Button } from "antd";
 import { ColumnsType } from "antd/es/table";
 
 const CertificateColumn = (
-  props: IColumn<ICertificateData>
+  props: Pick<IColumn<ICertificateData>, "onPrint" | "onDelete">
 ): ColumnsType<ICertificateData> => {
   const { t } = useLanguage();
 

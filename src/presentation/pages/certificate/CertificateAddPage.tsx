@@ -81,12 +81,12 @@ const CertificateAddPage = () => {
   };
 
   const onSubmit: SubmitHandler<ICertificateData> = async (data) => {
-    await certificateViewModel.createCertificate(token, data, message, reset);
+    await certificateViewModel.createCertificate(data, message, reset);
   };
   const goBack = () => {
     window.history.back();
   };
-  
+
   return (
     <Form
       layout="vertical"

@@ -1,6 +1,6 @@
 import {
-  IGet,
-  IPost,
+  IGetRequest,
+  IPostRequest,
   IResponseEntity,
   IResponsePaginationEntity,
 } from "./ResponseEntity";
@@ -44,8 +44,11 @@ export interface IMemoCreateResponse extends IResponseEntity<IMemoData> {}
 export interface IMemoResponse extends IResponsePaginationEntity<IMemoData> {}
 
 export interface IMemoService {
-  getAll(props: IGet): Promise<IMemoResponse>;
-  createMemo(props: IPost): Promise<IMemoCreateResponse>;
+  getAll(props: IGetRequest): Promise<IMemoResponse>;
+  createMemo(props: IPostRequest<FormData>): Promise<IMemoCreateResponse>;
 }
 
-export interface IMemoUseCase extends IMemoService {}
+export interface IMemoUseCase {
+  getAll(props: IGetRequest): Promise<IMemoResponse>;
+  createMemo(props: IPostRequest<IMemoData>): Promise<IMemoCreateResponse>;
+}

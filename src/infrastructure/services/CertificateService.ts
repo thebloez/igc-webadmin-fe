@@ -5,10 +5,14 @@ import {
   ICertificateCreateResponse,
   ICertificateResponse,
 } from "@domain/entities/CertificateEntity";
-import { IGet, IPost } from "@domain/entities/ResponseEntity";
+import {
+  IDeleteRequest,
+  IGetRequest,
+  IPostRequest,
+} from "@domain/entities/ResponseEntity";
 
 class CertificateService {
-  async get(props: IGet): Promise<ICertificateResponse> {
+  async getCertificate(props: IGetRequest): Promise<ICertificateResponse> {
     const response: AxiosResponse<ICertificateResponse> = await API.get(
       apiEndpoints.master,
       {
@@ -20,7 +24,9 @@ class CertificateService {
 
     return response.data;
   }
-  async post(props: IPost): Promise<ICertificateCreateResponse> {
+  async createCertificate(
+    props: IPostRequest<FormData>
+  ): Promise<ICertificateCreateResponse> {
     const response: AxiosResponse<ICertificateCreateResponse> = await API.post(
       apiEndpoints.master,
       props.data,
@@ -28,6 +34,20 @@ class CertificateService {
         headers: {
           Authorization: `Bearer ${props.token}`,
           "Content-Type": "Multipart/form-data",
+        },
+      }
+    );
+
+    return response.data;
+  }
+  async deleteCertificate(
+    props: IDeleteRequest
+  ): Promise<ICertificateResponse> {
+    const response: AxiosResponse<ICertificateResponse> = await API.delete(
+      apiEndpoints.master + `/delete?id=${props.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
         },
       }
     );

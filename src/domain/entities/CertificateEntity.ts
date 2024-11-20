@@ -34,6 +34,12 @@ export interface ICertificateData {
   };
 }
 
+export interface ICertificateDeleteState {
+  visible: boolean;
+  isLoading: boolean;
+  id: string;
+}
+
 export interface ICertificateTableState extends IBaseState {
   data: ICertificateData[];
 }

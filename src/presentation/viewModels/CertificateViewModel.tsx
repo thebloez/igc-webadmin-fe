@@ -1,5 +1,6 @@
 import {
   ICertificateData,
+  ICertificateDeleteState,
   ICertificateTableState,
 } from "@domain/entities/CertificateEntity";
 import CertificateUseCase from "@domain/useCases/CertificateUseCase";
@@ -51,13 +52,15 @@ class CertificateViewModel {
   }
 
   createCertificate = async (
-    token: string,
     data: ICertificateData,
     message: any,
     reset: UseFormReset<ICertificateData>
   ) => {
     try {
-      const response = await this.certificateUseCase.post({ token, data });
+      const response = await this.certificateUseCase.post({
+        token: this.token,
+        data,
+      });
 
       logger("CertificateViewModel.createCertificate | response => ", response);
 
@@ -68,6 +71,38 @@ class CertificateViewModel {
     } catch (error: any) {
       logger("CertificateViewModel.createCertificate | error => ", error);
       message.error("Gagal membuat sertifikat");
+    }
+  };
+
+  deleteCertificate = async (
+    id: string,
+    message: any,
+    setModal: (value: SetStateAction<ICertificateDeleteState>) => void
+  ) => {
+    try {
+      setModal((prevState) => ({
+        ...prevState,
+        isLoading: true,
+      }));
+      const response = await this.certificateUseCase.delete({
+        token: this.token,
+        id,
+      });
+
+      logger("CertificateViewModel.deleteCertificate | response => ", response);
+
+      if (response) {
+        message.success("Sertifikat berhasil dihapus");
+      }
+    } catch (error: any) {
+      logger("CertificateViewModel.deleteCertificate | error => ", error);
+      message.error("Gagal menghapus sertifikat");
+    } finally {
+      setModal((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        visible: false,
+      }));
     }
   };
 }

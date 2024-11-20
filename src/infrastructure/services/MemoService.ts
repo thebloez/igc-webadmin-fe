@@ -6,10 +6,10 @@ import {
   IMemoResponse,
   IMemoService,
 } from "@domain/entities/MemoEntity";
-import { IGet, IPost } from "@domain/entities/ResponseEntity";
+import { IGetRequest, IPostRequest } from "@domain/entities/ResponseEntity";
 
 class MemoService implements IMemoService {
-  async getAll(props: IGet): Promise<IMemoResponse> {
+  async getAll(props: IGetRequest): Promise<IMemoResponse> {
     const response: AxiosResponse<IMemoResponse> = await API.get(
       apiEndpoints.master + "?type=Memo",
       {
@@ -22,7 +22,9 @@ class MemoService implements IMemoService {
 
     return response.data;
   }
-  async createMemo(props: IPost): Promise<IMemoCreateResponse> {
+  async createMemo(
+    props: IPostRequest<FormData>
+  ): Promise<IMemoCreateResponse> {
     const response: AxiosResponse<IMemoCreateResponse> = await API.post(
       apiEndpoints.master,
       props.data,

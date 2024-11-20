@@ -2,13 +2,20 @@ import CertificateService from "@services/CertificateService";
 import isNullOrEmpty from "../../infrastructure/lib/utils/isNullOrEmpty";
 import logger from "@lib/utils/logger";
 import { ICertificateData } from "@domain/entities/CertificateEntity";
+import {
+  IDeleteRequest,
+  IGetRequest,
+  IPostRequest,
+} from "@domain/entities/ResponseEntity";
 
 export default class CertificateUseCase {
   private certificateService = new CertificateService();
 
-  async get(props: { token: string }) {
+  async get(props: IGetRequest) {
     try {
-      const result = await this.certificateService.get({ token: props.token });
+      const result = await this.certificateService.getCertificate({
+        token: props.token,
+      });
 
       logger("CertificateUseCase.get | response =>", result);
 
@@ -26,7 +33,8 @@ export default class CertificateUseCase {
       return null;
     }
   }
-  async post(props: { token: string; data: ICertificateData }) {
+
+  async post(props: IPostRequest<ICertificateData>) {
     try {
       const certData = new FormData();
 
@@ -41,7 +49,7 @@ export default class CertificateUseCase {
 
       logger("CertificateUseCase.payload | response =>", certData);
 
-      const result = await this.certificateService.post({
+      const result = await this.certificateService.createCertificate({
         token: props.token,
         data: certData,
       });
@@ -55,6 +63,32 @@ export default class CertificateUseCase {
       return result;
     } catch (error: any) {
       logger("CertificateUseCase.post | error =>", error);
+
+      if (error.response?.status === 401) {
+        window.location.href = "/login";
+        return;
+      }
+      throw error;
+    }
+  }
+  async delete(props: IDeleteRequest) {
+    try {
+      const result = await this.certificateService.deleteCertificate({
+        token: props.token,
+        id: props.id,
+      });
+
+      logger("CertificateUseCase.delete | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(
+          result?.meta?.message ?? "Failed to certificate delete"
+        );
+      }
+
+      return result;
+    } catch (error: any) {
+      logger("CertificateUseCase.delete | error =>", error);
 
       if (error.response?.status === 401) {
         window.location.href = "/login";
