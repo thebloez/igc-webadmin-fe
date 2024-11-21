@@ -32,13 +32,15 @@ export default class CertificateUseCase {
 
       return result;
     } catch (error: any) {
+      logger("CertificateUseCase.get | error =>", error);
       if (error.response?.status === 401) {
         this.clearToken();
-        window.location.href = "/login";
-      } else {
-        logger("CertificateUseCase.get | error =>", error);
+        return;
       }
-      return null;
+
+      throw new Error(
+        error.response?.data?.meta?.message ?? "Failed to get certificate"
+      );
     }
   }
 
@@ -74,10 +76,11 @@ export default class CertificateUseCase {
 
       if (error.response?.status === 401) {
         this.clearToken();
-        window.location.href = "/login";
         return;
       }
-      throw error;
+      throw new Error(
+        error.response?.data?.meta?.message ?? "Failed to post certificate"
+      );
     }
   }
   async delete(props: IDeleteRequest) {
@@ -101,7 +104,6 @@ export default class CertificateUseCase {
 
       if (error.response?.status === 401) {
         this.clearToken();
-        window.location.href = "/login";
         return;
       }
 
