@@ -11,7 +11,15 @@ import {
   IPostRequest,
 } from "@domain/entities/ResponseEntity";
 
-class CertificateService {
+export interface ICertificateService {
+  getCertificate(props: IGetRequest): Promise<ICertificateResponse>;
+  createCertificate(
+    props: IPostRequest<FormData>
+  ): Promise<ICertificateCreateResponse>;
+  deleteCertificate(props: IDeleteRequest): Promise<ICertificateResponse>;
+}
+
+class CertificateService implements ICertificateService {
   async getCertificate(props: IGetRequest): Promise<ICertificateResponse> {
     const response: AxiosResponse<ICertificateResponse> = await API.get(
       apiEndpoints.master,
@@ -19,6 +27,7 @@ class CertificateService {
         headers: {
           Authorization: `Bearer ${props.token}`,
         },
+        params: props.params,
       }
     );
 

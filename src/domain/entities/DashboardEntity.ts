@@ -48,5 +48,6 @@ export interface IColumn<T> {
 export interface IDataTable<T> extends IBaseState {
   data: T[];
   columns: ColumnsType<T>;
+  rowKey?: string;
   onChange?: (pagination: TablePaginationConfig) => void;
 }

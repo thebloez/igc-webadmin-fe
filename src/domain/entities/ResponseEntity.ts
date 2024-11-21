@@ -30,7 +30,12 @@ export interface IBaseRequest {
   token: string;
 }
 
-export interface IGetRequest extends IBaseRequest {}
+export interface IGetRequest extends IBaseRequest {
+  params?: {
+    page?: number;
+    per_page?: number;
+  };
+}
 
 export interface IPostRequest<T> extends IBaseRequest {
   data: T;

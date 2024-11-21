@@ -83,3 +83,16 @@ td.ant-table-cell:first-child {
   margin-bottom: 0 !important;
   margin-top: 10px !important;
 }
+
+.ant-message {
+  max-width: 60vw;
+}
+
+.ant-table {
+  overflow: auto;
+}
+
+.ant-table-container {
+  min-width: 1000px !important;
+  overflow: auto;
+}

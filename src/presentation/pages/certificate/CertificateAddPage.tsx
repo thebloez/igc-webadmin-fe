@@ -6,7 +6,7 @@ import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
 import CertificateViewModel from "@viewModels/CertificateViewModel";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CertificateForm from "@components/certificate/CertificateForm";
 import { ISuggestionsState } from "@domain/entities/SuggestionEntity";
@@ -16,10 +16,13 @@ import { ICustomerOption } from "@domain/entities/CustomerEntity";
 import CustomerUseCase from "@domain/useCases/CustomerUseCase";
 import CustomerViewModel from "@viewModels/CustomerViewModel";
 import ArrowLeftIcon from "@components/icon/ArrowLeftIcon";
+import CertificateService from "@services/CertificateService";
+import { setUserToken } from "@redux/user/userReduxReducer";
 
 const CertificateAddPage = () => {
   // get language and t function to change language
   const { t } = useLanguage();
+  const dispatch = useDispatch();
 
   const {
     handleSubmit,
@@ -29,6 +32,8 @@ const CertificateAddPage = () => {
   } = useForm<ICertificateData>({
     mode: "onChange",
   });
+
+  const clearToken = () => dispatch(setUserToken(""));
 
   const token = useSelector(selectToken);
 
@@ -51,8 +56,14 @@ const CertificateAddPage = () => {
     data: [],
   });
 
+  // create instance of certificate service, use case, and view model
+  const certificateService = new CertificateService();
+  const certificateUseCase = new CertificateUseCase(
+    certificateService,
+    clearToken
+  );
   const certificateViewModel = new CertificateViewModel(
-    new CertificateUseCase(),
+    certificateUseCase,
     token
   );
 
@@ -83,6 +94,7 @@ const CertificateAddPage = () => {
   const onSubmit: SubmitHandler<ICertificateData> = async (data) => {
     await certificateViewModel.createCertificate(data, message, reset);
   };
+
   const goBack = () => {
     window.history.back();
   };

@@ -11,18 +11,22 @@ import CertificateUseCase from "@domain/useCases/CertificateUseCase";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
 import CertificateViewModel from "@viewModels/CertificateViewModel";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CertificateDeleteModal from "@components/certificate/CertificateDeleteModal";
+import CertificateService from "@services/CertificateService";
+import { setUserToken } from "@redux/user/userReduxReducer";
 
 const CertificatePage = () => {
   // get language and t function to change language
   const { t } = useLanguage();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const token = useSelector(selectToken);
+  const clearToken = () => dispatch(setUserToken(""));
 
   const [modal, setModal] = useState<ICertificateDeleteState>({
     visible: false,
@@ -38,18 +42,24 @@ const CertificatePage = () => {
     data: [],
   });
 
+  // create instance of certificate service, use case, and view model
+  const certificateService = new CertificateService();
+  const certificateUseCase = new CertificateUseCase(
+    certificateService,
+    clearToken
+  );
   const certificateViewModel = new CertificateViewModel(
-    new CertificateUseCase(),
+    certificateUseCase,
     token
   );
 
   useEffect(() => {
     getCertificate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [table.currentPage, table.pageSize]);
 
   const getCertificate = async () => {
-    await certificateViewModel.getCertificate(setTable);
+    await certificateViewModel.getCertificate(table, setTable);
   };
 
   const gotoAddPage = () => {
@@ -74,6 +84,15 @@ const CertificatePage = () => {
   const closeModal = () => {
     setModal((prevState) => ({ ...prevState, visible: false }));
   };
+
+  const onChange = useCallback((props: any) => {
+    setTable((prevState) => ({
+      ...prevState,
+      currentPage: props.current,
+      pageSize: props.pageSize,
+    }));
+  }, []);
+
   return (
     <div className="tw-m-0 tw-p-6 ">
       <CertificateDeleteModal
@@ -99,17 +118,20 @@ const CertificatePage = () => {
             </Button>
           </div>
         </HeaderContent>
+        {/* <div className="!tw-min-w-[200px] tw-overflow-x-auto tw-relative"> */}
         <CertificateTable
           isLoading={table.isLoading}
           data={table.data}
           currentPage={table.currentPage}
           pageSize={table.pageSize}
           total={table.total}
+          onChange={onChange}
           columns={CertificateColumn({
             onDelete,
             onPrint,
           })}
         />
+        {/* </div> */}
       </div>
     </div>
   );

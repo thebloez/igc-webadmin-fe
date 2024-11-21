@@ -20,6 +20,7 @@ const CertificateColumn = (
     {
       title: "Kode",
       dataIndex: "id",
+      width: 200,
       key: "id",
     },
     {
@@ -27,17 +28,21 @@ const CertificateColumn = (
       className: "tw-text-sm md:tw-text-base",
       dataIndex: "attributes.object_name",
       key: "attributes.object_name",
+      width: 200,
       render: (_, record) => record.attributes.object_name,
     },
     {
       title: "Pelanggan",
       dataIndex: "member_phone_number",
+      width: 150,
       key: "member_phone_number",
     },
     {
       title: "Pembuat",
       dataIndex: "created_by",
       key: "created_by",
+      responsive: ["xs", "sm", "md", "lg"],
+      width: 150,
     },
 
     {
@@ -60,7 +65,7 @@ const CertificateColumn = (
               onClick={() => props.onDelete && props.onDelete(record)}
               type="primary"
               danger
-              className="!tw-h-[35px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold "
+              className="!tw-h-[35px] !tw-min-w-[80px] tw-rounded-md tw-shadow tw-font-semibold "
             >
               {t("certificate.list.button.delete")}
             </Button>

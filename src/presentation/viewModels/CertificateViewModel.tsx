@@ -18,6 +18,7 @@ class CertificateViewModel {
   }
 
   async getCertificate(
+    state: ICertificateTableState,
     setTable: (value: SetStateAction<ICertificateTableState>) => void
   ) {
     try {
@@ -26,7 +27,13 @@ class CertificateViewModel {
         isLoading: true,
       }));
 
-      const response = await this.certificateUseCase.get({ token: this.token });
+      const response = await this.certificateUseCase.get({
+        token: this.token,
+        params: {
+          page: state.currentPage,
+          per_page: state.pageSize,
+        },
+      });
 
       logger("CertificateViewModel.getCertificate | response => ", response);
 
@@ -96,7 +103,7 @@ class CertificateViewModel {
       }
     } catch (error: any) {
       logger("CertificateViewModel.deleteCertificate | error => ", error);
-      message.error("Gagal menghapus sertifikat");
+      message.error(error.message);
     } finally {
       setModal((prevState) => ({
         ...prevState,

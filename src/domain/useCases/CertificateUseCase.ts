@@ -1,4 +1,4 @@
-import CertificateService from "@services/CertificateService";
+import { ICertificateService } from "@services/CertificateService";
 import isNullOrEmpty from "../../infrastructure/lib/utils/isNullOrEmpty";
 import logger from "@lib/utils/logger";
 import { ICertificateData } from "@domain/entities/CertificateEntity";
@@ -9,12 +9,19 @@ import {
 } from "@domain/entities/ResponseEntity";
 
 export default class CertificateUseCase {
-  private certificateService = new CertificateService();
+  private certificateService: ICertificateService;
+  private clearToken: any;
+
+  constructor(certificateService: ICertificateService, clearToken: any) {
+    this.certificateService = certificateService;
+    this.clearToken = clearToken;
+  }
 
   async get(props: IGetRequest) {
     try {
       const result = await this.certificateService.getCertificate({
         token: props.token,
+        params: props.params,
       });
 
       logger("CertificateUseCase.get | response =>", result);
@@ -26,6 +33,7 @@ export default class CertificateUseCase {
       return result;
     } catch (error: any) {
       if (error.response?.status === 401) {
+        this.clearToken();
         window.location.href = "/login";
       } else {
         logger("CertificateUseCase.get | error =>", error);
@@ -65,6 +73,7 @@ export default class CertificateUseCase {
       logger("CertificateUseCase.post | error =>", error);
 
       if (error.response?.status === 401) {
+        this.clearToken();
         window.location.href = "/login";
         return;
       }
@@ -91,10 +100,14 @@ export default class CertificateUseCase {
       logger("CertificateUseCase.delete | error =>", error);
 
       if (error.response?.status === 401) {
+        this.clearToken();
         window.location.href = "/login";
         return;
       }
-      throw error;
+
+      throw new Error(
+        error.response?.data?.meta?.message ?? "Failed to delete certificate"
+      );
     }
   }
 }

@@ -7,11 +7,10 @@ const DataTable: React.FC<IDataTable<any>> = (props) => (
   <Table
     sticky
     caption
-    rowKey={"id"}
+    rowKey={props.rowKey || "id"}
     rowClassName="!tw-p-0"
     columns={props.columns}
     dataSource={props.data}
-    className="tw-w-full tw-relative"
     loading={{
       percent: 50,
       spinning: props.isLoading,
@@ -45,7 +44,7 @@ const DataTable: React.FC<IDataTable<any>> = (props) => (
         }
       },
     }}
-  ></Table>
+  />
 );
 
 export default DataTable;
