@@ -11,13 +11,6 @@ const CertificateColumn = (
 
   return [
     {
-      title: "No",
-      dataIndex: "index",
-      key: "index",
-      width: 60,
-      render: (_, _1, index) => index + 1, // Sequential number
-    },
-    {
       title: "Kode",
       dataIndex: "id",
       width: 200,

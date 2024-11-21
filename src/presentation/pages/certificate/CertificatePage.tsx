@@ -7,16 +7,14 @@ import {
   ICertificateDeleteState,
   ICertificateTableState,
 } from "@domain/entities/CertificateEntity";
-import CertificateUseCase from "@domain/useCases/CertificateUseCase";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
-import CertificateViewModel from "@viewModels/CertificateViewModel";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CertificateDeleteModal from "@components/certificate/CertificateDeleteModal";
-import CertificateService from "@services/CertificateService";
 import { setUserToken } from "@redux/user/userReduxReducer";
+import useCertificateViewModel from "@lib/hooks/useCertificateViewModel";
 
 const CertificatePage = () => {
   // get language and t function to change language
@@ -42,16 +40,7 @@ const CertificatePage = () => {
     data: [],
   });
 
-  // create instance of certificate service, use case, and view model
-  const certificateService = useMemo(() => new CertificateService(), []);
-  const certificateUseCase = useMemo(
-    () => new CertificateUseCase(certificateService, clearToken),
-    [certificateService, clearToken]
-  );
-  const certificateViewModel = useMemo(
-    () => new CertificateViewModel(certificateUseCase, token),
-    [certificateUseCase, token]
-  );
+  const certificateViewModel = useCertificateViewModel(token, clearToken);
 
   useEffect(() => {
     if (table.currentPage === 0) {
