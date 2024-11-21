@@ -44,13 +44,9 @@ class CertificateViewModel {
           total: response.meta?.pagination?.total,
         }));
       }
-
-      setTable((prevState) => ({
-        ...prevState,
-        isLoading: false,
-      }));
     } catch (error: any) {
       logger("CertificateViewModel.getCertificate | error => ", error);
+    } finally {
       setTable((prevState) => ({
         ...prevState,
         isLoading: false,

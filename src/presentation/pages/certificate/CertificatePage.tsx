@@ -11,7 +11,7 @@ import CertificateUseCase from "@domain/useCases/CertificateUseCase";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
 import CertificateViewModel from "@viewModels/CertificateViewModel";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CertificateDeleteModal from "@components/certificate/CertificateDeleteModal";
@@ -43,18 +43,25 @@ const CertificatePage = () => {
   });
 
   // create instance of certificate service, use case, and view model
-  const certificateService = new CertificateService();
-  const certificateUseCase = new CertificateUseCase(
-    certificateService,
-    clearToken
+  const certificateService = useMemo(() => new CertificateService(), []);
+  const certificateUseCase = useMemo(
+    () => new CertificateUseCase(certificateService, clearToken),
+    [certificateService, clearToken]
   );
-  const certificateViewModel = new CertificateViewModel(
-    certificateUseCase,
-    token
+  const certificateViewModel = useMemo(
+    () => new CertificateViewModel(certificateUseCase, token),
+    [certificateUseCase, token]
   );
 
   useEffect(() => {
-    getCertificate();
+    if (table.currentPage === 0) {
+      setTable((prevState) => ({
+        ...prevState,
+        currentPage: 1,
+      }));
+    } else {
+      getCertificate();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [table.currentPage, table.pageSize]);
 
@@ -78,7 +85,11 @@ const CertificatePage = () => {
   };
 
   const onPostDelete = async (id: string) => {
-    await certificateViewModel.deleteCertificate(id, message, setModal);
+    await certificateViewModel
+      .deleteCertificate(id, message, setModal)
+      .then(() => {
+        getCertificate();
+      });
   };
 
   const closeModal = () => {
