@@ -7,6 +7,8 @@ import { Button, Modal } from "antd";
 import React, { useRef } from "react";
 import QRCode from "react-qr-code";
 import { useReactToPrint } from "react-to-print";
+import { format } from "date-fns";
+import { id } from "date-fns/locale";
 
 import "./PrintMemo.style.css";
 
@@ -73,7 +75,10 @@ const PrintMemo: React.FC<IPrintMemo> = ({
           </h1>
           <div className=" tw-p-2 tw-bg-white tw-rounded-sm">
             <QRCode
-              value={data?.member_phone_number}
+              value={
+                "https://igc-lab.com/sertificate?id=" +
+                data.attributes.id_master
+              }
               size={64}
               bgColor="#FFFFFF"
               fgColor="#000000"
@@ -121,13 +126,19 @@ const PrintMemo: React.FC<IPrintMemo> = ({
             </div>
             <div className="tw-justify-center tw-items-center tw-gap-2 tw-flex tw-w-full">
               <div className="">
-                <p className="tw-text-xs">{data.created_at}</p>
+                <p className="tw-text-xxs tw-font-semibold">
+                  {format(new Date(data.created_at), "d MMM yyyy", {
+                    locale: id,
+                  })}
+                </p>
               </div>
               <div className="tw-w-50">
                 <HologramIcon width={50} height={50} />
               </div>
               <div className="">
-                <p className="tw-text-xs">{data.attributes.id_master}</p>
+                <p className="tw-text-xxs tw-font-semibold">
+                  {data.attributes.id_master}
+                </p>
               </div>
             </div>
           </div>
