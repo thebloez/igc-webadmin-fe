@@ -112,7 +112,7 @@ const CertificatePage = () => {
             yes: t("certificate.list.modal.delete.button.yes"),
           },
         }}
-        id={modal.id}
+        data={modal}
       />
       <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
         <HeaderContent

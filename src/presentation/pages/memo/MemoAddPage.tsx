@@ -16,6 +16,7 @@ import { ICustomerOption } from "@domain/entities/CustomerEntity";
 import CustomerUseCase from "@domain/useCases/CustomerUseCase";
 import CustomerViewModel from "@viewModels/CustomerViewModel";
 import ArrowLeftIcon from "@components/icon/ArrowLeftIcon";
+import MemoService from "@services/MemoService";
 
 const MemoAddPage = () => {
   // get language and t function to change language
@@ -51,7 +52,9 @@ const MemoAddPage = () => {
     data: [],
   });
 
-  const memoViewModel = new MemoViewModel(new MemoUseCase(), token);
+  const memoService = new MemoService();
+  const memoUseCase = new MemoUseCase(memoService, token);
+  const memoViewModel = new MemoViewModel(memoUseCase, token);
 
   const suggestionsViewModel = new SuggestionViewModel(
     new SuggestionUseCase(),
@@ -78,10 +81,9 @@ const MemoAddPage = () => {
   };
 
   const onSubmit: SubmitHandler<IMemoData> = async (data) => {
-    
-    await memoViewModel.createMemo(token, data, message, reset);
+    await memoViewModel.createMemo(data, message, reset);
   };
-  
+
   const goBack = () => {
     window.history.back();
   };
