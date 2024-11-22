@@ -76,7 +76,7 @@ const PrintMemo: React.FC<IPrintMemo> = ({
           <div className=" tw-p-2 tw-bg-white tw-rounded-sm">
             <QRCode
               value={
-                "https://igc-lab.com/sertificate?id=" +
+                "https://igc-lab.com/certificate?id=" +
                 data.attributes.id_master
               }
               size={64}
