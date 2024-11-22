@@ -68,7 +68,7 @@ class MemoViewModel {
       logger("MemoViewModel.createMemo | response => ", response);
 
       if (response) {
-        message.success("Sertifikat berhasil dibuat");
+        message.success("Memo berhasil dibuat");
         reset();
       }
     } catch (error: any) {
@@ -95,7 +95,7 @@ class MemoViewModel {
       logger("MemoViewModel.deleteMemo | response => ", response);
 
       if (response) {
-        message.success("Sertifikat berhasil dihapus");
+        message.success("Memo berhasil dihapus");
       }
     } catch (error: any) {
       logger("MemoViewModel.deleteMemo | error => ", error);
@@ -127,7 +127,7 @@ class MemoViewModel {
       logger("MemoViewModel.printMemo | response => ", response);
 
       if (response) {
-        message.success("Sertifikat berhasil cetak");
+        message.success("Memo berhasil cetak");
       }
     } catch (error: any) {
       logger("MemoViewModel.printMemo | error => ", error);
