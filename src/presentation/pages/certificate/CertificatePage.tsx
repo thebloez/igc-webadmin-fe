@@ -12,9 +12,9 @@ import { selectToken } from "@redux/user/userReduxSelector";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import CertificateDeleteModal from "@components/certificate/CertificateDeleteModal";
 import { setUserToken } from "@redux/user/userReduxReducer";
 import useCertificateViewModel from "@lib/hooks/useCertificateViewModel";
+import DeleteModal from "@components/modal/DeleteModal";
 
 const CertificatePage = () => {
   // get language and t function to change language
@@ -65,6 +65,7 @@ const CertificatePage = () => {
   const onPrint = (record: any) => {
     console.log("Print", record);
   };
+
   const onDelete = (record: any) => {
     setModal((prevState) => ({
       ...prevState,
@@ -95,11 +96,22 @@ const CertificatePage = () => {
 
   return (
     <div className="tw-m-0 tw-p-6 ">
-      <CertificateDeleteModal
+      <DeleteModal
         open={modal.visible}
         isLoading={modal.isLoading}
-        onClose={closeModal}
-        onDelete={onPostDelete}
+        onLeftClick={closeModal}
+        onRightClick={onPostDelete}
+        wording={{
+          description: t("certificate.list.modal.delete.description"),
+          warning: {
+            title: t("certificate.list.modal.delete.warning.title"),
+            description: t("certificate.list.modal.delete.warning.description"),
+          },
+          button: {
+            no: t("certificate.list.modal.delete.button.no"),
+            yes: t("certificate.list.modal.delete.button.yes"),
+          },
+        }}
         id={modal.id}
       />
       <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">

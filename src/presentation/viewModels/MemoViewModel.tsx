@@ -1,4 +1,8 @@
-import { IMemoData, IMemoTableState } from "@domain/entities/MemoEntity";
+import {
+  IMemoData,
+  IMemoDeleteState,
+  IMemoTableState,
+} from "@domain/entities/MemoEntity";
 import MemoUseCase from "@domain/useCases/MemoUseCase";
 import logger from "@lib/utils/logger";
 import { SetStateAction } from "react";
@@ -13,14 +17,23 @@ class MemoViewModel {
     this.token = token;
   }
 
-  async getMemo(setTable: (value: SetStateAction<IMemoTableState>) => void) {
+  async getMemo(
+    state: IMemoTableState,
+    setTable: (value: SetStateAction<IMemoTableState>) => void
+  ) {
     try {
       setTable((prevState) => ({
         ...prevState,
         isLoading: true,
       }));
 
-      const response = await this.memoUseCase.getAll({ token: this.token });
+      const response = await this.memoUseCase.get({
+        token: this.token,
+        params: {
+          page: state.currentPage,
+          per_page: state.pageSize,
+        },
+      });
 
       logger("MemoViewModel.getMemo | response => ", response);
 
@@ -41,27 +54,92 @@ class MemoViewModel {
     }
   }
 
-  async createMemo(
-    token: string,
+  createMemo = async (
     data: IMemoData,
     message: any,
     reset: UseFormReset<IMemoData>
-  ) {
+  ) => {
     try {
-      const response = await this.memoUseCase.createMemo({ token, data });
+      const response = await this.memoUseCase.createMemo({
+        token: this.token,
+        data,
+      });
 
       logger("MemoViewModel.createMemo | response => ", response);
 
       if (response) {
-        message.success("Memo created successfully");
+        message.success("Sertifikat berhasil dibuat");
         reset();
       }
     } catch (error: any) {
       logger("MemoViewModel.createMemo | error => ", error);
-
-      message.error(error.message  || "Failed to create memo");
+      message.error("Gagal membuat sertifikat");
     }
-  }
+  };
+
+  deleteMemo = async (
+    id: string,
+    message: any,
+    setModal: (value: SetStateAction<IMemoDeleteState>) => void
+  ) => {
+    try {
+      setModal((prevState) => ({
+        ...prevState,
+        isLoading: true,
+      }));
+      const response = await this.memoUseCase.delete({
+        token: this.token,
+        id,
+      });
+
+      logger("MemoViewModel.deleteMemo | response => ", response);
+
+      if (response) {
+        message.success("Sertifikat berhasil dihapus");
+      }
+    } catch (error: any) {
+      logger("MemoViewModel.deleteMemo | error => ", error);
+      message.error(error.message);
+    } finally {
+      setModal((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        visible: false,
+      }));
+    }
+  };
+  printMemo = async (
+    id: string,
+    message: any,
+    setModal: (value: SetStateAction<IMemoDeleteState>) => void
+  ) => {
+    try {
+      setModal((prevState) => ({
+        ...prevState,
+        isLoading: true,
+      }));
+
+      const response = await this.memoUseCase.printMemo({
+        token: this.token,
+        id,
+      });
+
+      logger("MemoViewModel.printMemo | response => ", response);
+
+      if (response) {
+        message.success("Sertifikat berhasil cetak");
+      }
+    } catch (error: any) {
+      logger("MemoViewModel.printMemo | error => ", error);
+      message.error(error.message);
+    } finally {
+      setModal((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        visible: false,
+      }));
+    }
+  };
 }
 
 export default MemoViewModel;

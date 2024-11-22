@@ -1,17 +1,28 @@
 import QuestionIcon from "@components/icon/QuestionIcon";
-import { useLanguage } from "@lib/hooks/useLanguage";
 import { Button, Modal } from "antd";
 
-interface ICertificateDeleteModal {
-  onClose: () => void;
-  onDelete: (id: string) => void;
-  id: string;
+export interface IDeleteModal {
+  onLeftClick: () => void;
+  onRightClick: (id: string) => void;
+  data: any;
   open: boolean;
   isLoading?: boolean;
+  wording: {
+    description: string;
+    warning: {
+      title: string;
+      description: string;
+    };
+    button: {
+      no: string;
+      yes: string;
+    };
+  };
 }
 
-const CertificateDeleteModal = (props: ICertificateDeleteModal) => {
-  const { t } = useLanguage();
+const DeleteModal = (props: IDeleteModal) => {
+  const { wording } = props;
+
   return (
     <Modal
       open={props.open}
@@ -22,19 +33,18 @@ const CertificateDeleteModal = (props: ICertificateDeleteModal) => {
       maskClosable={false}
       centered
     >
-      {/* modal delete */}
       <div className="tw-flex tw-w-full tw-flex-col tw-p-[20px] tw-items-center tw-gap-4 tw-relative">
         <div className="tw-m-4">
           <QuestionIcon />
         </div>
         <div className="tw-px-4">
           <p className="tw-text-center tw-font-semibold">
-            {t("certificate.list.modal.delete.description")}
+            {wording.description}
           </p>
         </div>
 
         <p className="tw-p-2 tw-rounded-lg tw-font-semibold tw-bg-slate-100 tw-w-full tw-text-center">
-          {props.id}
+          {props.data.id}
         </p>
         <div className="tw-flex tw-items-center tw-bg-[#FFE9D9] tw-h-[90px] tw-justify-between tw-rounded-sm">
           <div className="tw-h-full tw-rounded-full tw-w-1 tw-bg-red-400" />
@@ -52,33 +62,30 @@ const CertificateDeleteModal = (props: ICertificateDeleteModal) => {
                   fill="#771505"
                 />
               </svg>
-
               <p className="tw-text-red-900 tw-font-semibold">
-                {t("certificate.list.modal.delete.warning.title")}
+                {wording.warning.title}
               </p>
             </div>
-            <p className="tw-text-red-800">
-              {t("certificate.list.modal.delete.warning.description")}
-            </p>
+            <p className="tw-text-red-800">{wording.warning.description}</p>
           </div>
         </div>
         <div className="tw-flex tw-w-full tw-justify-center tw-gap-4">
           <Button
             disabled={props.isLoading}
-            onClick={props.onClose}
+            onClick={props.onLeftClick}
             className="!tw-rounded-md tw-w-[146px] tw-h-[45px] tw-border-primary-500 tw-font-semibold tw-text-primary-500"
             type="default"
           >
-            {t("certificate.list.modal.delete.button.no")}
+            {wording.button.no}
           </Button>
           <Button
             loading={props.isLoading}
-            onClick={() => props.onDelete(props.id)}
+            onClick={() => props.onRightClick(props.data.id)}
             className="!tw-rounded-md tw-w-[146px] tw-h-[45px] tw-shadow tw-font-semibold"
             danger
             type="primary"
           >
-            {t("certificate.list.modal.delete.button.yes")}
+            {wording.button.yes}
           </Button>
         </div>
       </div>
@@ -86,4 +93,4 @@ const CertificateDeleteModal = (props: ICertificateDeleteModal) => {
   );
 };
 
-export default CertificateDeleteModal;
+export default DeleteModal;

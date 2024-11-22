@@ -70,7 +70,8 @@
       "description": "List memo yang telah di buat",
       "button": {
         "add": "Buat Memo",
-        "edit": "Ubah",
+        "upgrade": "Upgrade",
+        "print": "Cetak",
         "delete": "Hapus"
       },
       "modal": {

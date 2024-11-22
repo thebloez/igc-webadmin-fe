@@ -1,10 +1,8 @@
-import {
-  IGetRequest,
-  IPostRequest,
-  IResponseEntity,
-  IResponsePaginationEntity,
-} from "./ResponseEntity";
+import { Control, FieldErrors } from "react-hook-form";
+import { IResponseEntity, IResponsePaginationEntity } from "./ResponseEntity";
 import { IBaseState } from "./SharedEntity";
+import { ISuggestionsState } from "./SuggestionEntity";
+import { ICustomerOption } from "./CustomerEntity";
 
 export interface IMemoData {
   id: string;
@@ -36,19 +34,26 @@ export interface IMemoData {
   };
 }
 
+export interface IMemoDeleteState {
+  visible: boolean;
+  isLoading: boolean;
+  type: "delete" | "print";
+  data: IMemoData;
+}
+
 export interface IMemoTableState extends IBaseState {
   data: IMemoData[];
 }
-export interface IMemoCreateResponse extends IResponseEntity<IMemoData> {}
 
-export interface IMemoResponse extends IResponsePaginationEntity<IMemoData> {}
+export interface IMemoResponse
+  extends IResponsePaginationEntity<IMemoData> {}
 
-export interface IMemoService {
-  getAll(props: IGetRequest): Promise<IMemoResponse>;
-  createMemo(props: IPostRequest<FormData>): Promise<IMemoCreateResponse>;
-}
+export interface IMemoCreateResponse
+  extends IResponseEntity<IMemoData> {}
 
-export interface IMemoUseCase {
-  getAll(props: IGetRequest): Promise<IMemoResponse>;
-  createMemo(props: IPostRequest<IMemoData>): Promise<IMemoCreateResponse>;
+export interface IMemoFormProps {
+  control: Control<IMemoData, any>;
+  errors: FieldErrors<IMemoData>;
+  suggestions: ISuggestionsState;
+  customers: ICustomerOption;
 }

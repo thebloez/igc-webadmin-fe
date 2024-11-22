@@ -6,7 +6,6 @@ import idTranslation from "../../assets/locales/id.json";
 import { store } from "../redux/store"; // Import Redux store
 
 const currentLanguage = store.getState().language.value || "en";
-console.log("currentLanguage", currentLanguage);
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -32,7 +31,4 @@ store.subscribe(() => {
   }
 });
 
-
 export default i18n;
-
-

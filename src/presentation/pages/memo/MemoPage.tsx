@@ -1,28 +1,34 @@
 import HeaderContent from "@components/dashboard/layout/HeaderContent";
 import PlusSquareIcon from "@components/icon/PlusSquareIcon";
 import MemoColumn from "@components/memo/MemoColumn";
+import { MemoModals } from "@components/memo/MemoModals";
 import MemoTable from "@components/memo/MemoTable";
-import { IMemoTableState } from "@domain/entities/MemoEntity";
-import MemoUseCase from "@domain/useCases/MemoUseCase";
+import DeleteModal from "@components/modal/DeleteModal";
+import PrintMemo from "@components/print/PrintMemo";
+import { IMemoDeleteState, IMemoTableState } from "@domain/entities/MemoEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
+import useMemoViewModel from "@lib/hooks/useMemoViewModel";
 import logger from "@lib/utils/logger";
+import { setUserToken } from "@redux/user/userReduxReducer";
 import { selectToken } from "@redux/user/userReduxSelector";
-import MemoService from "@services/MemoService";
-import MemoViewModel from "@viewModels/MemoViewModel";
-import { Button } from "antd";
-import { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
+import { Button, message } from "antd";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const MemoPage = () => {
   // get language and t function to change language
   const { t } = useLanguage();
 
-  // get token from redux
-  const token = useSelector(selectToken);
+  // get dispatch function from react-redux
+  const dispatch = useDispatch();
 
   // get navigate function from react-router-dom
   const navigate = useNavigate();
+
+  // get token from redux
+  const token = useSelector(selectToken);
+  const clearToken = () => dispatch(setUserToken(""));
 
   // set state for table
   const [table, setTable] = useState<IMemoTableState>({
@@ -33,21 +39,57 @@ const MemoPage = () => {
     data: [],
   });
 
+  const [modal, setModal] = useState<IMemoDeleteState>({
+    visible: false,
+    type: "delete",
+    isLoading: false,
+    data: {
+      id: "",
+      identifier: "",
+      type: "",
+      status: "",
+      member_phone_number: "",
+      created_by: "",
+      created_at: "",
+      updated_at: "",
+      updated_by: undefined,
+      printed_at: undefined,
+      print_version: 0,
+      additional_comment: "",
+      additional_data: "",
+      attributes: {
+        id_master: "",
+        object_name: "",
+        object_image: "",
+        measurement: "",
+        shape: "",
+        clarity: "",
+        transparency: "",
+        cut: "",
+        color: "",
+        weight: "",
+        comments: "",
+        origins: "",
+      },
+    },
+  });
+
   // Memoize service instances
   // create instance of memo service, memo use case, and memo view model
   // page -> ViewModel -> UseCase -> Service
-  const memoViewModel = useMemo(() => {
-    const memoService = new MemoService();
-    const memoUseCase = new MemoUseCase(memoService);
-    return new MemoViewModel(memoUseCase, token);
-  }, [token]);
+  const memoViewModel = useMemoViewModel(token, clearToken);
 
-  // get memo data
   useEffect(() => {
-    getMemo();
-
+    if (table.currentPage === 0) {
+      setTable((prevState) => ({
+        ...prevState,
+        currentPage: 1,
+      }));
+    } else {
+      getMemo();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [table.currentPage, table.pageSize]);
 
   // go to add page
   const gotoAddPage = () => {
@@ -55,10 +97,65 @@ const MemoPage = () => {
   };
 
   const getMemo = async () => {
-    await memoViewModel.getMemo(setTable);
+    await memoViewModel.getMemo(table, setTable);
   };
+
+  const onEdit = (record: any) => {
+    console.log("onEdit", record);
+  };
+
+  const onDelete = (record: any) => {
+    setModal((prevState) => ({
+      ...prevState,
+      visible: true,
+      data: record,
+    }));
+  };
+
+  const onPostDelete = async (id: string) => {
+    await memoViewModel.deleteMemo(id, message, setModal).then(() => {
+      getMemo();
+    });
+  };
+
+  const closeModal = () => {
+    setModal((prevState) => ({ ...prevState, visible: false }));
+  };
+
+  const onChange = useCallback((props: any) => {
+    setTable((prevState) => ({
+      ...prevState,
+      currentPage: props.current,
+      pageSize: props.pageSize,
+    }));
+  }, []);
+
+  const postPrint = async () => {
+    await memoViewModel.printMemo(modal.data.id, message, setModal);
+  };
+
+  const onPrint = (record: any) => {
+    setModal((prevState) => ({
+      ...prevState,
+      visible: true,
+      type: "print",
+      data: record,
+    }));
+  };
+
   return (
     <div className="tw-m-0 tw-p-6 ">
+      <MemoModals
+        onClose={closeModal}
+        data={modal.data}
+        isLoading={modal.isLoading}
+        onRightClick={onPostDelete}
+        open={modal.visible}
+        onPrint={postPrint}
+        type={modal.type}
+        showPrint
+        title={modal.type === "print" ? "Print Memo" : ""}
+      />
       <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
         <HeaderContent
           title={t("memo.list.title")}
@@ -81,13 +178,11 @@ const MemoPage = () => {
           currentPage={table.currentPage}
           pageSize={table.pageSize}
           total={table.total}
+          onChange={onChange}
           columns={MemoColumn({
-            onDetail(row) {
-              logger(row);
-            },
-            onEdit(row) {
-              logger(row);
-            },
+            onDelete,
+            onPrint,
+            onEdit,
           })}
         />
       </div>

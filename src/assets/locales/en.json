@@ -57,7 +57,7 @@
       "description": "List of created memos",
       "button": {
         "add": "Create Memo",
-        "edit": "Edit",
+        "upgrade": "Upgrade",
         "delete": "Delete"
       }
     },

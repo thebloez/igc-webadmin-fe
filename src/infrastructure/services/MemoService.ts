@@ -4,18 +4,31 @@ import { AxiosResponse } from "axios";
 import {
   IMemoCreateResponse,
   IMemoResponse,
-  IMemoService,
 } from "@domain/entities/MemoEntity";
-import { IGetRequest, IPostRequest } from "@domain/entities/ResponseEntity";
+import {
+  IDeleteRequest,
+  IGetRequest,
+  IPostRequest,
+} from "@domain/entities/ResponseEntity";
+
+export interface IMemoService {
+  getMemo(props: IGetRequest): Promise<IMemoResponse>;
+  createMemo(props: IPostRequest<FormData>): Promise<IMemoCreateResponse>;
+  deleteMemo(props: IDeleteRequest): Promise<IMemoResponse>;
+  printMemo(props: IGetRequest): Promise<IMemoResponse>;
+}
 
 class MemoService implements IMemoService {
-  async getAll(props: IGetRequest): Promise<IMemoResponse> {
+  async getMemo(props: IGetRequest): Promise<IMemoResponse> {
     const response: AxiosResponse<IMemoResponse> = await API.get(
-      apiEndpoints.master + "?type=Memo",
+      apiEndpoints.master,
       {
         headers: {
           Authorization: `Bearer ${props.token}`,
-          "Content-Type": "application/json",
+        },
+        params: {
+          type: "Memo",
+          ...props.params,
         },
       }
     );
@@ -32,6 +45,31 @@ class MemoService implements IMemoService {
         headers: {
           Authorization: `Bearer ${props.token}`,
           "Content-Type": "Multipart/form-data",
+        },
+      }
+    );
+
+    return response.data;
+  }
+  async deleteMemo(props: IDeleteRequest): Promise<IMemoResponse> {
+    const response: AxiosResponse<IMemoResponse> = await API.delete(
+      apiEndpoints.master + `/delete?id=${props.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    );
+
+    return response.data;
+  }
+
+  async printMemo(props: IDeleteRequest): Promise<IMemoResponse> {
+    const response: AxiosResponse<IMemoResponse> = await API.get(
+      apiEndpoints.master + `/print?id=${props.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
         },
       }
     );

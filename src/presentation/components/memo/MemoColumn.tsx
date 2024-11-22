@@ -1,21 +1,40 @@
 import { IColumn } from "@domain/entities/DashboardEntity";
 import { IMemoData } from "@domain/entities/MemoEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
-import { Button } from "antd";
+import isNullOrEmpty from "@lib/utils/isNullOrEmpty";
+import { Button, Dropdown } from "antd";
 import { ColumnsType } from "antd/es/table";
+import { Link } from "react-router-dom";
+
+const items = (origin: string, id: string) => {
+  let items = [
+    {
+      key: "1",
+      label: (
+        <Link to={"/memo/upgrade?type=sertifikat&id=" + id}>Sertifikat</Link>
+      ),
+    },
+  ];
+
+  if (!isNullOrEmpty(origin)) {
+    items = [
+      ...items,
+      {
+        key: "2",
+        label: (
+          <Link to={"/memo/upgrade?type=origin&id=" + id}>Memo Origin</Link>
+        ),
+      },
+    ];
+  }
+
+  return items;
+};
 
 const MemoColumn = (props: IColumn<IMemoData>): ColumnsType<IMemoData> => {
   const { t } = useLanguage();
 
   return [
-    {
-      title: "No",
-      dataIndex: "index",
-      key: "index",
-      width: 80,
-      responsive: ["xs", "sm", "md", "lg"],
-      render: (_, _1, index) => index + 1, // Sequential number
-    },
     {
       title: "Kode",
       dataIndex: "id",
@@ -46,16 +65,27 @@ const MemoColumn = (props: IColumn<IMemoData>): ColumnsType<IMemoData> => {
       title: "Action",
       key: "action",
       align: "center",
-      width: 250,
+      width: 300,
       render: (_, record) => {
         return (
           <div className="tw-flex tw-flex-wrap tw-gap-4 tw-w-full tw-justify-center">
-            <Button
-              onClick={() => props.onEdit && props.onEdit(record)}
-              type="primary"
-              className="!tw-h-[35px] tw-rounded-md tw-shadow !tw-w-[80px] tw-font-semibold  !tw-bg-green-500 !tw-border-green-500 hover:!tw-bg-green-600"
+            <Dropdown
+              trigger={["click"]}
+              menu={{ items: items(record.attributes.origins, record.id) }}
             >
-              {t("memo.list.button.edit")}
+              <Button
+                type="primary"
+                className="!tw-h-[35px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold "
+              >
+                {t("memo.list.button.upgrade")}
+              </Button>
+            </Dropdown>
+            <Button
+              onClick={() => props.onPrint && props.onPrint(record)}
+              type="primary"
+              className="!tw-h-[35px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold !tw-bg-green-500 hover:!tw-bg-green-600"
+            >
+              {t("memo.list.button.print")}
             </Button>
             <Button
               onClick={() => props.onDelete && props.onDelete(record)}
