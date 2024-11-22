@@ -26,10 +26,7 @@ class MemoService implements IMemoService {
         headers: {
           Authorization: `Bearer ${props.token}`,
         },
-        params: {
-          type: "Memo",
-          ...props.params,
-        },
+        params: props.params,
       }
     );
 

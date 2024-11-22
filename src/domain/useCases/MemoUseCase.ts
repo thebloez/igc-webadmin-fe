@@ -51,7 +51,7 @@ export default class MemoUseCase {
       certData.append("member_phone_number", props.data.member_phone_number);
       certData.append("additional_comment", props.data.additional_comment);
       certData.append("status", props.data.status ? "active" : "inactive");
-      certData.append("type", "Sertifikat");
+      certData.append("type", "Memo");
 
       Object.entries(props.data.attributes).forEach(([key, value]) => {
         certData.append(`attributes[${key}]`, value as any);
