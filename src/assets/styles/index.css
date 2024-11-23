@@ -101,3 +101,13 @@ td.ant-table-cell:first-child {
   min-width: 1000px !important;
   overflow: auto;
 }
+
+.ant-table-container {
+  min-height: calc(100vh - 260px);
+}
+
+.ant-pagination {
+  margin: unset !important;
+  border-top: 1px solid #e8e8e8;
+  padding: 10px 0;
+}
