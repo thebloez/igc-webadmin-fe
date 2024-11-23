@@ -1,45 +1,46 @@
-import { Card, Select } from "antd";
+import { Select } from "antd";
 import { useLanguage } from "@lib/hooks/useLanguage";
-import MappingIcon from "@components/sidebar/MappingIcon";
-import tailwindMerge from "@lib/utils/tailwindMerge";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dashboardFilters from "@lib/utils/dashboardFilters";
-
-const summaryData = [
-  {
-    title: "Sertifikat",
-    value: "100",
-    change: "+8% from yesterday",
-    color: "tw-bg-[#FFE2E5]",
-    icon: "cert",
-    bgIcon: "tw-bg-red-400",
-  },
-  {
-    title: "Memo",
-    value: "300",
-    change: "+5% from yesterday",
-    color: "tw-bg-[#FFF4DE]",
-    icon: "memo",
-    bgIcon: "tw-bg-yellow-400",
-  },
-  {
-    title: "Memo Non Origin",
-    value: "8",
-    change: "0.5% from yesterday",
-    color: "tw-bg-[#F3E8FF]",
-    icon: "memo",
-    bgIcon: "tw-bg-purple-400",
-  },
-];
+import { IInsightsState } from "@domain/entities/InsightEntity";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserToken } from "@redux/user/userReduxReducer";
+import useInsightViewModel from "@lib/hooks/useInsightViewModel";
+import { selectToken } from "@redux/user/userReduxSelector";
+import StatCard from "@components/insight/StatCard";
+import InsightLoading from "@components/insight/InsightLoading";
 
 const DashboardPage = () => {
   const { t } = useLanguage();
 
+  const dispatch = useDispatch();
+  const clearToken = () => dispatch(setUserToken(""));
+  const token = useSelector(selectToken);
+
+  const [state, setState] = useState<IInsightsState>({
+    data: [] as any,
+    isLoading: true,
+    type: "daily_count",
+  });
+
+  const insightViewModel = useInsightViewModel({
+    clearToken,
+    setState,
+    token,
+  });
   // state filter
-  const [filter, setFilter] = useState("today");
+  const [filter, setFilter] = useState("daily_count");
 
   const handleChangeFilter = (value: string) => {
     setFilter(value);
+  };
+
+  useEffect(() => {
+    getInsight();
+  }, [filter]);
+
+  const getInsight = async () => {
+    await insightViewModel.getInsight();
   };
 
   return (
@@ -66,32 +67,20 @@ const DashboardPage = () => {
 
             {/* Summary Cards */}
             <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-gap-4 tw-mb-2">
-              {summaryData.map((item, index) => (
-                <Card key={index} className={`${item.color} tw-rounded-lg`}>
-                  <div
-                    className={tailwindMerge(
-                      item.bgIcon,
-                      "tw-w-[32px] tw-h-[32px] tw-flex tw-items-center tw-justify-center tw-rounded-full"
-                    )}
-                  >
-                    <MappingIcon
-                      className="tw-h-[18px] tw-text-white"
-                      iconType={item.icon}
-                    />
-                  </div>
-                  <div className="tw-flex tw-items-center tw-gap-4">
-                    <div>
-                      <p className="tw-font-semibold tw-text-xl">
-                        {item.value}
-                      </p>
-                      <p>{item.title}</p>
-                      <p className="tw-text-xs tw-text-primary-500">
-                        {item.change}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              ))}
+              {state.isLoading ? (
+                <InsightLoading />
+              ) : (
+                state.data[state.type]?.map((item, index) => (
+                  <StatCard
+                    key={index}
+                    color={item.color}
+                    bgIcon={item.bgIcon}
+                    icon={item.icon}
+                    value={item.value}
+                    title={item.title}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>

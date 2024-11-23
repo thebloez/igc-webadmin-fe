@@ -1,11 +1,11 @@
 const dashboardFilters = [
   {
     label: "Today",
-    value: "today",
+    value: "daily_count",
   },
   {
     label: "This Month",
-    value: "thisMonth",
+    value: "monthly_count",
   },
 ];
 

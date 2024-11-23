@@ -38,9 +38,7 @@ export default class CertificateUseCase {
         return;
       }
 
-      throw new Error(
-        error.response?.data?.meta?.message ?? "Failed to get certificate"
-      );
+      throw error;
     }
   }
 
@@ -78,9 +76,7 @@ export default class CertificateUseCase {
         this.clearToken();
         return;
       }
-      throw new Error(
-        error.response?.data?.meta?.message ?? "Failed to post certificate"
-      );
+      throw error;
     }
   }
   async delete(props: IDeleteRequest) {
@@ -107,9 +103,7 @@ export default class CertificateUseCase {
         return;
       }
 
-      throw new Error(
-        error.response?.data?.meta?.message ?? "Failed to delete certificate"
-      );
+      throw error;
     }
   }
 }

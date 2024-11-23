@@ -21,9 +21,10 @@ const CertificatePage = () => {
   const { t } = useLanguage();
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
+  
   const token = useSelector(selectToken);
+  
+  const dispatch = useDispatch();
   const clearToken = () => dispatch(setUserToken(""));
 
   const [modal, setModal] = useState<ICertificateDeleteState>({

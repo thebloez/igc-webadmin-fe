@@ -17,12 +17,13 @@ export default class CustomerUseCase {
 
       return result;
     } catch (error: any) {
+      logger("CustomerUseCase.get | error =>", error);
+
       if (error.response?.status === 401) {
         window.location.href = "/login";
-      } else {
-        logger("CustomerUseCase.get | error =>", error);
       }
-      return null;
+
+      throw error;
     }
   }
 }
