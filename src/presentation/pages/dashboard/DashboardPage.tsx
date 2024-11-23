@@ -2,7 +2,7 @@ import { Select } from "antd";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { useEffect, useState } from "react";
 import dashboardFilters from "@lib/utils/dashboardFilters";
-import { IInsightsState } from "@domain/entities/InsightEntity";
+import { IInsightsState, InsightFilter } from "@domain/entities/InsightEntity";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "@redux/user/userReduxReducer";
 import useInsightViewModel from "@lib/hooks/useInsightViewModel";
@@ -20,7 +20,6 @@ const DashboardPage = () => {
   const [state, setState] = useState<IInsightsState>({
     data: [] as any,
     isLoading: true,
-    type: "daily_count",
   });
 
   const insightViewModel = useInsightViewModel({
@@ -29,9 +28,9 @@ const DashboardPage = () => {
     token,
   });
   // state filter
-  const [filter, setFilter] = useState("daily_count");
+  const [filter, setFilter] = useState<InsightFilter>("daily_count");
 
-  const handleChangeFilter = (value: string) => {
+  const handleChangeFilter = (value: InsightFilter) => {
     setFilter(value);
   };
 
@@ -70,7 +69,7 @@ const DashboardPage = () => {
               {state.isLoading ? (
                 <InsightLoading />
               ) : (
-                state.data[state.type]?.map((item, index) => (
+                state.data[filter]?.map((item, index) => (
                   <StatCard
                     key={index}
                     color={item.color}

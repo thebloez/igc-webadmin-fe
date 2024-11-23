@@ -17,8 +17,10 @@ export interface IInsightsState {
     daily_count: (IInsight & IInsightStyle)[];
     monthly_count: (IInsight & IInsightStyle)[];
   };
-  type: "daily_count" | "monthly_count";
 }
+
+export type InsightFilter = "daily_count" | "monthly_count";
+
 export interface IInsightData {
   daily_count: IInsight[];
   monthly_count: IInsight[];
