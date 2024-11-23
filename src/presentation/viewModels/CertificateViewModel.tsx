@@ -32,6 +32,7 @@ class CertificateViewModel {
         params: {
           page: state.currentPage,
           per_page: state.pageSize,
+          search: state.search,
         },
       });
 

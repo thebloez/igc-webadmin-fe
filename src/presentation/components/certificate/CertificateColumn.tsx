@@ -43,6 +43,7 @@ const CertificateColumn = (
       title: "Tgl. Dibuat",
       dataIndex: "created_at",
       key: "created_at",
+      width: 150,
       render: (date: string) => (
         <span>
           {format(new Date(date), "dd-MMM-yyyy", { locale: id })}

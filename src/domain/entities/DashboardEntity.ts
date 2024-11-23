@@ -49,5 +49,7 @@ export interface IDataTable<T> extends IBaseState {
   data: T[];
   columns: ColumnsType<T>;
   rowKey?: string;
+  showSearch?: boolean;
+  onSearch?: (value: string) => void;
   onChange?: (pagination: TablePaginationConfig) => void;
 }

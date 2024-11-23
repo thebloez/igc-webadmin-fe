@@ -110,3 +110,6 @@ td.ant-table-cell:first-child {
   border-top: 1px solid #e8e8e8;
   padding: 10px 0;
 }
+.ant-table-wrapper {
+  margin-top: 0;
+}

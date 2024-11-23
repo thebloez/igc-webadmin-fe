@@ -13,6 +13,7 @@ import { selectToken } from "@redux/user/userReduxSelector";
 import { message } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useDebouncedCallback } from "use-debounce";
 
 const TrashPage = () => {
   const { t } = useLanguage();
@@ -26,6 +27,7 @@ const TrashPage = () => {
     currentPage: 1,
     isLoading: true,
     pageSize: 10,
+    search: "",
     total: 0,
     data: [],
   });
@@ -93,6 +95,14 @@ const TrashPage = () => {
     }));
   }, []);
 
+  const onSearch = useDebouncedCallback((value) => {
+    setTable((prevState) => ({
+      ...prevState,
+      search: value,
+      currentPage: 0,
+    }));
+  }, 500);
+
   return (
     <div className="tw-m-0 tw-p-6 ">
       <QuestionModal
@@ -120,20 +130,21 @@ const TrashPage = () => {
           title={t("trash.list.title")}
           description={t("trash.list.description")}
         />
-        <div className="tw-p-4">
-          <TrashTable
-            isLoading={table.isLoading}
-            data={table.data}
-            currentPage={table.currentPage}
-            pageSize={table.pageSize}
-            total={table.total}
-            onChange={onChange}
-            columns={TrashColumn({
-              onDestroy,
-              onRestore,
-            })}
-          />
-        </div>
+
+        <TrashTable
+          showSearch
+          onSearch={onSearch}
+          isLoading={table.isLoading}
+          data={table.data}
+          currentPage={table.currentPage}
+          pageSize={table.pageSize}
+          total={table.total}
+          onChange={onChange}
+          columns={TrashColumn({
+            onDestroy,
+            onRestore,
+          })}
+        />
       </div>
     </div>
   );

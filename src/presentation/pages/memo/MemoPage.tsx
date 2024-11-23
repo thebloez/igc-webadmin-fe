@@ -12,6 +12,7 @@ import { Button, message } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDebouncedCallback } from "use-debounce";
 
 const MemoPage = () => {
   // get language and t function to change language
@@ -32,6 +33,7 @@ const MemoPage = () => {
     currentPage: 1,
     isLoading: true,
     pageSize: 10,
+    search: "",
     total: 0,
     data: [],
   });
@@ -140,6 +142,19 @@ const MemoPage = () => {
     }));
   };
 
+  const onSearch = useDebouncedCallback(
+    // function
+    (value) => {
+      setTable((prevState) => ({
+        ...prevState,
+        search: value,
+        currentPage: 0,
+      }));
+    },
+    // delay in ms
+    500
+  );
+
   return (
     <div className="tw-m-0 tw-p-6 ">
       <MemoModals
@@ -170,6 +185,8 @@ const MemoPage = () => {
           </div>
         </HeaderContent>
         <MemoTable
+          showSearch
+          onSearch={onSearch}
           isLoading={table.isLoading}
           data={table.data}
           currentPage={table.currentPage}

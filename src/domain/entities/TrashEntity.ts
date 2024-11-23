@@ -36,6 +36,7 @@ export interface ITrashData {
 
 export interface ITrashTableState extends IBaseState {
   data: ITrashData[];
+  search: string;
 }
 
 export interface ITrashResponse extends IResponsePaginationEntity<ITrashData> {}

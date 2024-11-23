@@ -42,6 +42,7 @@ export interface ICertificateDeleteState {
 
 export interface ICertificateTableState extends IBaseState {
   data: ICertificateData[];
+  search: string;
 }
 
 export interface ICertificateResponse

@@ -35,6 +35,7 @@ export interface IGetRequest extends IBaseRequest {
   params?: {
     page?: number;
     per_page?: number;
+    search?: string;
   };
 }
 

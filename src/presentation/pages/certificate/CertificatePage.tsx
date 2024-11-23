@@ -15,15 +15,16 @@ import { useNavigate } from "react-router-dom";
 import { setUserToken } from "@redux/user/userReduxReducer";
 import useCertificateViewModel from "@lib/hooks/useCertificateViewModel";
 import QuestionModal from "@components/modal/QuestionModal";
+import { useDebouncedCallback } from "use-debounce";
 
 const CertificatePage = () => {
   // get language and t function to change language
   const { t } = useLanguage();
 
   const navigate = useNavigate();
-  
+
   const token = useSelector(selectToken);
-  
+
   const dispatch = useDispatch();
   const clearToken = () => dispatch(setUserToken(""));
 
@@ -37,6 +38,7 @@ const CertificatePage = () => {
     currentPage: 1,
     isLoading: true,
     pageSize: 10,
+    search: "",
     total: 0,
     data: [],
   });
@@ -95,6 +97,14 @@ const CertificatePage = () => {
     }));
   }, []);
 
+  const onSearch = useDebouncedCallback((value) => {
+    setTable((prevState) => ({
+      ...prevState,
+      search: value,
+      currentPage: 0,
+    }));
+  }, 500);
+
   return (
     <div className="tw-m-0 tw-p-6 ">
       <QuestionModal
@@ -133,6 +143,8 @@ const CertificatePage = () => {
         </HeaderContent>
         {/* <div className="!tw-min-w-[200px] tw-overflow-x-auto tw-relative"> */}
         <CertificateTable
+          showSearch
+          onSearch={onSearch}
           isLoading={table.isLoading}
           data={table.data}
           currentPage={table.currentPage}

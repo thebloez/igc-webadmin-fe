@@ -43,6 +43,7 @@ export interface IMemoDeleteState {
 
 export interface IMemoTableState extends IBaseState {
   data: IMemoData[];
+  search: string;
 }
 
 export interface IMemoResponse
