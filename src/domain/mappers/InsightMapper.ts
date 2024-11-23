@@ -22,14 +22,18 @@ class InsightMapper {
 
     return {
       ...domain,
-      daily_count: domain.daily_count.map((item, index) => ({
-        ...item,
-        ...styles[index],
-      })),
-      monthly_count: domain.monthly_count.map((item, index) => ({
-        ...item,
-        ...styles[index],
-      })),
+      daily_count: domain.daily_count
+        ?.sort((a, b) => b.title.localeCompare(a.title))
+        .map((item, index) => ({
+          ...item,
+          ...styles[index],
+        })),
+      monthly_count: domain.monthly_count
+        ?.sort((a, b) => b.title.localeCompare(a.title))
+        .map((item, index) => ({
+          ...item,
+          ...styles[index],
+        })),
     };
   }
 }

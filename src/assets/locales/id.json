@@ -168,8 +168,21 @@
     }
   },
   "customer": {
-    "title": "Pelanggan",
-    "description": "List pelanggan yang telah di buat"
+    "list": {
+      "title": "Daftar Pelanggan",
+      "description": "List pelanggan yang telah di buat",
+      "button": {
+        "add": "Tambah Pelanggan",
+        "delete": "Hapus"
+      }
+    },
+    "add": {
+      "title": "Tambah Pelanggan",
+      "description": "Tambah pelanggan baru",
+      "button": {
+        "submit": "Simpan"
+      }
+    }
   },
   "trash": {
     "list": {
