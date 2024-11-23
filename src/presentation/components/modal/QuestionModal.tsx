@@ -48,7 +48,7 @@ const QuestionModal = ({ showWarning = true, ...props }: IQuestionModal) => {
           {props.data.id}
         </p>
         {showWarning && (
-          <div className="tw-flex tw-items-center tw-bg-[#FFE9D9] tw-h-[90px] tw-justify-between tw-rounded-sm">
+          <div className="tw-flex tw-items-center tw-w-full tw-bg-[#FFE9D9] tw-h-[90px] tw-justify-between tw-rounded-sm">
             <div className="tw-h-full tw-rounded-full tw-w-1 tw-bg-red-400" />
             <div className="tw-p-2 tw-w-full">
               <div className="tw-w-full tw-flex tw-justify-start tw-gap-2 tw-items-center tw-mb-2">
