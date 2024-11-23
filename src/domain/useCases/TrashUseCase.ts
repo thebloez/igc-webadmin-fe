@@ -1,13 +1,21 @@
-import TrashService from "@services/TrashService";
+import { ITrashService } from "@services/TrashService";
 import isNullOrEmpty from "../../infrastructure/lib/utils/isNullOrEmpty";
 import logger from "@lib/utils/logger";
+import { IGetRequest } from "@domain/entities/ResponseEntity";
 
 export default class TrashUseCase {
-  private trashService = new TrashService();
+  private trashService: ITrashService;
 
-  async get(props: { token: string }) {
+  constructor(trashService: ITrashService) {
+    this.trashService = trashService;
+  }
+
+  async getTrash(props: IGetRequest) {
     try {
-      const result = await this.trashService.get({ token: props.token });
+      const result = await this.trashService.getTrash({
+        token: props.token,
+        params: props.params,
+      });
 
       logger("TrashUseCase.get | response =>", result);
 
@@ -17,32 +25,49 @@ export default class TrashUseCase {
 
       return result;
     } catch (error: any) {
-      if (error.response?.status === 401) {
-        window.location.href = "/login";
-      } else {
-        logger("TrashUseCase.get | error =>", error);
-      }
-      return null;
+      logger("TrashUseCase.get | error =>", error);
+
+      throw error;
     }
   }
-  async post(props: { token: string; data: any }) {
+  async restoreTrash(props: IGetRequest) {
     try {
-      const result = await this.trashService.post(props);
+      const result = await this.trashService.restore({
+        token: props.token,
+        id: props.id,
+      });
 
-      logger("TrashUseCase.post | response =>", result);
+      logger("TrashUseCase.restore | response =>", result);
 
       if (isNullOrEmpty(result?.data)) {
-        throw new Error(result?.meta?.message ?? "Failed to trash post");
+        throw new Error(result?.meta?.message ?? "Failed to trash restore");
       }
 
       return result;
     } catch (error: any) {
-      if (error.response?.status === 401) {
-        window.location.href = "/login";
-      } else {
-        logger("TrashUseCase.post | error =>", error);
+      logger("TrashUseCase.restore | error =>", error);
+
+      throw error;
+    }
+  }
+  async destroyTrash(props: IGetRequest) {
+    try {
+      const result = await this.trashService.destroy({
+        token: props.token,
+        id: props.id,
+      });
+
+      logger("TrashUseCase.destroy | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(result?.meta?.message ?? "Failed to trash destroy");
       }
-      return null;
+
+      return result;
+    } catch (error: any) {
+      logger("TrashUseCase.destroy | error =>", error);
+
+      throw error;
     }
   }
 }

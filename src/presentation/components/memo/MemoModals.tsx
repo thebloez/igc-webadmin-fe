@@ -1,9 +1,9 @@
-import DeleteModal, { IDeleteModal } from "@components/modal/DeleteModal";
+import QuestionModal, { IQuestionModal } from "@components/modal/QuestionModal";
 import PrintMemo, { IPrintMemo } from "@components/print/PrintMemo";
 import { useTranslation } from "react-i18next";
 
 type IMemoModal = IPrintMemo &
-  Omit<IDeleteModal, "wording" | "onLeftClick"> & {
+  Omit<IQuestionModal, "wording" | "onLeftClick"> & {
     type: "print" | "delete";
   };
 
@@ -26,7 +26,7 @@ export const MemoModals = (modal: IMemoModal) => {
       )}
 
       {modal.type === "delete" && (
-        <DeleteModal
+        <QuestionModal
           open={modal.open}
           isLoading={modal.isLoading}
           onLeftClick={modal.onClose}

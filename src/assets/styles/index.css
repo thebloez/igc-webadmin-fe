@@ -26,7 +26,6 @@ body.root-body .min-h-screen-with-header {
 }
 
 .ant-spin-container {
-  min-height: calc(100vh - 210px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;

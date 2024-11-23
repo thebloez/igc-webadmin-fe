@@ -1,7 +1,7 @@
 {
   "login": {
     "form": {
-      "title": "Nice to meet you again",
+      "title": "Nice to see you again",
       "description": "Welcome back! Please enter your details.",
       "password": {
         "label": "Password",
@@ -9,42 +9,55 @@
         "not_null": "Password cannot be empty",
         "requirement": {
           "info": "Password must be a combination of:",
-          "requirement_1": "Minimum of 8 characters.",
-          "requirement_2": "Contains lowercase, uppercase, and numbers.",
-          "requirement_3": "Contains special characters (Ex: @,#,$)."
+          "requirement_1": "At least 8 characters long.",
+          "requirement_2": "Contains lowercase, uppercase letters, and numbers.",
+          "requirement_3": "Contains special characters (e.g., @,#,$)."
         }
       },
       "email": {
         "label": "Email",
         "placeholder": "Enter your email",
         "not_null": "Email cannot be empty",
-        "invalid": "Email is invalid"
+        "invalid": "Invalid email"
       },
       "login_button": "Login",
-      "error_message": "System is experiencing issues"
+      "error_message": "The system is experiencing an issue"
     },
     "banner": {
-      "title": "The right Digital Payment Solution for Your Business",
-      "description": "With us, enjoy the convenience of digital payments from receiving payments, sending payouts, and transferring funds online, easily and quickly."
+      "title": "The Right Digital Payment Solution for Your Business",
+      "description": "With us, enjoy the convenience of digital payments, from receiving payments, sending payouts, to transferring funds online, easily and quickly."
     }
   },
   "dashboard": {
     "title": "Summary",
-    "description": "View your business transactions and activities summary."
+    "description": "View the summary of your transactions and business activities."
   },
   "certificate": {
     "list": {
       "title": "Certificate List",
-      "description": "List of created certificates",
+      "description": "List of certificates that have been created",
       "button": {
         "add": "Create Certificate",
         "print": "Print",
         "delete": "Delete"
+      },
+      "modal": {
+        "delete": {
+          "description": "Are you sure you want to delete this certificate?",
+          "warning": {
+            "title": "Warning",
+            "description": "Deleted certificates can be recovered."
+          },
+          "button": {
+            "no": "No",
+            "yes": "Yes"
+          }
+        }
       }
     },
     "add": {
       "title": "Create Certificate",
-      "description": "Create new certificate",
+      "description": "Create a new certificate",
       "button": {
         "preview": "Preview",
         "submit": "Save"
@@ -54,16 +67,30 @@
   "memo": {
     "list": {
       "title": "Memo List",
-      "description": "List of created memos",
+      "description": "List of memos that have been created",
       "button": {
         "add": "Create Memo",
         "upgrade": "Upgrade",
+        "print": "Print",
         "delete": "Delete"
+      },
+      "modal": {
+        "delete": {
+          "description": "Are you sure you want to delete this memo?",
+          "warning": {
+            "title": "Warning",
+            "description": "Deleted memos can be recovered."
+          },
+          "button": {
+            "no": "No",
+            "yes": "Yes"
+          }
+        }
       }
     },
     "add": {
       "title": "Create Memo",
-      "description": "Create new memo",
+      "description": "Create a new memo",
       "button": {
         "preview": "Preview",
         "submit": "Save"
@@ -127,13 +154,13 @@
       },
       "comments": {
         "label": "Comments",
-        "placeholder": "Select your comments",
+        "placeholder": "Enter your comments",
         "required": "Comments are required"
       },
       "additional_comment": {
-        "label": "Additional Comment",
-        "placeholder": "Additional Comment",
-        "required": "Additional Comment is required"
+        "label": "Additional Comments",
+        "placeholder": "Additional Comments",
+        "required": "Additional Comments are required"
       },
       "status": {
         "label": "Status"
@@ -141,11 +168,41 @@
     }
   },
   "customer": {
-    "title": "Customers",
-    "description": "List of created customers"
+    "title": "Customer",
+    "description": "List of customers that have been created"
   },
   "trash": {
-    "title": "Trash",
-    "description": "List of deactivated data"
+    "list": {
+      "title": "Trash List",
+      "description": "List of trashed items",
+      "button": {
+        "restore": "Restore",
+        "delete": "Delete"
+      },
+      "modal": {
+        "destroy": {
+          "description": "Are you sure you want to permanently delete this trash?",
+          "warning": {
+            "title": "Warning",
+            "description": "Deleted trash cannot be recovered."
+          },
+          "button": {
+            "no": "No",
+            "yes": "Yes"
+          }
+        },
+        "restore": {
+          "description": "Are you sure you want to restore this trash?",
+          "warning": {
+            "title": "Warning",
+            "description": "Restored trash will be returned to the previous list."
+          },
+          "button": {
+            "no": "No",
+            "yes": "Yes"
+          }
+        }
+      }
+    }
   }
 }

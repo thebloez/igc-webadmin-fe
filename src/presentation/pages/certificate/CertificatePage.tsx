@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUserToken } from "@redux/user/userReduxReducer";
 import useCertificateViewModel from "@lib/hooks/useCertificateViewModel";
-import DeleteModal from "@components/modal/DeleteModal";
+import QuestionModal from "@components/modal/QuestionModal";
 
 const CertificatePage = () => {
   // get language and t function to change language
@@ -97,7 +97,7 @@ const CertificatePage = () => {
 
   return (
     <div className="tw-m-0 tw-p-6 ">
-      <DeleteModal
+      <QuestionModal
         open={modal.visible}
         isLoading={modal.isLoading}
         onLeftClick={closeModal}

@@ -1,18 +1,27 @@
 import HeaderContent from "@components/dashboard/layout/HeaderContent";
+import QuestionModal from "@components/modal/QuestionModal";
 import TrashColumn from "@components/trash/TrashColumn";
 import TrashTable from "@components/trash/TrashTable";
-import { ITrashTableState } from "@domain/entities/TrashEntity";
-import TrashUseCase from "@domain/useCases/TrashUseCase";
+import {
+  ITrashModalState,
+  ITrashTableState,
+} from "@domain/entities/TrashEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
-import logger from "@lib/utils/logger";
+import useTrashViewModel from "@lib/hooks/useTrashViewModel";
+import { setUserToken } from "@redux/user/userReduxReducer";
 import { selectToken } from "@redux/user/userReduxSelector";
-import TrashViewModel from "@viewModels/TrashViewModel";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { message } from "antd";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const TrashPage = () => {
   const { t } = useLanguage();
   const token = useSelector(selectToken);
+
+  const dispatch = useDispatch();
+
+  const clearToken = () => dispatch(setUserToken(""));
+
   const [table, setTable] = useState<ITrashTableState>({
     currentPage: 1,
     isLoading: true,
@@ -21,23 +30,95 @@ const TrashPage = () => {
     data: [],
   });
 
-  const trashViewModel = new TrashViewModel(new TrashUseCase(), token);
+  const [modal, setModal] = useState<ITrashModalState>({
+    visible: false,
+    isLoading: false,
+    type: "destroy",
+    id: "",
+  });
+
+  const trashViewModel = useTrashViewModel({ clearToken, token });
 
   useEffect(() => {
-    getTrash();
+    if (table.currentPage === 0) {
+      setTable((prevState) => ({
+        ...prevState,
+        currentPage: 1,
+      }));
+    } else {
+      getTrash();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [table.currentPage, table.pageSize]);
 
   const getTrash = async () => {
-    await trashViewModel.getTrash(setTable);
+    await trashViewModel.getTrash(table, setTable);
   };
+
+  const onDestroy = (record: any) => {
+    setModal((prevState) => ({
+      ...prevState,
+      visible: true,
+      id: record.id,
+      type: "destroy",
+    }));
+  };
+
+  const onRestore = (record: any) => {
+    setModal((prevState) => ({
+      ...prevState,
+      visible: true,
+      id: record.id,
+      type: "restore",
+    }));
+  };
+
+  const onAction = async (id: string) => {
+    if (modal.type === "destroy") {
+      await trashViewModel.destroyTrash(id, setModal, setTable, message);
+    } else {
+      await trashViewModel.restoreTrash(id, setModal, setTable, message);
+    }
+  };
+
+  const closeModal = () => {
+    setModal((prevState) => ({ ...prevState, visible: false }));
+  };
+
+  const onChange = useCallback((props: any) => {
+    setTable((prevState) => ({
+      ...prevState,
+      currentPage: props.current,
+      pageSize: props.pageSize,
+    }));
+  }, []);
 
   return (
     <div className="tw-m-0 tw-p-6 ">
+      <QuestionModal
+        open={modal.visible}
+        isLoading={modal.isLoading}
+        onLeftClick={closeModal}
+        onRightClick={onAction}
+        wording={{
+          description: t(`trash.list.modal.${modal.type}.description`),
+          warning: {
+            title: t(`trash.list.modal.${modal.type}.warning.title`),
+            description: t(
+              `trash.list.modal.${modal.type}.warning.description`
+            ),
+          },
+          button: {
+            no: t(`trash.list.modal.${modal.type}.button.no`),
+            yes: t(`trash.list.modal.${modal.type}.button.yes`),
+          },
+        }}
+        data={modal}
+      />
       <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
         <HeaderContent
-          title={t("trash.title")}
-          description={t("trash.description")}
+          title={t("trash.list.title")}
+          description={t("trash.list.description")}
         />
         <div className="tw-p-4">
           <TrashTable
@@ -46,16 +127,12 @@ const TrashPage = () => {
             currentPage={table.currentPage}
             pageSize={table.pageSize}
             total={table.total}
+            onChange={onChange}
             columns={TrashColumn({
-              onDestroy(row) {
-                logger(row);
-              },
-              onRestore(row) {
-                logger(row);
-              },
+              onDestroy,
+              onRestore,
             })}
           />
-          /
         </div>
       </div>
     </div>

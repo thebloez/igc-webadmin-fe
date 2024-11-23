@@ -5,6 +5,8 @@ import isNullOrEmpty from "@lib/utils/isNullOrEmpty";
 import { Button, Dropdown } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
+import { id } from "date-fns/locale"; // Indonesian locale if needed
 
 const items = (origin: string, id: string) => {
   let items = [
@@ -59,6 +61,17 @@ const MemoColumn = (props: IColumn<IMemoData>): ColumnsType<IMemoData> => {
       dataIndex: "created_by",
       key: "created_by",
       responsive: ["lg"], // Show only on medium and larger screens
+    },
+
+    {
+      title: "Tgl. Dibuat",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: (date: string) => (
+        <span>
+          {format(new Date(date), "dd-MMM-yyyy", { locale: id })}
+        </span>
+      ),
     },
 
     {

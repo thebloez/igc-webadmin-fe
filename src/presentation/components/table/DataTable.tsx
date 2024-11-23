@@ -34,7 +34,7 @@ const DataTable: React.FC<IDataTable<any>> = (props) => (
         paddingLeft: "16px",
       },
       pageSize: props.pageSize,
-      current: props.currentPage,
+      current: props.currentPage <= 0 ? 1 : props.currentPage,
       total: props.total,
       showSizeChanger: true,
       showTotal: () => `Total ${props.total} items`,

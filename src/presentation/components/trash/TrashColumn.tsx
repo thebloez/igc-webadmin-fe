@@ -2,21 +2,21 @@ import { ITrashData } from "@domain/entities/TrashEntity";
 import { IColumn } from "@domain/entities/DashboardEntity";
 import { Button } from "antd";
 import { ColumnsType } from "antd/es/table";
+import { format } from "date-fns";
+import { id } from "date-fns/locale"; // Indonesian locale if needed
 
 const TrashColumn = (
   props: Pick<IColumn<ITrashData>, "onRestore" | "onDestroy">
 ): ColumnsType<ITrashData> => [
   {
-    title: "No",
-    dataIndex: "index",
-    key: "index",
-    width: 100,
-    render: (_, _1, index) => index + 1, // Sequential number
-  },
-  {
     title: "Kode",
     dataIndex: "id",
     key: "id",
+  },
+  {
+    title: "Tipe",
+    dataIndex: "type",
+    key: "type",
   },
   {
     title: "Nama",
@@ -30,11 +30,13 @@ const TrashColumn = (
     key: "member_phone_number",
   },
   {
-    title: "Pembuat",
-    dataIndex: "created_by",
-    key: "created_by",
+    title: "Dihapus",
+    dataIndex: "updated_at",
+    key: "updated_at",
+    render: (date: string) => (
+      <span>{format(new Date(date), "dd-MMM-yyyy", { locale: id })}</span>
+    ),
   },
-
   {
     title: "Action",
     key: "action",

@@ -55,7 +55,9 @@ const DashboardLayout: React.FC<IDashboardLayoutProps> = ({ children }) => {
             onBurgerClick={toggleSidebar}
             isHideUserMenu={isHideUserMenu}
           />
-          <div className="tw-bg-background tw-relative">{children}</div>
+          <div className="tw-bg-background tw-relative tw-max-h-[calc(100vh-72px)] tw-overflow-y-auto">
+            {children}
+          </div>
         </>
       </ContainerLayout>
     </div>

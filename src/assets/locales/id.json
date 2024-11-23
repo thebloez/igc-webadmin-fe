@@ -172,7 +172,37 @@
     "description": "List pelanggan yang telah di buat"
   },
   "trash": {
-    "title": "Tong Sampah",
-    "description": "List data yang telah di non aktifkan"
+    "list": {
+      "title": "Daftar Sampah",
+      "description": "List sampah yang telah di buat",
+      "button": {
+        "restore": "Pulihkan",
+        "delete": "Hapus"
+      },
+      "modal": {
+        "destroy": {
+          "description": "Apakah Anda yakin ingin menghapus sampah ini?",
+          "warning": {
+            "title": "Peringatan",
+            "description": "Sampah yang dihapus tidak dapat dipulihkan kembali."
+          },
+          "button": {
+            "no": "Tidak",
+            "yes": "Ya"
+          }
+        },
+        "restore": {
+          "description": "Apakah Anda yakin ingin memulihkan sampah ini?",
+          "warning": {
+            "title": "Peringatan",
+            "description": "Sampah yang dipulihkan akan kembali ke list sebelumnya."
+          },
+          "button": {
+            "no": "Tidak",
+            "yes": "Ya"
+          }
+        }
+      }
+    }
   }
 }

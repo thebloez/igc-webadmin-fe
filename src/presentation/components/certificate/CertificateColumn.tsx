@@ -3,6 +3,8 @@ import { IColumn } from "@domain/entities/DashboardEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { Button } from "antd";
 import { ColumnsType } from "antd/es/table";
+import { format } from "date-fns";
+import { id } from "date-fns/locale"; // Indonesian locale if needed
 
 const CertificateColumn = (
   props: Pick<IColumn<ICertificateData>, "onPrint" | "onDelete">
@@ -37,7 +39,16 @@ const CertificateColumn = (
       responsive: ["xs", "sm", "md", "lg"],
       width: 150,
     },
-
+    {
+      title: "Tgl. Dibuat",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: (date: string) => (
+        <span>
+          {format(new Date(date), "dd-MMM-yyyy", { locale: id })}
+        </span>
+      ),
+    },
     {
       title: "Action",
       key: "action",

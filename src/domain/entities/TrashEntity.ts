@@ -38,11 +38,9 @@ export interface ITrashTableState extends IBaseState {
   data: ITrashData[];
 }
 
-export interface ITrashResponse
-  extends IResponsePaginationEntity<ITrashData> {}
+export interface ITrashResponse extends IResponsePaginationEntity<ITrashData> {}
 
-export interface ITrashCreateResponse
-  extends IResponseEntity<ITrashData> {}
+export interface ITrashCreateResponse extends IResponseEntity<ITrashData> {}
 
 export interface ITrashFormProps {
   control: Control<ITrashData, any>;
@@ -52,4 +50,11 @@ export interface ITrashFormProps {
   errors: FieldErrors<ITrashData>;
   suggestions: ISuggestionsState;
   customers: ICustomerOption;
+}
+
+export interface ITrashModalState {
+  visible: boolean;
+  isLoading: boolean;
+  id: string;
+  type: "restore" | "destroy";
 }
