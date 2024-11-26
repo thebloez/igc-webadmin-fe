@@ -217,7 +217,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               <img
                 src={data.attributes.object_image as any}
                 alt="Gem"
-                className="tw-w-full tw-h-full tw-object-fill tw-rounded-md"
+                className="tw-w-full tw-h-full tw-object-cover tw-rounded-md"
               />
               <p>{data.attributes.final_identification}</p>
             </div>
