@@ -1,5 +1,5 @@
 import {
-  ICertificateData,
+  ICertificateFormData,
   ICertificateModalState,
   ICertificateTableState,
 } from "@domain/entities/CertificateEntity";
@@ -56,9 +56,9 @@ class CertificateViewModel {
   }
 
   createCertificate = async (
-    data: ICertificateData,
+    data: ICertificateFormData,
     message: any,
-    reset: UseFormReset<ICertificateData>
+    reset: UseFormReset<ICertificateFormData>
   ) => {
     try {
       const response = await this.certificateUseCase.post({

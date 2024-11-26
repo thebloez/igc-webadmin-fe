@@ -1,7 +1,7 @@
 import { ICertificateService } from "@services/CertificateService";
 import isNullOrEmpty from "../../infrastructure/lib/utils/isNullOrEmpty";
 import logger from "@lib/utils/logger";
-import { ICertificateData } from "@domain/entities/CertificateEntity";
+import { ICertificateFormData } from "@domain/entities/CertificateEntity";
 import {
   IDeleteRequest,
   IGetRequest,
@@ -42,7 +42,7 @@ export default class CertificateUseCase {
     }
   }
 
-  async post(props: IPostRequest<ICertificateData>) {
+  async post(props: IPostRequest<ICertificateFormData>) {
     try {
       const certData = new FormData();
 

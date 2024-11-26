@@ -1,6 +1,6 @@
 import HeaderContent from "@components/dashboard/layout/HeaderContent";
 import { Button, Form, message } from "antd";
-import { ICertificateData } from "@domain/entities/CertificateEntity";
+import { ICertificateFormData } from "@domain/entities/CertificateEntity";
 import CertificateUseCase from "@domain/useCases/CertificateUseCase";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
@@ -29,7 +29,7 @@ const CertificateAddPage = () => {
     control,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<ICertificateData>({
+  } = useForm<ICertificateFormData>({
     mode: "onChange",
   });
 
@@ -91,7 +91,7 @@ const CertificateAddPage = () => {
     await customerViewModel.getCustomerOption(token, setCustomers);
   };
 
-  const onSubmit: SubmitHandler<ICertificateData> = async (data) => {
+  const onSubmit: SubmitHandler<ICertificateFormData> = async (data) => {
     await certificateViewModel.createCertificate(data, message, reset);
   };
 

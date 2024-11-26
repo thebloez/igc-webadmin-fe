@@ -5,12 +5,12 @@ export interface IBaseState {
   total: number;
 }
 
-export interface Attributes {
+export interface Attributes<T = Origins> {
   id_master: string
   final_identification: string
   object_name: string
   object_image: string
-  measurement: any
+  measurement: string
   shape: string
   clarity: string
   transparency: string
@@ -18,7 +18,7 @@ export interface Attributes {
   color: string
   weight: string
   comments: string
-  origins: Origins
+  origins: T
 }
 
 export interface Origins {

@@ -22,6 +22,18 @@ export interface ICertificateData {
   member: Member;
 }
 
+export interface ICertificateFormData {
+  id: string;
+  identifier: any;
+  type: string;
+  status: string;
+  member_phone_number: string;
+  additional_comment: string;
+  additional_data: string;
+  attributes: Attributes<string>;
+  member: Member;
+}
+
 export interface ICertificateModalState {
   visible: boolean;
   isLoading: boolean;
@@ -41,8 +53,8 @@ export interface ICertificateCreateResponse
   extends IResponseEntity<ICertificateData> {}
 
 export interface ICertificateFormProps {
-  control: Control<ICertificateData, any>;
-  errors: FieldErrors<ICertificateData>;
+  control: Control<ICertificateFormData, any>;
+  errors: FieldErrors<ICertificateFormData>;
   suggestions: ISuggestionsState;
   customers: ICustomerOption;
 }
