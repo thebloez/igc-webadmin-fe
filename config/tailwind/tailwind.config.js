@@ -42,6 +42,7 @@ export default {
         4: "4px",
       },
       fontSize: {
+        xxxs: ["8pt", ".7rem"],
         xxs: ["9pt", ".75rem"],
         xs: "10pt",
         sm: "11pt",

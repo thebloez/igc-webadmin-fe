@@ -1,4 +1,3 @@
-
 import { ICertificateData } from "@domain/entities/CertificateEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { Button, Modal } from "antd";
@@ -17,14 +16,7 @@ import "./PrintCertificate.style.css";
 import HologramFlatIcon from "@components/icon/HologramFlatIcon";
 import QRCode from "react-qr-code";
 import SignatureIcon from "@components/icon/SigntaureIcon";
-
-const randomString = () => {
-  return Math.random()
-    .toString(36)
-    .replace(/[^a-z]+/g, "")
-    .substr(0, 4)
-    ?.toUpperCase();
-};
+import randomString from "@lib/utils/randomString";
 
 export interface IPrintCertificate {
   title: string;
@@ -57,7 +49,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
 
   const { t } = useLanguage();
 
-  // make random A-Z string 4 characters
+  const identifier = randomString();
 
   return (
     <Modal
@@ -128,9 +120,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 <h1 className="tw-text-base tw-font-semibold tw-text-gray-900">
                   Complete Gemstone Analysis
                 </h1>
-                <p className="tw-text-sm tw-text-gray-600">{`${
-                  data.id
-                }-${randomString()}`}</p>
+                <p className="tw-text-sm tw-text-gray-600">{`${data.id}-${identifier}`}</p>
               </div>
             </div>
 
@@ -243,6 +233,16 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               <div className="tw-w-[100%]">
                 <HologramFlatIcon width={50} height={50} />
               </div>
+            </div>
+            <div>
+              <p className="tw-text-xxxs tw-text-[#444444] tw-px-4 tw-text-center">
+                This certification and the information written in it reflects
+                upon the identification and the characteristics of the gemstone
+                at the time of checking. The verification process strictly
+                adheres to the International Standard of Gemological Testing and
+                Equipment and IGC's Standard Operation Procedure. To ensure the
+                authenticity of this card, contact IGC.
+              </p>
             </div>
           </div>
         </div>

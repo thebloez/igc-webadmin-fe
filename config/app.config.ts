@@ -8,7 +8,7 @@ const config = {
   },
   baseURL: {
     dev: {
-      HOST: "http://127.0.0.1:8000/",
+      HOST: "https://api.igclab.com/",
     },
     prod: {
       HOST: "https://indosat-prod.ottodigital.id/",

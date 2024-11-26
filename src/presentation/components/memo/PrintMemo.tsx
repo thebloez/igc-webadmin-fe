@@ -12,6 +12,7 @@ import { id } from "date-fns/locale";
 
 import "./PrintMemo.style.css";
 import { PrintMemoItem } from "./PrintMemoItem";
+import randomString from "@lib/utils/randomString";
 
 export interface IPrintMemo {
   title: string;
@@ -40,6 +41,7 @@ const PrintMemo: React.FC<IPrintMemo> = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef, onAfterPrint: onPrint });
   const { t } = useLanguage();
+  const identifier = randomString();
 
   return (
     <Modal
@@ -54,8 +56,12 @@ const PrintMemo: React.FC<IPrintMemo> = ({
         },
       }}
       title={
-        <div className="tw-flex tw-p-4 tw-items-center tw-gap-2 tw-border-b">
+        <div className="tw-p-4 tw-border-b tw-flex tw-items-start tw-flex-col tw-justify-between">
           <h2 className="tw-text-lg tw-font-bold">{title}</h2>
+          <p className="tw-text-xxs tw-text-gray-600 tw-p-2 tw-bg-primary-500 tw-bg-opacity-10 tw-rounded-md">
+            Print Version:{" "}
+            <span className="tw-font-semibold">{data.print_version}</span>
+          </p>
         </div>
       }
       className="tw-font-sans"
@@ -143,7 +149,7 @@ const PrintMemo: React.FC<IPrintMemo> = ({
               </div>
               <div className="">
                 <p className="tw-text-xxs tw-font-semibold">
-                  {data.attributes.id_master}
+                  {data.attributes.id_master}-{identifier}
                 </p>
               </div>
             </div>

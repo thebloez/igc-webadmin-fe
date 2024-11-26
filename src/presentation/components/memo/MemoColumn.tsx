@@ -12,9 +12,7 @@ const items = (origin: string, id: string) => {
   let items = [
     {
       key: "1",
-      label: (
-        <Link to={"/memo/upgrade?type=sertifikat&id=" + id}>Sertifikat</Link>
-      ),
+      label: <Link to={"/memo/upgrade/certificate?id=" + id}>Sertifikat</Link>,
     },
   ];
 
@@ -24,7 +22,7 @@ const items = (origin: string, id: string) => {
       {
         key: "2",
         label: (
-          <Link to={"/memo/upgrade?type=origin&id=" + id}>Memo Origin</Link>
+          <Link to={"/memo/upgrade/memo-origin?id=" + id}>Memo Origin</Link>
         ),
       },
     ];
@@ -69,9 +67,7 @@ const MemoColumn = (props: IColumn<IMemoData>): ColumnsType<IMemoData> => {
       key: "created_at",
       width: 150,
       render: (date: string) => (
-        <span>
-          {format(new Date(date), "dd-MMM-yyyy", { locale: id })}
-        </span>
+        <span>{format(new Date(date), "dd-MMM-yyyy", { locale: id })}</span>
       ),
     },
 
