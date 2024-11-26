@@ -4,7 +4,8 @@ import HeaderContent from "@components/dashboard/layout/HeaderContent";
 import { Button, message } from "antd";
 import PlusSquareIcon from "@components/icon/PlusSquareIcon";
 import {
-  ICertificateDeleteState,
+  ICertificateData,
+  ICertificateModalState,
   ICertificateTableState,
 } from "@domain/entities/CertificateEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
@@ -14,8 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUserToken } from "@redux/user/userReduxReducer";
 import useCertificateViewModel from "@lib/hooks/useCertificateViewModel";
-import QuestionModal from "@components/modal/QuestionModal";
 import { useDebouncedCallback } from "use-debounce";
+import { CertificateModals } from "@components/certificate/CertificateModals";
 
 const CertificatePage = () => {
   // get language and t function to change language
@@ -28,12 +29,6 @@ const CertificatePage = () => {
   const dispatch = useDispatch();
   const clearToken = () => dispatch(setUserToken(""));
 
-  const [modal, setModal] = useState<ICertificateDeleteState>({
-    visible: false,
-    isLoading: false,
-    id: "",
-  });
-
   const [table, setTable] = useState<ICertificateTableState>({
     currentPage: 1,
     isLoading: true,
@@ -41,6 +36,13 @@ const CertificatePage = () => {
     search: "",
     total: 0,
     data: [],
+  });
+
+  const [modal, setModal] = useState<ICertificateModalState>({
+    visible: false,
+    type: "delete",
+    isLoading: false,
+    data: {} as ICertificateData,
   });
 
   const certificateViewModel = useCertificateViewModel(token, clearToken);
@@ -66,7 +68,13 @@ const CertificatePage = () => {
   };
 
   const onPrint = (record: any) => {
-    console.log("Print", record);
+    setModal((prevState) => ({
+      ...prevState,
+      visible: true,
+      id: record.id,
+      type: "print",
+      data: record,
+    }));
   };
 
   const onDelete = (record: any) => {
@@ -74,6 +82,8 @@ const CertificatePage = () => {
       ...prevState,
       visible: true,
       id: record.id,
+      type: "delete",
+      data: record,
     }));
   };
 
@@ -105,25 +115,22 @@ const CertificatePage = () => {
     }));
   }, 500);
 
+  const postPrint = async () => {
+    
+  }
+
   return (
     <div className="tw-m-0 tw-p-6 ">
-      <QuestionModal
-        open={modal.visible}
+      <CertificateModals
+        onClose={closeModal}
+        data={modal.data}
         isLoading={modal.isLoading}
-        onLeftClick={closeModal}
         onRightClick={onPostDelete}
-        wording={{
-          description: t("certificate.list.modal.delete.description"),
-          warning: {
-            title: t("certificate.list.modal.delete.warning.title"),
-            description: t("certificate.list.modal.delete.warning.description"),
-          },
-          button: {
-            no: t("certificate.list.modal.delete.button.no"),
-            yes: t("certificate.list.modal.delete.button.yes"),
-          },
-        }}
-        data={modal}
+        open={modal.visible}
+        onPrint={postPrint}
+        type={modal.type}
+        showPrint
+        title={modal.type === "print" ? "Print Memo" : ""}
       />
       <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
         <HeaderContent

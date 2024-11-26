@@ -1,13 +1,13 @@
 import QuestionModal, { IQuestionModal } from "@components/modal/QuestionModal";
 import { useTranslation } from "react-i18next";
-import PrintMemo, { IPrintMemo } from "./PrintMemo";
+import PrintCertificate, { IPrintCertificate } from "./PrintCertificate";
 
-type IMemoModal = IPrintMemo &
+type ICertificateModal = IPrintCertificate &
   Omit<IQuestionModal, "wording" | "onLeftClick"> & {
     type: "print" | "delete";
   };
 
-export const MemoModals = (modal: IMemoModal) => {
+export const CertificateModals = (modal: ICertificateModal) => {
   const { t } = useTranslation();
 
   if (!modal.open) return null;
@@ -15,12 +15,12 @@ export const MemoModals = (modal: IMemoModal) => {
   return (
     <>
       {modal.type === "print" && (
-        <PrintMemo
+        <PrintCertificate
           onPrint={modal.onPrint}
           open={modal.open}
           onClose={modal.onClose}
           showPrint
-          title="Print Memo"
+          title="Print Certificate"
           data={modal.data}
         />
       )}
@@ -32,14 +32,16 @@ export const MemoModals = (modal: IMemoModal) => {
           onLeftClick={modal.onClose}
           onRightClick={modal.onRightClick}
           wording={{
-            description: t("memo.list.modal.delete.description"),
+            description: t("certificate.list.modal.delete.description"),
             warning: {
-              title: t("memo.list.modal.delete.warning.title"),
-              description: t("memo.list.modal.delete.warning.description"),
+              title: t("certificate.list.modal.delete.warning.title"),
+              description: t(
+                "certificate.list.modal.delete.warning.description"
+              ),
             },
             button: {
-              no: t("memo.list.modal.delete.button.no"),
-              yes: t("memo.list.modal.delete.button.yes"),
+              no: t("certificate.list.modal.delete.button.no"),
+              yes: t("certificate.list.modal.delete.button.yes"),
             },
           }}
           data={modal.data}

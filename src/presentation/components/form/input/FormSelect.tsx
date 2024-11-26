@@ -17,6 +17,7 @@ interface FormSelectProps {
   rules?: Record<string, any>;
   error?: FieldError;
   loading?: boolean;
+  allowClear?: boolean;
 }
 
 const FormSelect: React.FC<FormSelectProps> = ({
@@ -28,6 +29,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
   rules,
   error,
   loading,
+  allowClear = false,
 }) => (
   <Form.Item
     label={label}
@@ -44,6 +46,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
           variant="outlined"
           className="custom-select"
           showSearch
+          allowClear={allowClear}
           loading={loading}
           {...field}
           suffixIcon={loading ? <SpinnerLoading width={12} height={12} type="primary-spinner" /> : <ArrowDownIcon height={12} width={12} />}

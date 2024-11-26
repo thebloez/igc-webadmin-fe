@@ -1,8 +1,9 @@
 import { ICertificateFormProps } from "@domain/entities/CertificateEntity";
 import FormInput from "@components/form/input/FormInput";
 import FormSelect from "@components/form/input/FormSelect";
-import FormToggle from "@components/form/input/FormToggle";
 import FormUpload from "@components/form/input/FormUpload";
+import { useLanguage } from "@lib/hooks/useLanguage";
+import FormTextArea from "@components/form/input/FormTextArea";
 
 const CertificateForm: React.FC<ICertificateFormProps> = ({
   errors,
@@ -10,147 +11,155 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
   suggestions,
   customers,
 }) => {
+  const { t } = useLanguage();
   return (
     <div className="tw-h-full tw-overflow-auto tw-px-4 tw-flex tw-justify-between tw-items-start tw-gap-4">
       {/* create image */}
       <div className="tw-w-full">
         <FormUpload
           name="attributes.object_image"
-          label="Object Image"
-          placeholder="Object Image"
+          label={t("certificate.form.object_image.label")}
+          placeholder={t("certificate.form.object_image.placeholder")}
           control={control}
-          rules={{ required: "Object Image is required" }}
+          rules={{ required: t("certificate.form.object_image.required") }}
           error={errors.attributes?.object_image}
         />
         <FormSelect
           name="member_phone_number"
-          label="Customer"
-          placeholder="Select your customer"
+          label={t("certificate.form.customer.label")}
+          placeholder={t("certificate.form.customer.placeholder")}
           options={customers.data}
           control={control}
           loading={customers.isLoading}
-          rules={{ required: "Customer is required" }}
+          rules={{ required: t("certificate.form.customer.required") }}
           error={errors.member_phone_number}
         />
 
-        <FormSelect
+        <FormInput
           name="attributes.object_name"
-          label="Object Name"
-          placeholder="Select your object name"
-          options={suggestions.data.object_name}
-          loading={suggestions.isLoading}
+          label={t("certificate.form.object_name.label")}
+          placeholder={t("certificate.form.object_name.placeholder")}
           control={control}
-          rules={{ required: "Object name is required" }}
+          rules={{ required: t("certificate.form.object_name.required") }}
           error={errors.attributes?.object_name}
         />
 
+        <FormSelect
+          name="attributes.final_identification"
+          label={t("certificate.form.final_identification.label")}
+          placeholder={t("certificate.form.final_identification.placeholder")}
+          options={suggestions.data.final_identification}
+          loading={suggestions.isLoading}
+          control={control}
+          rules={{
+            required: t("certificate.form.final_identification.required"),
+          }}
+          error={errors.attributes?.final_identification}
+        />
         <FormInput
           name="attributes.measurement"
-          label="Measurement"
-          placeholder="10 x 20 x 30cm"
+          label={t("certificate.form.measurement.label")}
+          placeholder={t("certificate.form.measurement.placeholder")}
           control={control}
-          rules={{ required: "Measurement is required" }}
+          rules={{
+            required: t("certificate.form.measurement.required"),
+          }}
           error={errors.attributes?.measurement}
         />
 
         <FormSelect
           name="attributes.clarity"
-          label="Clarity"
-          placeholder="Select your clarity"
+          label={t("certificate.form.clarity.label")}
+          placeholder={t("certificate.form.clarity.placeholder")}
           options={suggestions.data.clarity}
           loading={suggestions.isLoading}
           control={control}
-          rules={{ required: "Clarity is required" }}
+          rules={{ required: t("certificate.form.clarity.required") }}
           error={errors.attributes?.clarity}
         />
         <FormSelect
           name="attributes.transparency"
-          label="Transparency"
-          placeholder="Select your transparency"
+          label={t("certificate.form.transparency.label")}
+          placeholder={t("certificate.form.transparency.placeholder")}
           options={suggestions.data.transparency}
           loading={suggestions.isLoading}
           control={control}
-          rules={{ required: "Transparency is required" }}
+          rules={{ required: t("certificate.form.transparency.required") }}
           error={errors.attributes?.transparency}
         />
         <FormSelect
           name="attributes.cut"
-          label="Cut"
-          placeholder="Select your cut"
+          label={t("certificate.form.cut.label")}
+          placeholder={t("certificate.form.cut.placeholder")}
           options={suggestions.data.cut}
           loading={suggestions.isLoading}
           control={control}
-          rules={{ required: "Cut is required" }}
+          rules={{ required: t("memo.form.cut.required") }}
           error={errors.attributes?.cut}
         />
       </div>
       <div className="tw-w-full">
         <FormSelect
           name="attributes.shape"
-          label="Shape"
-          placeholder="Select your shape"
+          label={t("memo.form.shape.label")}
+          placeholder={t("memo.form.shape.placeholder")}
           options={suggestions.data.shape}
           loading={suggestions.isLoading}
           control={control}
-          rules={{ required: "Shape is required" }}
+          rules={{ required: t("memo.form.shape.required") }}
           error={errors.attributes?.shape}
         />
         <FormSelect
           name="attributes.color"
-          label="Color"
-          placeholder="Select your color"
+          label={t("memo.form.color.label")}
+          placeholder={t("memo.form.color.placeholder")}
           options={suggestions.data.color}
           loading={suggestions.isLoading}
           control={control}
-          rules={{ required: "Color is required" }}
+          rules={{ required: t("memo.form.color.required") }}
           error={errors.attributes?.color}
         />
 
         <FormInput
           name="attributes.weight"
-          label="Weight"
-          placeholder="10 carat"
+          label={t("memo.form.weight.label")}
+          placeholder={t("memo.form.weight.placeholder")}
           control={control}
-          rules={{ required: "Weight is required" }}
+          rules={{ required: t("memo.form.weight.required") }}
           error={errors.attributes?.weight}
         />
 
         <FormSelect
           name="attributes.origins"
-          label="Origin"
-          placeholder="Select your origins"
+          label={t("memo.form.origins.label")}
+          placeholder={t("memo.form.origins.placeholder")}
           options={suggestions.data.origin}
           loading={suggestions.isLoading}
           control={control}
-          rules={{ required: "Origins is required" }}
+          rules={{ required: t("memo.form.origins.required") }}
           error={errors.attributes?.origins}
         />
 
         <FormSelect
           name="attributes.comments"
-          label="Comment"
-          placeholder="Select your comments"
+          label={t("memo.form.comments.label")}
+          placeholder={t("memo.form.comments.placeholder")}
           options={suggestions.data.comment}
           loading={suggestions.isLoading}
           control={control}
-          rules={{ required: "Comment is required" }}
+          rules={{ required: t("memo.form.comments.required") }}
           error={errors.attributes?.comments}
         />
 
-        <FormInput
+        <FormTextArea
           name="additional_comment"
-          label="Additional Comment"
-          placeholder="Additional Comment"
+          label={t("certificate.form.additional_comment.label")}
+          placeholder={t("certificate.form.additional_comment.placeholder")}
           control={control}
-          rules={{ required: "Additional Comment is required" }}
+          rules={{
+            required: t("certificate.form.additional_comment.required"),
+          }}
           error={errors.additional_comment}
-        />
-
-        <FormToggle
-          name="status"
-          label="Status"
-          control={control}
-          error={errors.status}
         />
       </div>
     </div>

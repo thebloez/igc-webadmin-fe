@@ -1,6 +1,6 @@
 import {
   ICertificateData,
-  ICertificateDeleteState,
+  ICertificateModalState,
   ICertificateTableState,
 } from "@domain/entities/CertificateEntity";
 import CertificateUseCase from "@domain/useCases/CertificateUseCase";
@@ -81,7 +81,7 @@ class CertificateViewModel {
   deleteCertificate = async (
     id: string,
     message: any,
-    setModal: (value: SetStateAction<ICertificateDeleteState>) => void
+    setModal: (value: SetStateAction<ICertificateModalState>) => void
   ) => {
     try {
       setModal((prevState) => ({

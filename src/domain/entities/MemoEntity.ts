@@ -21,6 +21,7 @@ export interface IMemoData {
   attributes: {
     id_master: string;
     object_name: string;
+    final_identification: string;
     object_image: File | string;
     measurement: string;
     shape: string;

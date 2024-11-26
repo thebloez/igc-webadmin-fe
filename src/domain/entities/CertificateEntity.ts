@@ -1,12 +1,12 @@
 import { Control, FieldErrors } from "react-hook-form";
 import { IResponseEntity, IResponsePaginationEntity } from "./ResponseEntity";
-import { IBaseState } from "./SharedEntity";
+import { Attributes, IBaseState, Member } from "./SharedEntity";
 import { ISuggestionsState } from "./SuggestionEntity";
 import { ICustomerOption } from "./CustomerEntity";
 
 export interface ICertificateData {
   id: string;
-  identifier: string;
+  identifier: any;
   type: string;
   status: string;
   member_phone_number: string;
@@ -18,26 +18,15 @@ export interface ICertificateData {
   print_version: number;
   additional_comment: string;
   additional_data: string;
-  attributes: {
-    id_master: string;
-    object_name: string;
-    object_image: File | string;
-    measurement: string;
-    shape: string;
-    clarity: string;
-    transparency: string;
-    cut: string;
-    color: string;
-    weight: string;
-    comments: string;
-    origins: string;
-  };
+  attributes: Attributes;
+  member: Member;
 }
 
-export interface ICertificateDeleteState {
+export interface ICertificateModalState {
   visible: boolean;
   isLoading: boolean;
-  id: string;
+  type: "delete" | "print";
+  data: ICertificateData;
 }
 
 export interface ICertificateTableState extends IBaseState {

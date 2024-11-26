@@ -6,8 +6,8 @@ import { useMemo } from "react";
 const useMemoViewModel = (token: string, clearToken: () => void) => {
   return useMemo(() => {
     const service = new MemoService();
-    const useCase = new MemoUseCase(service, clearToken);
-    return new MemoViewModel(useCase, token);
+    const useCase = new MemoUseCase(service);
+    return new MemoViewModel(useCase, token, clearToken);
   }, [token, clearToken]);
 };
 

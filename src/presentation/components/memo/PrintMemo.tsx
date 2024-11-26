@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { id } from "date-fns/locale";
 
 import "./PrintMemo.style.css";
+import { PrintMemoItem } from "./PrintMemoItem";
 
 export interface IPrintMemo {
   title: string;
@@ -27,6 +28,7 @@ const excludes = [
   "shape",
   "id_master",
 ];
+
 const PrintMemo: React.FC<IPrintMemo> = ({
   title,
   data,
@@ -60,7 +62,7 @@ const PrintMemo: React.FC<IPrintMemo> = ({
     >
       <div
         ref={contentRef}
-        className="tw-bg-white !tw-h-[483px] !tw-w-[800px] tw-rounded-lg tw-shadow-lg tw-font-sans"
+        className="tw-bg-white !tw-w-[800px] tw-rounded-lg tw-shadow-lg tw-font-sans"
       >
         <div
           style={{
@@ -71,7 +73,7 @@ const PrintMemo: React.FC<IPrintMemo> = ({
         >
           <LogoWhiteIcon width={100} height={100} />
           <h1 className="tw-text-xl tw-text-[#F5AE26] tw-font-bold">
-            {data.identifier}
+            {data.attributes.final_identification}
           </h1>
           <div className=" tw-p-2 tw-bg-white tw-rounded-sm">
             <QRCode
@@ -93,19 +95,23 @@ const PrintMemo: React.FC<IPrintMemo> = ({
           }}
         >
           <div className="tw-w-[60%]">
-            {objectToArray(data.attributes, excludes).map((detail, index) => (
-              <div key={index} className="tw-flex tw-justify-between tw-py-2">
-                <div className="tw-w-[30%]">
-                  <p>{detail.label}</p>
-                </div>
-                <div className="tw-w-[5%]">
-                  <p>:</p>
-                </div>
-                <div className="tw-w-[65%]">
-                  <p>{detail.value}</p>
-                </div>
-              </div>
-            ))}
+            {objectToArray(data.attributes, excludes)
+              .filter((res) => res.value)
+              .map((detail, index) => (
+                <PrintMemoItem
+                  key={index}
+                  label={
+                    detail.label === "final_identification"
+                      ? "identification"
+                      : detail.label
+                  }
+                  value={
+                    detail.label === "origins"
+                      ? detail.value.name
+                      : detail.value
+                  }
+                />
+              ))}
           </div>
           <div className="tw-flex tw-items-center tw-w-[40%] tw-flex-col tw-justify-center tw-gap-4 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
             <div
@@ -154,7 +160,7 @@ const PrintMemo: React.FC<IPrintMemo> = ({
 
       <div>
         {showPrint && (
-          <div className="tw-flex tw-justify-end tw-p-2">
+          <div className="tw-flex tw-w-full tw-justify-end tw-p-2">
             <Button
               onClick={() => reactToPrintFn()}
               type="primary"

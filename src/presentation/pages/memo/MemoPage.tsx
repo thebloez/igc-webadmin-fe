@@ -3,7 +3,11 @@ import PlusSquareIcon from "@components/icon/PlusSquareIcon";
 import MemoColumn from "@components/memo/MemoColumn";
 import { MemoModals } from "@components/memo/MemoModals";
 import MemoTable from "@components/memo/MemoTable";
-import { IMemoDeleteState, IMemoTableState } from "@domain/entities/MemoEntity";
+import {
+  IMemoData,
+  IMemoDeleteState,
+  IMemoTableState,
+} from "@domain/entities/MemoEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import useMemoViewModel from "@lib/hooks/useMemoViewModel";
 import { setUserToken } from "@redux/user/userReduxReducer";
@@ -42,35 +46,7 @@ const MemoPage = () => {
     visible: false,
     type: "delete",
     isLoading: false,
-    data: {
-      id: "",
-      identifier: "",
-      type: "",
-      status: "",
-      member_phone_number: "",
-      created_by: "",
-      created_at: "",
-      updated_at: "",
-      updated_by: undefined,
-      printed_at: undefined,
-      print_version: 0,
-      additional_comment: "",
-      additional_data: "",
-      attributes: {
-        id_master: "",
-        object_name: "",
-        object_image: "",
-        measurement: "",
-        shape: "",
-        clarity: "",
-        transparency: "",
-        cut: "",
-        color: "",
-        weight: "",
-        comments: "",
-        origins: "",
-      },
-    },
+    data: {} as IMemoData,
   });
 
   // Memoize service instances

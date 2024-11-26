@@ -1,0 +1,12 @@
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .printable-content {
+    width: 483px;
+    height: 800px; /* Set ke A4 (standar) */
+    page-break-after: always; /* Pisahkan setiap halaman */
+  }
+}

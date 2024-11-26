@@ -48,7 +48,7 @@ export default class CertificateUseCase {
 
       certData.append("member_phone_number", props.data.member_phone_number);
       certData.append("additional_comment", props.data.additional_comment);
-      certData.append("status", props.data.status ? "active" : "inactive");
+      certData.append("status", "active");
       certData.append("type", "Sertifikat");
 
       Object.entries(props.data.attributes).forEach(([key, value]) => {

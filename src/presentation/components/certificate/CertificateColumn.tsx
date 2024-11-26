@@ -19,7 +19,7 @@ const CertificateColumn = (
       key: "id",
     },
     {
-      title: "Nama",
+      title: t("certificate.list.column.name"),
       className: "tw-text-sm md:tw-text-base",
       dataIndex: "attributes.object_name",
       key: "attributes.object_name",
@@ -27,20 +27,20 @@ const CertificateColumn = (
       render: (_, record) => record.attributes.object_name,
     },
     {
-      title: "Pelanggan",
+      title: t("certificate.list.column.customer"),
       dataIndex: "member_phone_number",
       width: 150,
       key: "member_phone_number",
     },
     {
-      title: "Pembuat",
+      title: t("certificate.list.column.creator"),
       dataIndex: "created_by",
       key: "created_by",
       responsive: ["xs", "sm", "md", "lg"],
       width: 150,
     },
     {
-      title: "Tgl. Dibuat",
+      title: t("certificate.list.column.created_at"),
       dataIndex: "created_at",
       key: "created_at",
       width: 150,

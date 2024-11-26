@@ -11,10 +11,12 @@ import { UseFormReset } from "react-hook-form";
 class MemoViewModel {
   private memoUseCase: MemoUseCase;
   private token: string;
+  private clearToken: () => void;
 
-  constructor(memoUseCase: MemoUseCase, token: string) {
+  constructor(memoUseCase: MemoUseCase, token: string, clearToken: () => void) {
     this.memoUseCase = memoUseCase;
     this.token = token;
+    this.clearToken = clearToken;
   }
 
   async getMemo(
@@ -47,6 +49,10 @@ class MemoViewModel {
       }
     } catch (error: any) {
       logger("MemoViewModel.getMemo | error => ", error);
+
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
     } finally {
       setTable((prevState) => ({
         ...prevState,
@@ -73,6 +79,10 @@ class MemoViewModel {
         reset();
       }
     } catch (error: any) {
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
+
       logger("MemoViewModel.createMemo | error => ", error);
       message.error("Gagal membuat sertifikat");
     }
@@ -100,6 +110,9 @@ class MemoViewModel {
       }
     } catch (error: any) {
       logger("MemoViewModel.deleteMemo | error => ", error);
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
       message.error(error.message);
     } finally {
       setModal((prevState) => ({
@@ -132,6 +145,9 @@ class MemoViewModel {
       }
     } catch (error: any) {
       logger("MemoViewModel.printMemo | error => ", error);
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
       message.error(error.message);
     } finally {
       setModal((prevState) => ({

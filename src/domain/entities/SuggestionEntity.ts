@@ -10,7 +10,7 @@ interface ISuggestionData {
   color: ISuggest[];
   comment: ISuggest[];
   cut: ISuggest[];
-  object_name: ISuggest[];
+  final_identification: ISuggest[];
   origin: ISuggest[];
   shape: ISuggest[];
   transparency: ISuggest[];

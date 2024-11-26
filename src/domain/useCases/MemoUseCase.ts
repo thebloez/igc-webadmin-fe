@@ -10,11 +10,9 @@ import {
 
 export default class MemoUseCase {
   private memoService: IMemoService;
-  private clearToken: any;
 
-  constructor(memoService: IMemoService, clearToken: any) {
+  constructor(memoService: IMemoService) {
     this.memoService = memoService;
-    this.clearToken = clearToken;
   }
 
   async get(props: IGetRequest) {
@@ -33,14 +31,8 @@ export default class MemoUseCase {
       return result;
     } catch (error: any) {
       logger("MemoUseCase.get | error =>", error);
-      if (error.response?.status === 401) {
-        this.clearToken();
-        return;
-      }
 
-      throw new Error(
-        error.response?.data?.meta?.message ?? "Failed to get memo"
-      );
+      throw error;
     }
   }
 
@@ -50,11 +42,11 @@ export default class MemoUseCase {
 
       certData.append("member_phone_number", props.data.member_phone_number);
       certData.append("additional_comment", props.data.additional_comment);
-      certData.append("status", props.data.status ? "active" : "inactive");
+      certData.append("status", "active");
       certData.append("type", "Memo");
 
       Object.entries(props.data.attributes).forEach(([key, value]) => {
-        certData.append(`attributes[${key}]`, value as any);
+        certData.append(`attributes[${key}]`, value ?? "");
       });
 
       logger("MemoUseCase.payload | response =>", certData);
@@ -73,11 +65,6 @@ export default class MemoUseCase {
       return result;
     } catch (error: any) {
       logger("MemoUseCase.post | error =>", error);
-
-      if (error.response?.status === 401) {
-        this.clearToken();
-        return;
-      }
 
       throw error;
     }
@@ -99,11 +86,6 @@ export default class MemoUseCase {
     } catch (error: any) {
       logger("MemoUseCase.delete | error =>", error);
 
-      if (error.response?.status === 401) {
-        this.clearToken();
-        return;
-      }
-
       throw error;
     }
   }
@@ -123,11 +105,6 @@ export default class MemoUseCase {
       return result;
     } catch (error: any) {
       logger("MemoUseCase.printMemo | error =>", error);
-
-      if (error.response?.status === 401) {
-        this.clearToken();
-        return;
-      }
 
       throw error;
     }

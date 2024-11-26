@@ -44,7 +44,7 @@ const CertificateAddPage = () => {
       color: [],
       comment: [],
       cut: [],
-      object_name: [],
+      final_identification: [],
       origin: [],
       shape: [],
       transparency: [],

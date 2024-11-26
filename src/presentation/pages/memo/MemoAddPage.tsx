@@ -1,12 +1,10 @@
 import HeaderContent from "@components/dashboard/layout/HeaderContent";
 import { Button, Form, message } from "antd";
 import { IMemoData } from "@domain/entities/MemoEntity";
-import MemoUseCase from "@domain/useCases/MemoUseCase";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
-import MemoViewModel from "@viewModels/MemoViewModel";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MemoForm from "@components/memo/MemoForm";
 import { ISuggestionsState } from "@domain/entities/SuggestionEntity";
@@ -16,11 +14,17 @@ import { ICustomerOption } from "@domain/entities/CustomerEntity";
 import CustomerUseCase from "@domain/useCases/CustomerUseCase";
 import CustomerViewModel from "@viewModels/CustomerViewModel";
 import ArrowLeftIcon from "@components/icon/ArrowLeftIcon";
-import MemoService from "@services/MemoService";
+import useMemoViewModel from "@lib/hooks/useMemoViewModel";
+import { setUserToken } from "@redux/user/userReduxReducer";
 
 const MemoAddPage = () => {
   // get language and t function to change language
   const { t } = useLanguage();
+
+  const dispatch = useDispatch();
+
+  // get token from redux
+  const clearToken = () => dispatch(setUserToken(""));
 
   const {
     handleSubmit,
@@ -40,7 +44,7 @@ const MemoAddPage = () => {
       color: [],
       comment: [],
       cut: [],
-      object_name: [],
+      final_identification: [],
       origin: [],
       shape: [],
       transparency: [],
@@ -52,9 +56,7 @@ const MemoAddPage = () => {
     data: [],
   });
 
-  const memoService = new MemoService();
-  const memoUseCase = new MemoUseCase(memoService, token);
-  const memoViewModel = new MemoViewModel(memoUseCase, token);
+  const memoViewModel = useMemoViewModel(token, clearToken);
 
   const suggestionsViewModel = new SuggestionViewModel(
     new SuggestionUseCase(),
