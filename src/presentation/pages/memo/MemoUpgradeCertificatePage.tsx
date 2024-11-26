@@ -102,7 +102,7 @@ const MemoUpgradeCertificatePage = () => {
       <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
         <HeaderContent
           leftIcon={<ArrowLeftIcon onClick={goBack} />}
-          title={t("memo.upgrade-to-memo-origin.title")}
+          title={t("memo.upgrade-to-certificate.title")}
           description={id}
         >
           <div className="tw-w-full tw-flex tw-justify-end tw-items-center">
@@ -112,7 +112,7 @@ const MemoUpgradeCertificatePage = () => {
               loading={isSubmitting}
               className="!tw-h-[40px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
             >
-              {t("memo.add.button.submit")}
+              {t("memo.upgrade-to-certificate.button.submit")}
             </Button>
           </div>
         </HeaderContent>

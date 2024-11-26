@@ -112,7 +112,7 @@ const MemoUpgradeOriginPage = () => {
               loading={isSubmitting}
               className="!tw-h-[40px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
             >
-              {t("memo.add.button.submit")}
+              {t("memo.upgrade-to-memo-origin.button.submit")}
             </Button>
           </div>
         </HeaderContent>
