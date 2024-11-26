@@ -6,12 +6,14 @@ import { ISuggestionsState } from "@domain/entities/SuggestionEntity";
 import { IMemoData } from "@domain/entities/MemoEntity";
 import FormInput from "@components/form/input/FormInput";
 import { useLanguage } from "@lib/hooks/useLanguage";
+import FormTextArea from "@components/form/input/FormTextArea";
 
 export interface IMemoFormProps {
   control: Control<IMemoData, any>;
   errors: FieldErrors<IMemoData>;
   suggestions: ISuggestionsState;
   customers: ICustomerOption;
+  type?: "add" | "upgrade";
 }
 
 const MemoForm: React.FC<IMemoFormProps> = ({
@@ -19,6 +21,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
   control,
   suggestions,
   customers,
+  type = "add",
 }) => {
   const { t } = useLanguage();
 
@@ -109,17 +112,6 @@ const MemoForm: React.FC<IMemoFormProps> = ({
         />
 
         <FormSelect
-          name="attributes.origins"
-          label={t("memo.form.origins.label")}
-          placeholder={t("memo.form.origins.placeholder")}
-          options={suggestions.data.origin}
-          loading={suggestions.isLoading}
-          control={control}
-          allowClear
-          error={errors.attributes?.origins}
-        />
-
-        <FormSelect
           name="attributes.comments"
           label={t("memo.form.comments.label")}
           placeholder={t("memo.form.comments.placeholder")}
@@ -130,7 +122,24 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           error={errors.attributes?.comments}
         />
 
-        <FormInput
+        <FormSelect
+          name="attributes.origins"
+          label={t("memo.form.origins.label")}
+          placeholder={t("memo.form.origins.placeholder")}
+          options={suggestions.data.origin}
+          loading={suggestions.isLoading}
+          control={control}
+          allowClear
+          rules={{
+            required: {
+              value: type === "upgrade" ? true : false,
+              message: t("memo.form.origins.required"),
+            },
+          }}
+          error={errors.attributes?.origins}
+        />
+
+        <FormTextArea
           name="additional_comment"
           label={t("memo.form.additional_comment.label")}
           placeholder={t("memo.form.additional_comment.placeholder")}

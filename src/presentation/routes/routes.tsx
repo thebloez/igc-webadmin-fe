@@ -5,6 +5,8 @@ import DashboardPage from "@pages/dashboard/DashboardPage";
 import LoginPage from "@pages/login/LoginPage";
 import MemoAddPage from "@pages/memo/MemoAddPage";
 import MemoPage from "@pages/memo/MemoPage";
+import MemoUpgradeCertificatePage from "@pages/memo/MemoUpgradeCertificatePage";
+import MemoUpgradeOriginPage from "@pages/memo/MemoUpgradeOriginPage";
 import TrashPage from "@pages/trash/TrashPage";
 
 type TRoutes = { path: string; isAuth: boolean; element: JSX.Element }[];
@@ -39,6 +41,16 @@ const routes: TRoutes = [
     path: "/memo",
     isAuth: true,
     element: <MemoPage />,
+  },
+  {
+    path: "/memo/upgrade/certificate/:id",
+    isAuth: true,
+    element: <MemoUpgradeCertificatePage />,
+  },
+  {
+    path: "/memo/upgrade/memo-origin/:id",
+    isAuth: true,
+    element: <MemoUpgradeOriginPage />,
   },
   {
     path: "/memo/add",

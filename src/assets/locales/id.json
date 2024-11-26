@@ -178,6 +178,18 @@
         "submit": "Simpan"
       }
     },
+    "upgrade-to-certificate": {
+      "title": "Upgrade ke Sertifikat",
+      "button": {
+        "submit": "Upgrade"
+      }
+    },
+    "upgrade-to-memo-origin": {
+      "title": "Upgrade ke Memo Origin",
+      "button": {
+        "submit": "Upgrade"
+      }
+    },
     "form": {
       "object_image": {
         "label": "Gambar Objek",
@@ -265,6 +277,7 @@
     },
     "add": {
       "title": "Tambah Pelanggan",
+
       "description": "Tambah pelanggan baru",
       "button": {
         "submit": "Simpan"

@@ -12,7 +12,7 @@ const items = (origin: string, id: string) => {
   let items = [
     {
       key: "1",
-      label: <Link to={"/memo/upgrade/certificate?id=" + id}>Sertifikat</Link>,
+      label: <Link to={"/memo/upgrade/certificate/" + id}>Sertifikat</Link>,
     },
   ];
 
@@ -21,9 +21,7 @@ const items = (origin: string, id: string) => {
       ...items,
       {
         key: "2",
-        label: (
-          <Link to={"/memo/upgrade/memo-origin?id=" + id}>Memo Origin</Link>
-        ),
+        label: <Link to={"/memo/upgrade/memo-origin/" + id}>Memo Origin</Link>,
       },
     ];
   }
