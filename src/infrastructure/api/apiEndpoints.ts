@@ -6,6 +6,7 @@ const APIEndpoints = {
     managementParent: "dashboard/v1/menu/parents",
   },
   login: "api/login",
+  profile: "api/profile",
   master: "api/masters",
   members: "api/members",
   suggestions: "api/suggestion/all",

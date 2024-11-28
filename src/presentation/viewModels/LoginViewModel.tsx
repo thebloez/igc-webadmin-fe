@@ -32,7 +32,7 @@ class LoginViewModel implements ILoginViewModel {
       this.dispatch(
         setUser({
           email: props.email,
-          fullName: "John Doe",
+          fullName: result?.profile?.name,
           token: result?.token,
         })
       );

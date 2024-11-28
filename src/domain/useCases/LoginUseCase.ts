@@ -6,14 +6,31 @@ export default class LoginUseCase {
   private loginService = new LoginService();
 
   async credentialLogin(email: string, password: string) {
-    const result = await this.loginService.credentialLogin(email, password);
+    try {
+      const result = await this.loginService.credentialLogin(email, password);
 
-    logger("LoginUseCase.credentialLogin", result);
+      const resultProfile = await this.loginService.getProfile({
+        token: result?.data?.token,
+      });
 
-    if (isNullOrEmpty(result?.data?.token)) {
-      throw new Error(result?.meta?.message ?? "Login failed");
+      logger("LoginUseCase.credentialLogin", result);
+
+      if (isNullOrEmpty(result?.data?.token)) {
+        throw new Error(result?.meta?.message ?? "Login failed");
+      }
+      if (isNullOrEmpty(resultProfile?.data)) {
+        throw new Error(result?.meta?.message ?? "Profile not found");
+      }
+
+      return {
+        token: result?.data?.token,
+        expires_at: result?.data?.expires_at,
+        profile: resultProfile?.data,
+      };
+    } catch (error) {
+      logger("LoginUseCase.credentialLogin", error);
+
+      throw error;
     }
-
-    return result?.data;
   }
 }
