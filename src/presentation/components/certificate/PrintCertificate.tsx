@@ -15,7 +15,6 @@ import LogoTransparentIcon from "@components/icon/LogoTransparentIcon";
 import "./PrintCertificate.style.css";
 import HologramFlatIcon from "@components/icon/HologramFlatIcon";
 import QRCode from "react-qr-code";
-import SignatureIcon from "@components/icon/SigntaureIcon";
 import randomString from "@lib/utils/randomString";
 
 export interface IPrintCertificate {
@@ -209,25 +208,27 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 alt="Gem"
                 className="tw-w-full tw-h-full tw-object-cover tw-rounded-md"
               />
-              <p>{data.attributes.final_identification}</p>
+              <p className="tw-text-center tw-text-[#444444] tw-text-xl tw-font-bold tw-py-2">
+                {data.attributes.final_identification}
+              </p>
             </div>
             <div className="tw-justify-center tw-items-center tw-gap-4 tw-flex tw-w-full">
-              <div className="tw-w-[100%]">
+              <div className="tw-w-[100%] tw-flex tw-flex-col tw-items-center">
                 <QRCode
                   value={
                     "https://igc-lab.com/certificate?id=" +
                     data.attributes.id_master
                   }
-                  size={64}
+                  size={70}
                   bgColor="transparent"
                   fgColor="#000000"
                 />
+                <p className="tw-font-semibold">E-Certificate</p>
               </div>
 
               <div className="tw-w-[100%]">
-                <SignatureIcon width={100} />
-                <p className="tw-text-xxs tw-font-semibold tw-mt-2">
-                  Dr. John Doe
+                <p className="tw-text-xs tw-text-center tw-font-bold tw-mt-2">
+                  Joe Doe
                 </p>
               </div>
               <div className="tw-w-[100%]">

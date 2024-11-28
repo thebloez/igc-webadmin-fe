@@ -16,7 +16,7 @@ const items = (origin: string, id: string) => {
     },
   ];
 
-  if (!isNullOrEmpty(origin)) {
+  if (isNullOrEmpty(origin)) {
     items = [
       ...items,
       {
