@@ -22,7 +22,7 @@ export interface ICertificateService {
 class CertificateService implements ICertificateService {
   async getCertificate(props: IGetRequest): Promise<ICertificateResponse> {
     const response: AxiosResponse<ICertificateResponse> = await API.get(
-      apiEndpoints.master,
+      apiEndpoints.master.base,
       {
         headers: {
           Authorization: `Bearer ${props.token}`,
@@ -37,7 +37,7 @@ class CertificateService implements ICertificateService {
     props: IPostRequest<FormData>
   ): Promise<ICertificateCreateResponse> {
     const response: AxiosResponse<ICertificateCreateResponse> = await API.post(
-      apiEndpoints.master,
+      apiEndpoints.master.base,
       props.data,
       {
         headers: {
@@ -53,10 +53,13 @@ class CertificateService implements ICertificateService {
     props: IDeleteRequest
   ): Promise<ICertificateResponse> {
     const response: AxiosResponse<ICertificateResponse> = await API.delete(
-      apiEndpoints.master + `/delete?id=${props.id}`,
+      apiEndpoints.master.delete,
       {
         headers: {
           Authorization: `Bearer ${props.token}`,
+        },
+        params: {
+          id: props.id,
         },
       }
     );

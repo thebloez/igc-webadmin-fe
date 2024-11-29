@@ -1,6 +1,6 @@
 import HeaderContent from "@components/dashboard/layout/HeaderContent";
 import { Button, Form, message } from "antd";
-import { IMemoData } from "@domain/entities/MemoEntity";
+import { IMemoData, IMemoUpgradeState } from "@domain/entities/MemoEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
 import { useEffect, useState } from "react";
@@ -16,29 +16,38 @@ import CustomerViewModel from "@viewModels/CustomerViewModel";
 import ArrowLeftIcon from "@components/icon/ArrowLeftIcon";
 import useMemoViewModel from "@lib/hooks/useMemoViewModel";
 import { setUserToken } from "@redux/user/userReduxReducer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import SpinnerLoading from "@components/loader/SpinnerLoading";
 
 const MemoUpgradeOriginPage = () => {
   // get language and t function to change language
   const { t } = useLanguage();
 
-  const { id } = useParams<{ id: string }>();
+  const { id: paramId } = useParams<{ id: string }>();
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
+  const token = useSelector(selectToken);
+
   // get token from redux
   const clearToken = () => dispatch(setUserToken(""));
+
+  const [state, setState] = useState<IMemoUpgradeState>({
+    isLoading: true,
+    id: paramId as string,
+  });
 
   const {
     handleSubmit,
     control,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<IMemoData>({
     mode: "onChange",
   });
-
-  const token = useSelector(selectToken);
 
   const [suggestions, setSuggestions] = useState<ISuggestionsState>({
     isLoading: true,
@@ -85,8 +94,19 @@ const MemoUpgradeOriginPage = () => {
     await customerViewModel.getCustomerOption(token, setCustomers);
   };
 
+  useEffect(() => {
+    if (state.id) {
+      findMemo();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.id]);
+
+  const findMemo = async () => {
+    await memoViewModel.findMemo(state, setState, setValue);
+  };
+
   const onSubmit: SubmitHandler<IMemoData> = async (data) => {
-    await memoViewModel.createMemo(data, message, reset);
+    await memoViewModel.upgradeMemo(data, message, navigate, "m1");
   };
 
   const goBack = () => {
@@ -103,26 +123,35 @@ const MemoUpgradeOriginPage = () => {
         <HeaderContent
           leftIcon={<ArrowLeftIcon onClick={goBack} />}
           title={t("memo.upgrade-to-memo-origin.title")}
-          description={id}
+          description={state.id ?? "-"}
         >
-          <div className="tw-w-full tw-flex tw-justify-end tw-items-center">
-            <Button
-              htmlType="submit"
-              type="primary"
-              loading={isSubmitting}
-              className="!tw-h-[40px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
-            >
-              {t("memo.upgrade-to-memo-origin.button.submit")}
-            </Button>
-          </div>
+          {!state.isLoading && (
+            <div className="tw-w-full tw-flex tw-justify-end tw-items-center">
+              <Button
+                htmlType="submit"
+                type="primary"
+                loading={isSubmitting}
+                className="!tw-h-[40px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
+              >
+                {t("memo.upgrade-to-memo-origin.button.submit")}
+              </Button>
+            </div>
+          )}
         </HeaderContent>
         <div className="tw-p-4">
-          <MemoForm
-            control={control}
-            errors={errors}
-            suggestions={suggestions}
-            customers={customers}
-          />
+          {state.isLoading ? (
+            <div className="tw-w-full tw-flex tw-justify-center tw-h-[200px] tw-items-center">
+              <SpinnerLoading width={32} height={32} type="primary-spinner" />
+            </div>
+          ) : (
+            <MemoForm
+              type="upgrade"
+              control={control}
+              errors={errors}
+              suggestions={suggestions}
+              customers={customers}
+            />
+          )}
         </div>
       </div>
     </Form>

@@ -7,6 +7,7 @@ import {
   IGetRequest,
   IPostRequest,
 } from "@domain/entities/ResponseEntity";
+import { UpgradeType } from "@api/apiEndpoints";
 
 export default class MemoUseCase {
   private memoService: IMemoService;
@@ -18,6 +19,48 @@ export default class MemoUseCase {
   async get(props: IGetRequest) {
     try {
       const result = await this.memoService.getMemo({
+        token: props.token,
+        params: props.params,
+      });
+
+      logger("MemoUseCase.get | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(result?.meta?.message ?? "Failed to memo get");
+      }
+
+      return result;
+    } catch (error: any) {
+      logger("MemoUseCase.get | error =>", error);
+
+      throw error;
+    }
+  }
+
+  async findMemo(props: IGetRequest) {
+    try {
+      const result = await this.memoService.findMemo({
+        token: props.token,
+        params: props.params,
+      });
+
+      logger("MemoUseCase.find | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(result?.meta?.message ?? "Failed to find memo");
+      }
+
+      return result;
+    } catch (error: any) {
+      logger("MemoUseCase.find | error =>", error);
+
+      throw error;
+    }
+  }
+
+  async find(props: IGetRequest) {
+    try {
+      const result = await this.memoService.findMemo({
         token: props.token,
         params: props.params,
       });
@@ -49,7 +92,7 @@ export default class MemoUseCase {
         certData.append(`attributes[${key}]`, value ?? "");
       });
 
-      logger("MemoUseCase.payload | response =>", certData);
+      logger("MemoUseCase.createMemo | payload =>", certData);
 
       const result = await this.memoService.createMemo({
         token: props.token,
@@ -69,6 +112,48 @@ export default class MemoUseCase {
       throw error;
     }
   }
+
+  async upgradeMemo(props: IPostRequest<IMemoData>, type: UpgradeType) {
+    try {
+      const certData = new FormData();
+
+      certData.append("id", props.data.id);
+      certData.append("member_phone_number", props.data.member_phone_number);
+      certData.append("additional_comment", props.data.additional_comment);
+      certData.append("status", "active");
+      certData.append("type", "Memo");
+
+      Object.entries(props.data.attributes).forEach(([key, value]) => {
+        certData.append(`attributes[${key}]`, value ?? "");
+      });
+
+      logger("MemoUseCase.upgradeMemo | payload =>", certData);
+
+      const result = await this.memoService.upgradeMemo(
+        {
+          id: props.data.id,
+        },
+        {
+          token: props.token,
+          data: certData,
+        },
+        type
+      );
+
+      logger("MemoUseCase.upgradeMemo | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(result?.meta?.message ?? "Failed to upgrade memo");
+      }
+
+      return result;
+    } catch (error: any) {
+      logger("MemoUseCase.upgradeMemo | error =>", error);
+
+      throw error;
+    }
+  }
+
   async delete(props: IDeleteRequest) {
     try {
       const result = await this.memoService.deleteMemo({

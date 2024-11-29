@@ -23,6 +23,7 @@ const MemoAddPage = () => {
 
   const dispatch = useDispatch();
 
+  const token = useSelector(selectToken);
   // get token from redux
   const clearToken = () => dispatch(setUserToken(""));
 
@@ -34,8 +35,6 @@ const MemoAddPage = () => {
   } = useForm<IMemoData>({
     mode: "onChange",
   });
-
-  const token = useSelector(selectToken);
 
   const [suggestions, setSuggestions] = useState<ISuggestionsState>({
     isLoading: true,

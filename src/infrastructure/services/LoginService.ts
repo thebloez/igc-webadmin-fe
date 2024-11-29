@@ -14,7 +14,7 @@ class LoginService {
     password: string
   ): Promise<ILoginResponse> {
     const response: AxiosResponse<IResponseEntity<ILoginData>> = await API.post(
-      apiEndpoints.login,
+      apiEndpoints.auth.login,
       JSON.stringify({
         email,
         password,
@@ -30,7 +30,7 @@ class LoginService {
   }
   async getProfile(props: IGetRequest): Promise<IProfileResponse> {
     const response: AxiosResponse<IProfileResponse> = await API.get(
-      apiEndpoints.profile,
+      apiEndpoints.auth.profile,
       {
         headers: {
           Authorization: `Bearer ${props.token}`,

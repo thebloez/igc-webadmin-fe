@@ -1,12 +1,15 @@
+import { UpgradeType } from "@api/apiEndpoints";
 import {
   IMemoData,
   IMemoDeleteState,
   IMemoTableState,
+  IMemoUpgradeState,
 } from "@domain/entities/MemoEntity";
 import MemoUseCase from "@domain/useCases/MemoUseCase";
 import logger from "@lib/utils/logger";
 import { SetStateAction } from "react";
-import { UseFormReset } from "react-hook-form";
+import { UseFormReset, UseFormSetValue } from "react-hook-form";
+import { NavigateFunction } from "react-router-dom";
 
 class MemoViewModel {
   private memoUseCase: MemoUseCase;
@@ -61,6 +64,45 @@ class MemoViewModel {
     }
   }
 
+  async findMemo(
+    state: IMemoUpgradeState,
+    setTable: (value: SetStateAction<IMemoUpgradeState>) => void,
+    setValue: UseFormSetValue<IMemoData>
+  ) {
+    try {
+      setTable((prevState) => ({
+        ...prevState,
+        isLoading: true,
+      }));
+
+      const response = await this.memoUseCase.findMemo({
+        token: this.token,
+        params: {
+          id: state.id,
+        },
+      });
+
+      logger("MemoViewModel.findMemo | response => ", response);
+
+      if (response) {
+        setValue("attributes", response.data.attributes);
+        setValue("id", response.data.id);
+        setValue("member_phone_number", response.data.member_phone_number);
+      }
+    } catch (error: any) {
+      logger("MemoViewModel.findMemo | error => ", error);
+
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
+    } finally {
+      setTable((prevState) => ({
+        ...prevState,
+        isLoading: false,
+      }));
+    }
+  }
+
   createMemo = async (
     data: IMemoData,
     message: any,
@@ -84,6 +126,38 @@ class MemoViewModel {
       }
 
       logger("MemoViewModel.createMemo | error => ", error);
+      message.error("Gagal membuat sertifikat");
+    }
+  };
+
+  upgradeMemo = async (
+    data: IMemoData,
+    message: any,
+    navigate: NavigateFunction,
+    type: UpgradeType
+  ) => {
+    try {
+      const response = await this.memoUseCase.upgradeMemo(
+        {
+          token: this.token,
+          data,
+        },
+        type
+      );
+
+      logger("MemoViewModel.upgradeMemo | response => ", response);
+
+      if (response) {
+        message.success("Memo berhasil dibuat");
+        navigate("/memo");
+      }
+    } catch (error: any) {
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
+
+      logger("MemoViewModel.upgradeMemo | error => ", error);
+
       message.error("Gagal membuat sertifikat");
     }
   };
@@ -122,6 +196,7 @@ class MemoViewModel {
       }));
     }
   };
+
   printMemo = async (
     id: string,
     message: any,

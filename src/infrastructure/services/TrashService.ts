@@ -13,7 +13,7 @@ export interface ITrashService {
 class TrashService {
   async getTrash(props: IGetRequest): Promise<ITrashResponse> {
     const response: AxiosResponse<ITrashResponse> = await API.get(
-      apiEndpoints.trash,
+      apiEndpoints.master.trash,
       {
         headers: {
           Authorization: `Bearer ${props.token}`,
@@ -26,10 +26,13 @@ class TrashService {
   }
   async restore(props: IGetRequest): Promise<ITrashResponse> {
     const response: AxiosResponse<ITrashResponse> = await API.get(
-      apiEndpoints.trash + "/restore?id=" + props.id,
+      apiEndpoints.master["trash/restore"],
       {
         headers: {
           Authorization: `Bearer ${props.token}`,
+        },
+        params: {
+          id: props.id,
         },
       }
     );
@@ -38,10 +41,13 @@ class TrashService {
   }
   async destroy(props: IGetRequest): Promise<ITrashResponse> {
     const response: AxiosResponse<ITrashResponse> = await API.delete(
-      apiEndpoints.trash + "/destroy?id=" + props.id,
+      apiEndpoints.master["trash/destroy"],
       {
         headers: {
           Authorization: `Bearer ${props.token}`,
+        },
+        params: {
+          id: props.id,
         },
       }
     );

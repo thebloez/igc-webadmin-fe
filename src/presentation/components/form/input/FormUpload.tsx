@@ -80,7 +80,7 @@ const FormUpload: React.FC<FormUploadProps> = ({
               maxCount={1}
             >
               {getValue ? (
-                <div className="tw-relative tw-w-[180px] tw-border tw-rounded tw-cursor-pointer">
+                <div className="tw-relative tw-w-[180px] tw-min-h-[100px] tw-border tw-rounded tw-cursor-pointer tw-flex tw-justify-center tw-items-center">
                   <div className="tw-absolute -tw-right-2 -tw-top-2">
                     <svg
                       width="36"

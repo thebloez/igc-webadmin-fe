@@ -47,11 +47,17 @@ export interface IMemoTableState extends IBaseState {
   search: string;
 }
 
-export interface IMemoResponse
+export interface IMemoUpgradeState {
+  isLoading: boolean;
+  id: string;
+}
+
+export interface IMemoResponsePagination
   extends IResponsePaginationEntity<IMemoData> {}
 
-export interface IMemoCreateResponse
-  extends IResponseEntity<IMemoData> {}
+export interface IMemoResponse extends IResponseEntity<IMemoData> {}
+
+export interface IMemoCreateResponse extends IResponseEntity<IMemoData> {}
 
 export interface IMemoFormProps {
   control: Control<IMemoData, any>;

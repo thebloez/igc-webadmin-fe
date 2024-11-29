@@ -1,3 +1,5 @@
+export type UpgradeType = "sertifikat" | "m1";
+
 const APIEndpoints = {
   menu: {
     accessMenu: "dashboard/v1/access/menu",
@@ -5,12 +7,22 @@ const APIEndpoints = {
     managementList: "dashboard/v1/menu/list",
     managementParent: "dashboard/v1/menu/parents",
   },
-  login: "api/login",
-  profile: "api/profile",
-  master: "api/masters",
+  auth: {
+    login: "api/login",
+    profile: "api/profile",
+  },
+  master: {
+    base: "api/masters",
+    find: "api/masters/search",
+    delete: "api/masters/delete",
+    trash: "api/masters/thrash",
+    "trash/restore": "api/masters/thrash/restore",
+    "trash/destroy": "api/masters/thrash/destroy",
+    print: "api/masters/print",
+    upgrade: (type: UpgradeType) => `api/masters/upgrade/${type}`,
+  },
   members: "api/members",
   suggestions: "api/suggestion/all",
-  trash: "api/masters/thrash",
   insight: "api/insight",
 };
 
