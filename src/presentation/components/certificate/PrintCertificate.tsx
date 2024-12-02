@@ -214,7 +214,9 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 <QRCode
                   value={
                     "https://igc-lab.com/certificate?id=" +
-                    data.attributes.id_master
+                    data.attributes.id_master +
+                    "-" +
+                    identifier
                   }
                   size={70}
                   bgColor="transparent"
