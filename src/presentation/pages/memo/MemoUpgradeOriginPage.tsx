@@ -106,7 +106,9 @@ const MemoUpgradeOriginPage = () => {
   };
 
   const onSubmit: SubmitHandler<IMemoData> = async (data) => {
-    await memoViewModel.upgradeMemo(data, message, navigate, "m1");
+    await memoViewModel.upgradeMemo(data, message, navigate, "m1").then(() => {
+      goBack();
+    });
   };
 
   const goBack = () => {

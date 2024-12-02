@@ -147,8 +147,8 @@ class MemoViewModel {
 
       logger("MemoViewModel.upgradeMemo | response => ", response);
 
-      if (response) {
-        message.success("Memo berhasil dibuat");
+      if (response.data) {
+        message.success("Memo berhasil diupgrade");
         navigate("/memo");
       }
     } catch (error: any) {
@@ -158,7 +158,7 @@ class MemoViewModel {
 
       logger("MemoViewModel.upgradeMemo | error => ", error);
 
-      message.error("Gagal membuat sertifikat");
+      message.error("Gagal upgrade memo");
     }
   };
 

@@ -16,6 +16,7 @@ import CustomerViewModel from "@viewModels/CustomerViewModel";
 import ArrowLeftIcon from "@components/icon/ArrowLeftIcon";
 import useMemoViewModel from "@lib/hooks/useMemoViewModel";
 import { setUserToken } from "@redux/user/userReduxReducer";
+import { useNavigate } from "react-router-dom";
 
 const MemoAddPage = () => {
   // get language and t function to change language
@@ -26,6 +27,8 @@ const MemoAddPage = () => {
   const token = useSelector(selectToken);
   // get token from redux
   const clearToken = () => dispatch(setUserToken(""));
+
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -82,11 +85,13 @@ const MemoAddPage = () => {
   };
 
   const onSubmit: SubmitHandler<IMemoData> = async (data) => {
-    await memoViewModel.createMemo(data, message, reset);
+    await memoViewModel.createMemo(data, message, reset).then(() => {
+      goBack();
+    });
   };
 
   const goBack = () => {
-    window.history.back();
+    navigate("/memo");
   };
 
   return (
