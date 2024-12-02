@@ -1,10 +1,8 @@
 import HeaderContent from "@components/dashboard/layout/HeaderContent";
 import { Button, Form, message } from "antd";
 import { ICertificateFormData } from "@domain/entities/CertificateEntity";
-import CertificateUseCase from "@domain/useCases/CertificateUseCase";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
-import CertificateViewModel from "@viewModels/CertificateViewModel";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -16,8 +14,8 @@ import { ICustomerOption } from "@domain/entities/CustomerEntity";
 import CustomerUseCase from "@domain/useCases/CustomerUseCase";
 import CustomerViewModel from "@viewModels/CustomerViewModel";
 import ArrowLeftIcon from "@components/icon/ArrowLeftIcon";
-import CertificateService from "@services/CertificateService";
 import { setUserToken } from "@redux/user/userReduxReducer";
+import useCertificateViewModel from "@lib/hooks/useCertificateViewModel";
 
 const CertificateAddPage = () => {
   // get language and t function to change language
@@ -57,15 +55,7 @@ const CertificateAddPage = () => {
   });
 
   // create instance of certificate service, use case, and view model
-  const certificateService = new CertificateService();
-  const certificateUseCase = new CertificateUseCase(
-    certificateService,
-    clearToken
-  );
-  const certificateViewModel = new CertificateViewModel(
-    certificateUseCase,
-    token
-  );
+  const certificateViewModel = useCertificateViewModel(token, clearToken);
 
   const suggestionsViewModel = new SuggestionViewModel(
     new SuggestionUseCase(),

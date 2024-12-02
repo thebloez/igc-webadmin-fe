@@ -1,7 +1,7 @@
 import { UpgradeType } from "@api/apiEndpoints";
 import {
   IMemoData,
-  IMemoDeleteState,
+  IMemoModalState,
   IMemoTableState,
   IMemoUpgradeState,
 } from "@domain/entities/MemoEntity";
@@ -165,7 +165,7 @@ class MemoViewModel {
   deleteMemo = async (
     id: string,
     message: any,
-    setModal: (value: SetStateAction<IMemoDeleteState>) => void
+    setModal: (value: SetStateAction<IMemoModalState>) => void
   ) => {
     try {
       setModal((prevState) => ({
@@ -199,8 +199,9 @@ class MemoViewModel {
 
   printMemo = async (
     id: string,
+    identifier: string,
     message: any,
-    setModal: (value: SetStateAction<IMemoDeleteState>) => void
+    setModal: (value: SetStateAction<IMemoModalState>) => void
   ) => {
     try {
       setModal((prevState) => ({
@@ -211,6 +212,9 @@ class MemoViewModel {
       const response = await this.memoUseCase.printMemo({
         token: this.token,
         id,
+        params: {
+          identifier,
+        },
       });
 
       logger("MemoViewModel.printMemo | response => ", response);

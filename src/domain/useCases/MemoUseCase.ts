@@ -174,11 +174,15 @@ export default class MemoUseCase {
       throw error;
     }
   }
-  async printMemo(props: IDeleteRequest) {
+  
+  async printMemo(props: IGetRequest) {
     try {
       const result = await this.memoService.printMemo({
         token: props.token,
         id: props.id,
+        params: {
+          identifier: props.params?.identifier,
+        },
       });
 
       logger("MemoUseCase.printMemo | response =>", result);

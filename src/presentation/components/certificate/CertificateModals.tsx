@@ -4,7 +4,7 @@ import PrintCertificate, { IPrintCertificate } from "./PrintCertificate";
 
 type ICertificateModal = IPrintCertificate &
   Omit<IQuestionModal, "wording" | "onLeftClick"> & {
-    type: "print" | "delete";
+    type: "print" | "delete" | "after-print";
   };
 
 export const CertificateModals = (modal: ICertificateModal) => {
@@ -16,7 +16,7 @@ export const CertificateModals = (modal: ICertificateModal) => {
     <>
       {modal.type === "print" && (
         <PrintCertificate
-          onPrint={modal.onPrint}
+          onAfterPrint={modal.onAfterPrint}
           open={modal.open}
           onClose={modal.onClose}
           showPrint
@@ -25,23 +25,24 @@ export const CertificateModals = (modal: ICertificateModal) => {
         />
       )}
 
-      {modal.type === "delete" && (
+      {(modal.type === "delete" || modal.type == "after-print") && (
         <QuestionModal
           open={modal.open}
           isLoading={modal.isLoading}
           onLeftClick={modal.onClose}
           onRightClick={modal.onRightClick}
+          showWarning={modal.showWarning}
           wording={{
-            description: t("certificate.list.modal.delete.description"),
+            description: t(`certificate.list.modal.${modal.type}.description`),
             warning: {
-              title: t("certificate.list.modal.delete.warning.title"),
+              title: t(`certificate.list.modal.${modal.type}.warning.title`),
               description: t(
-                "certificate.list.modal.delete.warning.description"
+                `certificate.list.modal.${modal.type}.warning.description`
               ),
             },
             button: {
-              no: t("certificate.list.modal.delete.button.no"),
-              yes: t("certificate.list.modal.delete.button.yes"),
+              no: t(`certificate.list.modal.${modal.type}.button.no`),
+              yes: t(`certificate.list.modal.${modal.type}.button.yes`),
             },
           }}
           data={modal.data}

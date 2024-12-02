@@ -5,7 +5,7 @@ import { MemoModals } from "@components/memo/MemoModals";
 import MemoTable from "@components/memo/MemoTable";
 import {
   IMemoData,
-  IMemoDeleteState,
+  IMemoModalState,
   IMemoTableState,
 } from "@domain/entities/MemoEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
@@ -42,10 +42,11 @@ const MemoPage = () => {
     data: [],
   });
 
-  const [modal, setModal] = useState<IMemoDeleteState>({
+  const [modal, setModal] = useState<IMemoModalState>({
     visible: false,
     type: "delete",
     isLoading: false,
+    showWarning: false,
     data: {} as IMemoData,
   });
 
@@ -83,14 +84,10 @@ const MemoPage = () => {
     setModal((prevState) => ({
       ...prevState,
       visible: true,
+      type: "delete",
+      showWarning: true,
       data: record,
     }));
-  };
-
-  const onPostDelete = async (id: string) => {
-    await memoViewModel.deleteMemo(id, message, setModal).then(() => {
-      getMemo();
-    });
   };
 
   const closeModal = () => {
@@ -105,8 +102,28 @@ const MemoPage = () => {
     }));
   }, []);
 
-  const postPrint = async () => {
-    await memoViewModel.printMemo(modal.data.id, message, setModal);
+  const onPostDelete = async (id: string) => {
+    await memoViewModel.deleteMemo(id, message, setModal).then(() => {
+      getMemo();
+      closeModal();
+    });
+  };
+
+  const postPrint = async (id: string) => {
+    await memoViewModel
+      .printMemo(id, modal.data.identifier, message, setModal)
+      .then(() => {
+        getMemo();
+        closeModal();
+      });
+  };
+
+  const onAfterQuestion = () => {
+    if (modal.type === "delete") {
+      onPostDelete(modal.data.id);
+    } else if (modal.type === "after-print") {
+      postPrint(modal.data.id);
+    }
   };
 
   const onPrint = (record: any) => {
@@ -131,15 +148,29 @@ const MemoPage = () => {
     500
   );
 
+  const onQuestionPrint = (identifier: string) => {
+    setModal((prevState) => ({
+      ...prevState,
+      visible: true,
+      type: "after-print",
+      showWarning: false,
+      data: {
+        ...prevState.data,
+        identifier,
+      },
+    }));
+  };
+
   return (
     <div className="tw-m-0 tw-p-6 ">
       <MemoModals
         onClose={closeModal}
         data={modal.data}
         isLoading={modal.isLoading}
-        onRightClick={onPostDelete}
+        onRightClick={onAfterQuestion}
         open={modal.visible}
-        onPrint={postPrint}
+        showWarning={modal.showWarning}
+        onAfterPrint={onQuestionPrint}
         type={modal.type}
         showPrint
         title={modal.type === "print" ? "Print Memo" : ""}

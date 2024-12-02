@@ -7,8 +7,8 @@ import { useMemo } from "react";
 const useCertificateViewModel = (token: string, clearToken: () => void) => {
   return useMemo(() => {
     const service = new CertificateService();
-    const useCase = new CertificateUseCase(service, clearToken);
-    return new CertificateViewModel(useCase, token);
+    const useCase = new CertificateUseCase(service);
+    return new CertificateViewModel(useCase, token, clearToken);
   }, [token, clearToken]);
 };
 

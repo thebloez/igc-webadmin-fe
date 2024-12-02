@@ -20,7 +20,7 @@ import randomString from "@lib/utils/randomString";
 export interface IPrintCertificate {
   title: string;
   open: boolean;
-  onPrint: () => void;
+  onAfterPrint: (identifier: string) => void;
   showPrint?: boolean;
   data: ICertificateData;
   onClose: () => void;
@@ -31,19 +31,16 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
   data,
   open,
   showPrint,
-  onPrint,
+  onAfterPrint,
   onClose,
 }) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const onAfterPrint = () => {
-    onClose();
-    onPrint();
-  };
-
   const reactToPrintFn = useReactToPrint({
     contentRef,
-    onAfterPrint: onAfterPrint,
+    onAfterPrint: () => {
+      onAfterPrint(identifier);
+    },
   });
 
   const { t } = useLanguage();

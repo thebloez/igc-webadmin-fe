@@ -4,7 +4,7 @@ import PrintMemo, { IPrintMemo } from "./PrintMemo";
 
 type IMemoModal = IPrintMemo &
   Omit<IQuestionModal, "wording" | "onLeftClick"> & {
-    type: "print" | "delete";
+    type: "print" | "delete" | "upgrade" | "after-print";
   };
 
 export const MemoModals = (modal: IMemoModal) => {
@@ -16,7 +16,7 @@ export const MemoModals = (modal: IMemoModal) => {
     <>
       {modal.type === "print" && (
         <PrintMemo
-          onPrint={modal.onPrint}
+          onAfterPrint={modal.onAfterPrint}
           open={modal.open}
           onClose={modal.onClose}
           showPrint
@@ -25,21 +25,24 @@ export const MemoModals = (modal: IMemoModal) => {
         />
       )}
 
-      {modal.type === "delete" && (
+      {(modal.type === "delete" || modal.type === "after-print") && (
         <QuestionModal
           open={modal.open}
           isLoading={modal.isLoading}
           onLeftClick={modal.onClose}
           onRightClick={modal.onRightClick}
+          showWarning={modal.showWarning}
           wording={{
-            description: t("memo.list.modal.delete.description"),
+            description: t(`memo.list.modal.${modal.type}.description`),
             warning: {
-              title: t("memo.list.modal.delete.warning.title"),
-              description: t("memo.list.modal.delete.warning.description"),
+              title: t(`memo.list.modal.${modal.type}.warning.title`),
+              description: t(
+                `memo.list.modal.${modal.type}.warning.description`
+              ),
             },
             button: {
-              no: t("memo.list.modal.delete.button.no"),
-              yes: t("memo.list.modal.delete.button.yes"),
+              no: t(`memo.list.modal.${modal.type}.button.no`),
+              yes: t(`memo.list.modal.${modal.type}.button.yes`),
             },
           }}
           data={modal.data}

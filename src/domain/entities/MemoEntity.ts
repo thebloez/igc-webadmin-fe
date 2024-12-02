@@ -35,11 +35,12 @@ export interface IMemoData {
   };
 }
 
-export interface IMemoDeleteState {
+export interface IMemoModalState {
   visible: boolean;
   isLoading: boolean;
-  type: "delete" | "print";
+  type: "delete" | "print" | "upgrade" | "after-print";
   data: IMemoData;
+  showWarning?: boolean;
 }
 
 export interface IMemoTableState extends IBaseState {
@@ -50,6 +51,10 @@ export interface IMemoTableState extends IBaseState {
 export interface IMemoUpgradeState {
   isLoading: boolean;
   id: string;
+  error: {
+    status: boolean;
+    message: string;
+  };
 }
 
 export interface IMemoResponsePagination

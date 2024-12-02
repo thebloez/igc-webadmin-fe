@@ -37,12 +37,12 @@ const MemoUpgradeOriginPage = () => {
   const [state, setState] = useState<IMemoUpgradeState>({
     isLoading: true,
     id: paramId as string,
+    error: {} as IMemoUpgradeState["error"],
   });
 
   const {
     handleSubmit,
     control,
-    reset,
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<IMemoData>({
@@ -110,51 +110,53 @@ const MemoUpgradeOriginPage = () => {
   };
 
   const goBack = () => {
-    window.history.back();
+    navigate("/memo");
   };
 
   return (
-    <Form
-      layout="vertical"
-      onFinish={handleSubmit(onSubmit)}
-      className="tw-m-0 tw-p-6"
-    >
-      <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
-        <HeaderContent
-          leftIcon={<ArrowLeftIcon onClick={goBack} />}
-          title={t("memo.upgrade-to-memo-origin.title")}
-          description={state.id ?? "-"}
-        >
-          {!state.isLoading && (
-            <div className="tw-w-full tw-flex tw-justify-end tw-items-center">
-              <Button
-                htmlType="submit"
-                type="primary"
-                loading={isSubmitting}
-                className="!tw-h-[40px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
-              >
-                {t("memo.upgrade-to-memo-origin.button.submit")}
-              </Button>
-            </div>
-          )}
-        </HeaderContent>
-        <div className="tw-p-4">
-          {state.isLoading ? (
-            <div className="tw-w-full tw-flex tw-justify-center tw-h-[200px] tw-items-center">
-              <SpinnerLoading width={32} height={32} type="primary-spinner" />
-            </div>
-          ) : (
-            <MemoForm
-              type="upgrade"
-              control={control}
-              errors={errors}
-              suggestions={suggestions}
-              customers={customers}
-            />
-          )}
+    <>
+      <Form
+        layout="vertical"
+        onFinish={handleSubmit(onSubmit)}
+        className="tw-m-0 tw-p-6"
+      >
+        <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
+          <HeaderContent
+            leftIcon={<ArrowLeftIcon onClick={goBack} />}
+            title={t("memo.upgrade-to-memo-origin.title")}
+            description={state.id ?? "-"}
+          >
+            {!state.isLoading && (
+              <div className="tw-w-full tw-flex tw-justify-end tw-items-center">
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  loading={isSubmitting}
+                  className="!tw-h-[40px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
+                >
+                  {t("memo.upgrade-to-memo-origin.button.submit")}
+                </Button>
+              </div>
+            )}
+          </HeaderContent>
+          <div className="tw-p-4">
+            {state.isLoading ? (
+              <div className="tw-w-full tw-flex tw-justify-center tw-h-[200px] tw-items-center">
+                <SpinnerLoading width={32} height={32} type="primary-spinner" />
+              </div>
+            ) : (
+              <MemoForm
+                type="upgrade"
+                control={control}
+                errors={errors}
+                suggestions={suggestions}
+                customers={customers}
+              />
+            )}
+          </div>
         </div>
-      </div>
-    </Form>
+      </Form>
+    </>
   );
 };
 

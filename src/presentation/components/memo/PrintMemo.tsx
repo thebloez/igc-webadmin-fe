@@ -9,15 +9,15 @@ import QRCode from "react-qr-code";
 import { useReactToPrint } from "react-to-print";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
-
-import "./PrintMemo.style.css";
 import { PrintMemoItem } from "./PrintMemoItem";
 import randomString from "@lib/utils/randomString";
+
+import "./PrintMemo.style.css";
 
 export interface IPrintMemo {
   title: string;
   open: boolean;
-  onPrint: () => void;
+  onAfterPrint: (identifier: string) => void;
   showPrint?: boolean;
   data: IMemoData;
   onClose: () => void;
@@ -35,13 +35,19 @@ const PrintMemo: React.FC<IPrintMemo> = ({
   data,
   open,
   showPrint,
-  onPrint,
+  onAfterPrint,
   onClose,
 }) => {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const reactToPrintFn = useReactToPrint({ contentRef, onAfterPrint: onPrint });
-  const { t } = useLanguage();
   const identifier = randomString();
+
+  const contentRef = useRef<HTMLDivElement>(null);
+  const reactToPrintFn = useReactToPrint({
+    contentRef,
+    onAfterPrint: () => {
+      onAfterPrint(identifier);
+    },
+  });
+  const { t } = useLanguage();
 
   return (
     <Modal

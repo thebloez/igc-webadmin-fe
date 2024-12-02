@@ -8,15 +8,11 @@ import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { id } from "date-fns/locale"; // Indonesian locale if needed
 
-const items = (origin: string, id: string, identifier: string) => {
+const items = (origin: string, id: string) => {
   let items = [
     {
       key: "1",
-      label: (
-        <Link to={"/memo/upgrade/certificate/" + id + "-" + identifier}>
-          Sertifikat
-        </Link>
-      ),
+      label: <Link to={"/memo/upgrade/certificate/" + id}>Sertifikat</Link>,
     },
   ];
 
@@ -25,11 +21,7 @@ const items = (origin: string, id: string, identifier: string) => {
       ...items,
       {
         key: "2",
-        label: (
-          <Link to={"/memo/upgrade/memo-origin/" + id + "-" + identifier}>
-            Memo Origin
-          </Link>
-        ),
+        label: <Link to={"/memo/upgrade/memo-origin/" + id}>Memo Origin</Link>,
       },
     ];
   }
@@ -88,11 +80,7 @@ const MemoColumn = (props: IColumn<IMemoData>): ColumnsType<IMemoData> => {
             <Dropdown
               trigger={["click"]}
               menu={{
-                items: items(
-                  record.attributes.origins,
-                  record.id,
-                  record.identifier
-                ),
+                items: items(record.attributes.origins, record.id),
               }}
             >
               <Button

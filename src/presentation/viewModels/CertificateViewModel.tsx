@@ -11,10 +11,16 @@ import { UseFormReset } from "react-hook-form";
 class CertificateViewModel {
   private certificateUseCase: CertificateUseCase;
   private token: string;
+  private clearToken: () => void;
 
-  constructor(certificateUseCase: CertificateUseCase, token: string) {
+  constructor(
+    certificateUseCase: CertificateUseCase,
+    token: string,
+    clearToken: () => void
+  ) {
     this.certificateUseCase = certificateUseCase;
     this.token = token;
+    this.clearToken = clearToken;
   }
 
   async getCertificate(
@@ -47,6 +53,10 @@ class CertificateViewModel {
       }
     } catch (error: any) {
       logger("CertificateViewModel.getCertificate | error => ", error);
+
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
     } finally {
       setTable((prevState) => ({
         ...prevState,
@@ -74,6 +84,9 @@ class CertificateViewModel {
       }
     } catch (error: any) {
       logger("CertificateViewModel.createCertificate | error => ", error);
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
       message.error("Gagal membuat sertifikat");
     }
   };
@@ -100,6 +113,49 @@ class CertificateViewModel {
       }
     } catch (error: any) {
       logger("CertificateViewModel.deleteCertificate | error => ", error);
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
+      message.error(error.message);
+    } finally {
+      setModal((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        visible: false,
+      }));
+    }
+  };
+
+  printCertificate = async (
+    id: string,
+    identifier: string,
+    message: any,
+    setModal: (value: SetStateAction<ICertificateModalState>) => void
+  ) => {
+    try {
+      setModal((prevState) => ({
+        ...prevState,
+        isLoading: true,
+      }));
+
+      const response = await this.certificateUseCase.printCertificate({
+        token: this.token,
+        id,
+        params: {
+          identifier,
+        },
+      });
+
+      logger("CertificateViewModel.printCertificate | response => ", response);
+
+      if (response) {
+        message.success("Certificate berhasil cetak");
+      }
+    } catch (error: any) {
+      logger("CertificateViewModel.printCertificate | error => ", error);
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
       message.error(error.message);
     } finally {
       setModal((prevState) => ({

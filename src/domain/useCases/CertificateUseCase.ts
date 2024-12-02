@@ -10,11 +10,9 @@ import {
 
 export default class CertificateUseCase {
   private certificateService: ICertificateService;
-  private clearToken: any;
 
-  constructor(certificateService: ICertificateService, clearToken: any) {
+  constructor(certificateService: ICertificateService) {
     this.certificateService = certificateService;
-    this.clearToken = clearToken;
   }
 
   async get(props: IGetRequest) {
@@ -33,10 +31,6 @@ export default class CertificateUseCase {
       return result;
     } catch (error: any) {
       logger("CertificateUseCase.get | error =>", error);
-      if (error.response?.status === 401) {
-        this.clearToken();
-        return;
-      }
 
       throw error;
     }
@@ -72,13 +66,10 @@ export default class CertificateUseCase {
     } catch (error: any) {
       logger("CertificateUseCase.post | error =>", error);
 
-      if (error.response?.status === 401) {
-        this.clearToken();
-        return;
-      }
       throw error;
     }
   }
+
   async delete(props: IDeleteRequest) {
     try {
       const result = await this.certificateService.deleteCertificate({
@@ -98,10 +89,29 @@ export default class CertificateUseCase {
     } catch (error: any) {
       logger("CertificateUseCase.delete | error =>", error);
 
-      if (error.response?.status === 401) {
-        this.clearToken();
-        return;
+      throw error;
+    }
+  }
+
+  async printCertificate(props: IGetRequest) {
+    try {
+      const result = await this.certificateService.printCertificate({
+        token: props.token,
+        id: props.id,
+        params: {
+          identifier: props.params?.identifier,
+        },
+      });
+
+      logger("CertificateUseCase.printCertificate | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(result?.meta?.message ?? "Failed to print certificate");
       }
+
+      return result;
+    } catch (error: any) {
+      logger("CertificateUseCase.printCertificate | error =>", error);
 
       throw error;
     }

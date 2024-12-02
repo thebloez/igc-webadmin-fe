@@ -37,7 +37,8 @@ export interface ICertificateFormData {
 export interface ICertificateModalState {
   visible: boolean;
   isLoading: boolean;
-  type: "delete" | "print";
+  showWarning?: boolean;
+  type: "delete" | "print" | "after-print";
   data: ICertificateData;
 }
 

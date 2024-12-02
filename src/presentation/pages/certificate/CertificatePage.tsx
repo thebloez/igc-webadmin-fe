@@ -42,6 +42,7 @@ const CertificatePage = () => {
     visible: false,
     type: "delete",
     isLoading: false,
+    showWarning: false,
     data: {} as ICertificateData,
   });
 
@@ -83,6 +84,7 @@ const CertificatePage = () => {
       visible: true,
       id: record.id,
       type: "delete",
+      showWarning: true,
       data: record,
     }));
   };
@@ -92,6 +94,24 @@ const CertificatePage = () => {
       .deleteCertificate(id, message, setModal)
       .then(() => {
         getCertificate();
+        closeModal;
+      });
+  };
+
+  const onAfterQuestion = () => {
+    if (modal.type === "delete") {
+      onPostDelete(modal.data.id);
+    } else if (modal.type === "after-print") {
+      postPrint(modal.data.id);
+    }
+  };
+
+  const postPrint = async (id: string) => {
+    await certificateViewModel
+      .printCertificate(id, modal.data.identifier, message, setModal)
+      .then(() => {
+        getCertificate();
+        closeModal();
       });
   };
 
@@ -115,19 +135,28 @@ const CertificatePage = () => {
     }));
   }, 500);
 
-  const postPrint = async () => {
-    
-  }
-
+  const onQuestionPrint = (identifier: string) => {
+    setModal((prevState) => ({
+      ...prevState,
+      visible: true,
+      type: "after-print",
+      showWarning: false,
+      data: {
+        ...prevState.data,
+        identifier,
+      },
+    }));
+  };
   return (
     <div className="tw-m-0 tw-p-6 ">
       <CertificateModals
         onClose={closeModal}
         data={modal.data}
         isLoading={modal.isLoading}
-        onRightClick={onPostDelete}
+        onRightClick={onAfterQuestion}
         open={modal.visible}
-        onPrint={postPrint}
+        showWarning={modal.showWarning}
+        onAfterPrint={onQuestionPrint}
         type={modal.type}
         showPrint
         title={modal.type === "print" ? "Print Memo" : ""}

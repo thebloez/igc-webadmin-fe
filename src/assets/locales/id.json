@@ -59,6 +59,13 @@
             "no": "Tidak",
             "yes": "Ya"
           }
+        },
+        "after-print": {
+          "description": "Apakah Anda berhasil melakukan print sertifikat ini?",
+          "button": {
+            "no": "Tidak",
+            "yes": "Ya"
+          }
         }
       }
     },
@@ -167,6 +174,13 @@
             "no": "Tidak",
             "yes": "Ya"
           }
+        },
+        "after-print": {
+          "description": "Apakah Anda berhasil melakukan print memo ini?",
+          "button": {
+            "no": "Tidak",
+            "yes": "Ya"
+          }
         }
       }
     },
@@ -188,6 +202,17 @@
       "title": "Upgrade ke Memo Origin",
       "button": {
         "submit": "Upgrade"
+      },
+      "modal": {
+        "description": "Apakah Anda yakin ingin mengupgrade memo ini?",
+        "warning": {
+          "title": "Peringatan",
+          "description": "Memo yang diupgrade tidak dapat dikembalikan ke memo sebelumnya."
+        },
+        "button": {
+          "no": "Tidak",
+          "yes": "Ya"
+        }
       }
     },
     "form": {

@@ -114,7 +114,7 @@ class MemoService implements IMemoService {
     return response.data;
   }
 
-  async printMemo(props: IDeleteRequest): Promise<IMemoResponse> {
+  async printMemo(props: IGetRequest): Promise<IMemoResponse> {
     const response: AxiosResponse<IMemoResponse> = await API.get(
       apiEndpoints.master.print,
       {
@@ -123,6 +123,7 @@ class MemoService implements IMemoService {
         },
         params: {
           id: props.id,
+          identifier: props.params?.identifier,
         },
       }
     );
