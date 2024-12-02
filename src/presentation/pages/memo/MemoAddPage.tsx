@@ -1,6 +1,6 @@
 import HeaderContent from "@components/dashboard/layout/HeaderContent";
 import { Button, Form, message } from "antd";
-import { IMemoData } from "@domain/entities/MemoEntity";
+import { IMemoFormData } from "@domain/entities/MemoEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
 import { useEffect, useState } from "react";
@@ -38,7 +38,7 @@ const MemoAddPage = () => {
     control,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<IMemoData>({
+  } = useForm<IMemoFormData>({
     mode: "onChange",
   });
 
@@ -93,7 +93,7 @@ const MemoAddPage = () => {
     await customerViewModel.getCustomerOption(setCustomers);
   };
 
-  const onSubmit: SubmitHandler<IMemoData> = async (data) => {
+  const onSubmit: SubmitHandler<IMemoFormData> = async (data) => {
     await memoViewModel.createMemo(data, message, reset).then(() => {
       goBack();
     });

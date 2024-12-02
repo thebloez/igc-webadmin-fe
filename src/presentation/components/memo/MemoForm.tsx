@@ -3,14 +3,14 @@ import FormUpload from "@components/form/input/FormUpload";
 import FormSelect from "@components/form/input/FormSelect";
 import { ICustomerOption } from "@domain/entities/CustomerEntity";
 import { ISuggestionsState } from "@domain/entities/SuggestionEntity";
-import { IMemoData } from "@domain/entities/MemoEntity";
+import { IMemoFormData } from "@domain/entities/MemoEntity";
 import FormInput from "@components/form/input/FormInput";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import FormTextArea from "@components/form/input/FormTextArea";
 
 export interface IMemoFormProps {
-  control: Control<IMemoData, any>;
-  errors: FieldErrors<IMemoData>;
+  control: Control<IMemoFormData, any>;
+  errors: FieldErrors<IMemoFormData>;
   suggestions: ISuggestionsState;
   customers: ICustomerOption;
   type?: "add" | "upgrade";

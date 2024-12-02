@@ -1,6 +1,6 @@
 import HeaderContent from "@components/dashboard/layout/HeaderContent";
 import { Button, Form, message } from "antd";
-import { IMemoData, IMemoUpgradeState } from "@domain/entities/MemoEntity";
+import { IMemoFormData, IMemoUpgradeState } from "@domain/entities/MemoEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
 import { useEffect, useState } from "react";
@@ -48,7 +48,7 @@ const MemoUpgradeOriginPage = () => {
     control,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<IMemoData>({
+  } = useForm<IMemoFormData>({
     mode: "onChange",
   });
 
@@ -114,7 +114,7 @@ const MemoUpgradeOriginPage = () => {
     await memoViewModel.findMemo(state, setState, setValue);
   };
 
-  const onSubmit: SubmitHandler<IMemoData> = async (data) => {
+  const onSubmit: SubmitHandler<IMemoFormData> = async (data) => {
     await memoViewModel.upgradeMemo(data, message, navigate, "m1").then(() => {
       goBack();
     });

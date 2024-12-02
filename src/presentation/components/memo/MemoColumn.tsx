@@ -80,7 +80,7 @@ const MemoColumn = (props: IColumn<IMemoData>): ColumnsType<IMemoData> => {
             <Dropdown
               trigger={["click"]}
               menu={{
-                items: items(record.attributes.origins, record.id),
+                items: items(record.attributes.origins?.name, record.id),
               }}
             >
               <Button

@@ -1,7 +1,7 @@
 import { IMemoService } from "@services/MemoService";
 import isNullOrEmpty from "../../infrastructure/lib/utils/isNullOrEmpty";
 import logger from "@lib/utils/logger";
-import { IMemoData } from "@domain/entities/MemoEntity";
+import { IMemoFormData } from "@domain/entities/MemoEntity";
 import {
   IDeleteRequest,
   IGetRequest,
@@ -79,7 +79,7 @@ export default class MemoUseCase {
     }
   }
 
-  async createMemo(props: IPostRequest<IMemoData>) {
+  async createMemo(props: IPostRequest<IMemoFormData>) {
     try {
       const certData = new FormData();
 
@@ -113,7 +113,7 @@ export default class MemoUseCase {
     }
   }
 
-  async upgradeMemo(props: IPostRequest<IMemoData>, type: UpgradeType) {
+  async upgradeMemo(props: IPostRequest<IMemoFormData>, type: UpgradeType) {
     try {
       const certData = new FormData();
 
@@ -174,7 +174,7 @@ export default class MemoUseCase {
       throw error;
     }
   }
-  
+
   async printMemo(props: IGetRequest) {
     try {
       const result = await this.memoService.printMemo({

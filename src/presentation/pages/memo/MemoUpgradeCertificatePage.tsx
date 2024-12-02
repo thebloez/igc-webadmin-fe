@@ -1,43 +1,56 @@
 import HeaderContent from "@components/dashboard/layout/HeaderContent";
 import { Button, Form, message } from "antd";
-import { IMemoData } from "@domain/entities/MemoEntity";
+import { IMemoFormData, IMemoUpgradeState } from "@domain/entities/MemoEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
-import MemoForm from "@components/memo/MemoForm";
-import { ISuggestionsState } from "@domain/entities/SuggestionEntity";
+import {
+  ISuggestionModalState,
+  ISuggestionsState,
+} from "@domain/entities/SuggestionEntity";
 import SuggestionViewModel from "@viewModels/SuggestionViewModel";
 import SuggestionUseCase from "@domain/useCases/SuggestionUseCase";
 import { ICustomerOption } from "@domain/entities/CustomerEntity";
 import ArrowLeftIcon from "@components/icon/ArrowLeftIcon";
 import useMemoViewModel from "@lib/hooks/useMemoViewModel";
 import { setUserToken } from "@redux/user/userReduxReducer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import SpinnerLoading from "@components/loader/SpinnerLoading";
 import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
+import SuggestionModal from "@components/suggestion/SuggestionModal";
+import CertificateForm from "@components/certificate/CertificateForm";
 
 const MemoUpgradeCertificatePage = () => {
   // get language and t function to change language
   const { t } = useLanguage();
 
-  const { id } = useParams<{ id: string }>();
+  const { id: paramId } = useParams<{ id: string }>();
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const token = useSelector(selectToken);
 
   // get token from redux
   const clearToken = () => dispatch(setUserToken(""));
 
+  const [state, setState] = useState<IMemoUpgradeState>({
+    isLoading: true,
+    id: paramId as string,
+    error: {} as IMemoUpgradeState["error"],
+  });
+
   const {
     handleSubmit,
     control,
-    reset,
+    setValue,
     formState: { errors, isSubmitting },
-  } = useForm<IMemoData>({
+  } = useForm<IMemoFormData>({
     mode: "onChange",
   });
-
-  const token = useSelector(selectToken);
 
   const [suggestions, setSuggestions] = useState<ISuggestionsState>({
     isLoading: true,
@@ -56,6 +69,11 @@ const MemoUpgradeCertificatePage = () => {
   const [customers, setCustomers] = useState<ICustomerOption>({
     isLoading: true,
     data: [],
+  });
+
+  const [modal, setModal] = useState<ISuggestionModalState>({
+    visible: false,
+    type: "final_identification",
   });
 
   const memoViewModel = useMemoViewModel(token, clearToken);
@@ -85,47 +103,101 @@ const MemoUpgradeCertificatePage = () => {
     await customerViewModel.getCustomerOption(setCustomers);
   };
 
-  const onSubmit: SubmitHandler<IMemoData> = async (data) => {
-    await memoViewModel.createMemo(data, message, reset);
+  useEffect(() => {
+    if (state.id) {
+      findMemo();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.id]);
+
+  const findMemo = async () => {
+    await memoViewModel.findMemo(state, setState, setValue);
+  };
+
+  const onSubmit: SubmitHandler<IMemoFormData> = async (data) => {
+    await memoViewModel.upgradeMemo(data, message, navigate, "sertifikat").then(() => {
+      goBack();
+    });
   };
 
   const goBack = () => {
-    window.history.back();
+    navigate("/memo");
+  };
+
+  const onAddNew = (name: ISuggestionModalState["type"]) => {
+    setModal((prevState) => ({ ...prevState, visible: true, type: name }));
+  };
+
+  const onClose = () => {
+    setModal((prevState) => ({ ...prevState, visible: false }));
+  };
+
+  const onSubmitSuggestion = async (data: any) => {
+    if (modal.type === "customer") {
+      await customerViewModel.createCustomer(data, message).then(() => {
+        getCustomerOption();
+        onClose();
+      });
+    } else {
+      await suggestionsViewModel
+        .createSuggestion(data, modal.type, message)
+        .then(() => {
+          getSuggestion();
+          onClose();
+        });
+    }
   };
 
   return (
-    <Form
-      layout="vertical"
-      onFinish={handleSubmit(onSubmit)}
-      className="tw-m-0 tw-p-6"
-    >
-      <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
-        <HeaderContent
-          leftIcon={<ArrowLeftIcon onClick={goBack} />}
-          title={t("memo.upgrade-to-certificate.title")}
-          description={id}
-        >
-          <div className="tw-w-full tw-flex tw-justify-end tw-items-center">
-            <Button
-              htmlType="submit"
-              type="primary"
-              loading={isSubmitting}
-              className="!tw-h-[40px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
-            >
-              {t("memo.upgrade-to-certificate.button.submit")}
-            </Button>
+    <>
+      <SuggestionModal
+        onClose={onClose}
+        visible={modal.visible}
+        onSubmit={onSubmitSuggestion}
+        type={modal.type}
+      />
+      <Form
+        layout="vertical"
+        onFinish={handleSubmit(onSubmit)}
+        className="tw-m-0 tw-p-6"
+      >
+        <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
+          <HeaderContent
+            leftIcon={<ArrowLeftIcon onClick={goBack} />}
+            title={t("memo.upgrade-to-certificate.title")}
+            description={state.id ?? "-"}
+          >
+            {!state.isLoading && (
+              <div className="tw-w-full tw-flex tw-justify-end tw-items-center">
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  loading={isSubmitting}
+                  className="!tw-h-[40px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
+                >
+                  {t("memo.upgrade-to-certificate.button.submit")}
+                </Button>
+              </div>
+            )}
+          </HeaderContent>
+          <div className="tw-p-4">
+            {state.isLoading ? (
+              <div className="tw-w-full tw-flex tw-justify-center tw-h-[200px] tw-items-center">
+                <SpinnerLoading width={32} height={32} type="primary-spinner" />
+              </div>
+            ) : (
+              <CertificateForm
+                onAddNew={onAddNew as any}
+                control={control}
+                errors={errors}
+                suggestions={suggestions}
+                customers={customers}
+              />
+            )}
           </div>
-        </HeaderContent>
-        <div className="tw-p-4">
-          <MemoForm
-            control={control}
-            errors={errors}
-            suggestions={suggestions}
-            customers={customers}
-          />
         </div>
-      </div>
-    </Form>
+      </Form>
+    </>
   );
 };
 

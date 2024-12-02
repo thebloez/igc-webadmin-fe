@@ -1,6 +1,6 @@
 import { UpgradeType } from "@api/apiEndpoints";
 import {
-  IMemoData,
+  IMemoFormData,
   IMemoModalState,
   IMemoTableState,
   IMemoUpgradeState,
@@ -67,7 +67,7 @@ class MemoViewModel {
   async findMemo(
     state: IMemoUpgradeState,
     setTable: (value: SetStateAction<IMemoUpgradeState>) => void,
-    setValue: UseFormSetValue<IMemoData>
+    setValue: UseFormSetValue<IMemoFormData>
   ) {
     try {
       setTable((prevState) => ({
@@ -85,7 +85,7 @@ class MemoViewModel {
       logger("MemoViewModel.findMemo | response => ", response);
 
       if (response) {
-        setValue("attributes", response.data.attributes);
+        setValue("attributes", response.data.attributes as any);
         setValue("id", response.data.id);
         setValue("member_phone_number", response.data.member_phone_number);
       }
@@ -104,9 +104,9 @@ class MemoViewModel {
   }
 
   createMemo = async (
-    data: IMemoData,
+    data: IMemoFormData,
     message: any,
-    reset: UseFormReset<IMemoData>
+    reset: UseFormReset<IMemoFormData>
   ) => {
     try {
       const response = await this.memoUseCase.createMemo({
@@ -131,7 +131,7 @@ class MemoViewModel {
   };
 
   upgradeMemo = async (
-    data: IMemoData,
+    data: IMemoFormData,
     message: any,
     navigate: NavigateFunction,
     type: UpgradeType
