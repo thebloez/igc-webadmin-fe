@@ -7,7 +7,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MemoForm from "@components/memo/MemoForm";
-import { ISuggestionsState } from "@domain/entities/SuggestionEntity";
+import {
+  ISuggestionModalState,
+  ISuggestionsState,
+} from "@domain/entities/SuggestionEntity";
 import SuggestionViewModel from "@viewModels/SuggestionViewModel";
 import SuggestionUseCase from "@domain/useCases/SuggestionUseCase";
 import { ICustomerOption } from "@domain/entities/CustomerEntity";
@@ -17,6 +20,7 @@ import { setUserToken } from "@redux/user/userReduxReducer";
 import { useNavigate, useParams } from "react-router-dom";
 import SpinnerLoading from "@components/loader/SpinnerLoading";
 import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
+import SuggestionModal from "@components/suggestion/SuggestionModal";
 
 const MemoUpgradeOriginPage = () => {
   // get language and t function to change language
@@ -67,6 +71,11 @@ const MemoUpgradeOriginPage = () => {
     data: [],
   });
 
+  const [modal, setModal] = useState<ISuggestionModalState>({
+    visible: false,
+    type: "final_identification",
+  });
+
   const memoViewModel = useMemoViewModel(token, clearToken);
 
   const suggestionsViewModel = new SuggestionViewModel(
@@ -115,8 +124,38 @@ const MemoUpgradeOriginPage = () => {
     navigate("/memo");
   };
 
+  const onAddNew = (name: ISuggestionModalState["type"]) => {
+    setModal((prevState) => ({ ...prevState, visible: true, type: name }));
+  };
+
+  const onClose = () => {
+    setModal((prevState) => ({ ...prevState, visible: false }));
+  };
+
+  const onSubmitSuggestion = async (data: any) => {
+    if (modal.type === "customer") {
+      await customerViewModel.createCustomer(data, message).then(() => {
+        getCustomerOption();
+        onClose();
+      });
+    } else {
+      await suggestionsViewModel
+        .createSuggestion(data, modal.type, message)
+        .then(() => {
+          getSuggestion();
+          onClose();
+        });
+    }
+  };
+
   return (
     <>
+      <SuggestionModal
+        onClose={onClose}
+        visible={modal.visible}
+        onSubmit={onSubmitSuggestion}
+        type={modal.type}
+      />
       <Form
         layout="vertical"
         onFinish={handleSubmit(onSubmit)}
@@ -148,6 +187,7 @@ const MemoUpgradeOriginPage = () => {
               </div>
             ) : (
               <MemoForm
+                onAddNew={onAddNew as any}
                 type="upgrade"
                 control={control}
                 errors={errors}
