@@ -11,12 +11,11 @@ import { ISuggestionsState } from "@domain/entities/SuggestionEntity";
 import SuggestionViewModel from "@viewModels/SuggestionViewModel";
 import SuggestionUseCase from "@domain/useCases/SuggestionUseCase";
 import { ICustomerOption } from "@domain/entities/CustomerEntity";
-import CustomerUseCase from "@domain/useCases/CustomerUseCase";
-import CustomerViewModel from "@viewModels/CustomerViewModel";
 import ArrowLeftIcon from "@components/icon/ArrowLeftIcon";
 import useMemoViewModel from "@lib/hooks/useMemoViewModel";
 import { setUserToken } from "@redux/user/userReduxReducer";
 import { useParams } from "react-router-dom";
+import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
 
 const MemoUpgradeCertificatePage = () => {
   // get language and t function to change language
@@ -63,7 +62,7 @@ const MemoUpgradeCertificatePage = () => {
 
   const suggestionsViewModel = new SuggestionViewModel(
     new SuggestionUseCase(),
-    setSuggestions
+    token
   );
 
   useEffect(() => {
@@ -72,7 +71,7 @@ const MemoUpgradeCertificatePage = () => {
   }, []);
 
   const getSuggestion = async () => {
-    await suggestionsViewModel.getSuggestion(token);
+    await suggestionsViewModel.getSuggestion(setSuggestions);
   };
 
   useEffect(() => {
@@ -80,9 +79,10 @@ const MemoUpgradeCertificatePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const customerViewModel = useCustomerViewModel(token, clearToken);
+
   const getCustomerOption = async () => {
-    const customerViewModel = new CustomerViewModel(new CustomerUseCase());
-    await customerViewModel.getCustomerOption(token, setCustomers);
+    await customerViewModel.getCustomerOption(setCustomers);
   };
 
   const onSubmit: SubmitHandler<IMemoData> = async (data) => {

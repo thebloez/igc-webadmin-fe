@@ -5,42 +5,63 @@ import { SetStateAction } from "react";
 
 class SuggestionViewModel {
   private suggestionUseCase: SuggestionUseCase;
-  private setSuggestion: (value: SetStateAction<ISuggestionsState>) => void;
+  private token: string;
 
-  constructor(
-    suggestionUseCase: SuggestionUseCase,
-    setSuggestion: (value: SetStateAction<ISuggestionsState>) => void
-  ) {
+  constructor(suggestionUseCase: SuggestionUseCase, token: string) {
     this.suggestionUseCase = suggestionUseCase;
-    this.setSuggestion = setSuggestion;
+    this.token = token;
   }
 
-  async getSuggestion(token: string) {
+  async getSuggestion(
+    setSuggestion: (value: SetStateAction<ISuggestionsState>) => void
+  ) {
     try {
-      this.setSuggestion((prevState) => ({
+      setSuggestion((prevState) => ({
         ...prevState,
         isLoading: true,
       }));
 
-      const response = await this.suggestionUseCase.get({ token });
+      const response = await this.suggestionUseCase.get({ token: this.token });
 
       logger("SuggestionViewModel.getSuggestion | response => ", response);
 
       if (response) {
-        this.setSuggestion((prevState) => ({
+        setSuggestion((prevState) => ({
           ...prevState,
           data: response.data,
         }));
       }
-
     } catch (error: any) {
       logger("SuggestionViewModel.getSuggestion | error => ", error);
+
       throw error;
     } finally {
-      this.setSuggestion((prevState) => ({
+      setSuggestion((prevState) => ({
         ...prevState,
         isLoading: false,
       }));
+    }
+  }
+
+  async createSuggestion(data: any, id: string, message: any) {
+    try {
+      const response = await this.suggestionUseCase.createSuggestion({
+        data: data,
+        id: id,
+        token: this.token,
+      });
+
+      logger("SuggestionViewModel.createSuggestion | response => ", response);
+
+      if (response) {
+        message.success("Suggestion created successfully");
+      }
+    } catch (error: any) {
+      logger("SuggestionViewModel.createSuggestion | error => ", error);
+
+      message.error(error.message ?? "Failed to create suggestion");
+
+      throw error;
     }
   }
 }

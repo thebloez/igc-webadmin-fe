@@ -45,6 +45,11 @@ export interface IPostRequest<T> extends IBaseRequest {
   data: T;
 }
 
+export interface IPutRequest<T> extends IBaseRequest {
+  id: string;
+  data: T;
+}
+
 export interface IDeleteRequest extends IBaseRequest {
   id: string;
 }

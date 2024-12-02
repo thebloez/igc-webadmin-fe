@@ -171,7 +171,7 @@ const CertificatePage = () => {
               onClick={gotoAddPage}
               type="primary"
               icon={<PlusSquareIcon />}
-              className="!tw-h-[45px] tw-w-full md:tw-w-auto tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
+              className="!tw-h-[45px] tw-w-full sm:tw-w-auto tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
             >
               {t("certificate.list.button.add")}
             </Button>

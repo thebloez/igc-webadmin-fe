@@ -1,34 +1,44 @@
 import apiEndpoints from "@api/apiEndpoints";
-import logger from "../lib/utils/logger";
 import { API } from "@api/APIInstance";
 import { AxiosResponse } from "axios";
-import { ICustomerResponse } from "@domain/entities/CustomerEntity";
+import {
+  ICustomerData,
+  ICustomerResponse,
+} from "@domain/entities/CustomerEntity";
+import { IGetRequest, IPostRequest } from "@domain/entities/ResponseEntity";
 
-interface IGet {
-  token: string;
+export interface ICustomerService {
+  get(props: IGetRequest): Promise<ICustomerResponse>;
+  post(props: IPostRequest<ICustomerData>): Promise<ICustomerResponse>;
 }
 
 class CustomerService {
-  async get(props: IGet): Promise<ICustomerResponse> {
-    try {
-      logger("CustomerService.get | token => ", props.token);
+  async get(props: IGetRequest): Promise<ICustomerResponse> {
+    const response: AxiosResponse<ICustomerResponse> = await API.get(
+      apiEndpoints.members,
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    );
 
-      const response: AxiosResponse<ICustomerResponse> = await API.get(
-        apiEndpoints.members,
-        {
-          headers: {
-            Authorization: `Bearer ${props.token}`,
-          },
-        }
-      );
+    return response.data;
+  }
 
-      logger("CustomerService.get | response => ", response.data);
+  async post(props: IPostRequest<ICustomerData>): Promise<ICustomerResponse> {
+    const response: AxiosResponse<ICustomerResponse> = await API.post(
+      apiEndpoints.members,
+      props.data,
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-      return response.data;
-    } catch (error: any) {
-      logger("CustomerService.get | error => ", error);
-      throw error;
-    }
+    return response.data;
   }
 }
 

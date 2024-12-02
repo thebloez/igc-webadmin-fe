@@ -11,12 +11,11 @@ import { ISuggestionsState } from "@domain/entities/SuggestionEntity";
 import SuggestionViewModel from "@viewModels/SuggestionViewModel";
 import SuggestionUseCase from "@domain/useCases/SuggestionUseCase";
 import { ICustomerOption } from "@domain/entities/CustomerEntity";
-import CustomerUseCase from "@domain/useCases/CustomerUseCase";
-import CustomerViewModel from "@viewModels/CustomerViewModel";
 import ArrowLeftIcon from "@components/icon/ArrowLeftIcon";
 import useMemoViewModel from "@lib/hooks/useMemoViewModel";
 import { setUserToken } from "@redux/user/userReduxReducer";
 import { useNavigate } from "react-router-dom";
+import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
 
 const MemoAddPage = () => {
   // get language and t function to change language
@@ -62,7 +61,7 @@ const MemoAddPage = () => {
 
   const suggestionsViewModel = new SuggestionViewModel(
     new SuggestionUseCase(),
-    setSuggestions
+    token
   );
 
   useEffect(() => {
@@ -71,7 +70,7 @@ const MemoAddPage = () => {
   }, []);
 
   const getSuggestion = async () => {
-    await suggestionsViewModel.getSuggestion(token);
+    await suggestionsViewModel.getSuggestion(setSuggestions);
   };
 
   useEffect(() => {
@@ -79,9 +78,10 @@ const MemoAddPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const customerViewModel = useCustomerViewModel(token, clearToken);
+
   const getCustomerOption = async () => {
-    const customerViewModel = new CustomerViewModel(new CustomerUseCase());
-    await customerViewModel.getCustomerOption(token, setCustomers);
+    await customerViewModel.getCustomerOption(setCustomers);
   };
 
   const onSubmit: SubmitHandler<IMemoData> = async (data) => {
@@ -111,7 +111,7 @@ const MemoAddPage = () => {
               htmlType="submit"
               type="primary"
               loading={isSubmitting}
-              className="!tw-h-[40px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
+              className="!tw-h-[40px] tw-w-full sm:tw-w-auto tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
             >
               {t("memo.add.button.submit")}
             </Button>

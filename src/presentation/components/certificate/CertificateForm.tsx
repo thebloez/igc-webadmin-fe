@@ -10,10 +10,11 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
   control,
   suggestions,
   customers,
+  onAddNew,
 }) => {
   const { t } = useLanguage();
   return (
-    <div className="tw-h-full tw-overflow-auto tw-px-4 tw-pb-2 tw-flex tw-flex-wrap sm:tw-flex-nowrap tw-justify-between tw-items-start tw-gap-0 sm:tw-gap-4">
+    <div className="tw-h-full tw-overflow-auto tw-px-4 tw-pb-2 tw-flex tw-flex-col lg:tw-flex-row tw-justify-between tw-items-start tw-gap-0 sm:tw-gap-4">
       {/* create image */}
       <div className="tw-w-full">
         <FormUpload
@@ -33,6 +34,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           loading={customers.isLoading}
           rules={{ required: t("certificate.form.customer.required") }}
           error={errors.member_phone_number}
+          onAddNew={() => onAddNew("customer")}
         />
 
         <FormInput
@@ -55,6 +57,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
             required: t("certificate.form.final_identification.required"),
           }}
           error={errors.attributes?.final_identification}
+          onAddNew={() => onAddNew("final_identification")}
         />
         <FormInput
           name="attributes.measurement"
@@ -76,6 +79,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           control={control}
           rules={{ required: t("certificate.form.clarity.required") }}
           error={errors.attributes?.clarity}
+          onAddNew={() => onAddNew("clarity")}
         />
         <FormSelect
           name="attributes.transparency"
@@ -86,6 +90,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           control={control}
           rules={{ required: t("certificate.form.transparency.required") }}
           error={errors.attributes?.transparency}
+          onAddNew={() => onAddNew("transparency")}
         />
         <FormSelect
           name="attributes.cut"
@@ -96,6 +101,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.cut.required") }}
           error={errors.attributes?.cut}
+          onAddNew={() => onAddNew("cut")}
         />
       </div>
       <div className="tw-w-full">
@@ -108,6 +114,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.shape.required") }}
           error={errors.attributes?.shape}
+          onAddNew={() => onAddNew("shape")}
         />
         <FormSelect
           name="attributes.color"
@@ -118,6 +125,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.color.required") }}
           error={errors.attributes?.color}
+          onAddNew={() => onAddNew("color")}
         />
 
         <FormInput
@@ -138,6 +146,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.origins.required") }}
           error={errors.attributes?.origins}
+          onAddNew={() => onAddNew("origin")}
         />
 
         <FormSelect
@@ -149,6 +158,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.comments.required") }}
           error={errors.attributes?.comments}
+          onAddNew={() => onAddNew("comment")}
         />
 
         <FormTextArea

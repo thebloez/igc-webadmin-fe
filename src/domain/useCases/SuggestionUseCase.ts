@@ -17,12 +17,36 @@ export default class SuggestionUseCase {
 
       return result;
     } catch (error: any) {
-      if (error.response?.status === 401) {
-        window.location.href = "/login";
-      } else {
-        logger("SuggestionUseCase.get | error =>", error);
+      logger("SuggestionUseCase.get | error =>", error);
+
+      throw error;
+    }
+  }
+
+  async createSuggestion(props: { token: string; data: any; id: string }) {
+    try {
+      
+      logger("SuggestionUseCase.createSuggestion | payload =>", props);
+
+      const result = await this.suggestionService.post({
+        id: props.id,
+        token: props.token,
+        data: props.data,
+      });
+
+      logger("SuggestionUseCase.createSuggestion | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(
+          result?.meta?.message ?? "Failed to create suggestions"
+        );
       }
-      return null;
+
+      return result;
+    } catch (error: any) {
+      logger("SuggestionUseCase.createSuggestion | error =>", error);
+
+      throw error;
     }
   }
 }

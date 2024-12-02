@@ -58,4 +58,5 @@ export interface ICertificateFormProps {
   errors: FieldErrors<ICertificateFormData>;
   suggestions: ISuggestionsState;
   customers: ICustomerOption;
+  onAddNew: (name: string) => void;
 }

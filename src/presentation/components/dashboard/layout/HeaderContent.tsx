@@ -9,7 +9,7 @@ const HeaderContent = ({
 }: IHeaderContent) => {
   return (
     <div
-      className={`${className} tw-bg-blue-50 tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-items-start tw-justify-between tw-p-4 tw-rounded-b-md`}
+      className={`${className} tw-bg-blue-50 tw-flex tw-flex-col sm:tw-flex-row tw-gap-4 tw-items-start tw-justify-between tw-p-4 tw-rounded-b-md`}
     >
       <div className="tw-w-full tw-flex-1 tw-flex tw-justify-start tw-items-start">
         {leftIcon && <div className="tw-mr-2 tw-p-1 tw-cursor-pointer">{leftIcon}</div>}

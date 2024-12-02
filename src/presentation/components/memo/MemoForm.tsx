@@ -26,7 +26,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
   const { t } = useLanguage();
 
   return (
-    <div className="tw-h-full tw-overflow-auto tw-px-4 tw-pb-2 tw-flex tw-flex-wrap sm:tw-flex-nowrap tw-justify-between tw-items-start tw-gap-0 sm:tw-gap-4">
+    <div className="tw-h-full tw-overflow-auto tw-px-4 tw-pb-2 tw-flex tw-flex-col lg:tw-flex-row tw-justify-between tw-items-start tw-gap-0 sm:tw-gap-4">
       {/* create image */}
       <div className="tw-w-full">
         <FormUpload

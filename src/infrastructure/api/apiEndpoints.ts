@@ -1,3 +1,5 @@
+import { ISuggestionModalState } from "@domain/entities/SuggestionEntity";
+
 export type UpgradeType = "sertifikat" | "m1";
 
 const APIEndpoints = {
@@ -22,7 +24,10 @@ const APIEndpoints = {
     upgrade: (type: UpgradeType) => `api/masters/upgrade/${type}`,
   },
   members: "api/members",
-  suggestions: "api/suggestion/all",
+  suggestions: {
+    all: "api/suggestion/all",
+    create: (type: ISuggestionModalState["type"]) => `api/suggestion/${type}`,
+  },
   insight: "api/insight",
 };
 

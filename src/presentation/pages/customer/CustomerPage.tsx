@@ -5,12 +5,12 @@ import {
   ICustomerData,
   ICustomerTableState,
 } from "@domain/entities/CustomerEntity";
-import CustomerUseCase from "@domain/useCases/CustomerUseCase";
+import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
 import { useLanguage } from "@lib/hooks/useLanguage";
+import { setUserToken } from "@redux/user/userReduxReducer";
 import { selectToken } from "@redux/user/userReduxSelector";
-import CustomerViewModel from "@viewModels/CustomerViewModel";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const CustomerPage = () => {
@@ -23,6 +23,10 @@ const CustomerPage = () => {
   // get token from redux
   const token = useSelector(selectToken);
 
+  const dispatch = useDispatch();
+
+  const clearToken = () => dispatch(setUserToken(""));
+
   // set state for table
   const [table, setTable] = useState<ICustomerTableState>({
     currentPage: 1,
@@ -32,16 +36,15 @@ const CustomerPage = () => {
     data: [],
   });
 
+  const customerViewModel = useCustomerViewModel(token, clearToken);
+
   useEffect(() => {
     getCustomer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCustomer = async () => {
-    const certificateUseCase = new CustomerUseCase();
-    const certificateViewModel = new CustomerViewModel(certificateUseCase);
-
-    await certificateViewModel.getCustomer(token, setTable);
+    await customerViewModel.getCustomer(setTable);
   };
 
   const onEdit = (data: ICustomerData) => {

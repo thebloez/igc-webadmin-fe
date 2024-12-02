@@ -171,7 +171,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 color="#D7BF2A"
               />
               <PrintItemCertificate
-                title="Comments"
+                title="Comment"
                 value={data.attributes.comments}
                 color="#E7375A"
               />
