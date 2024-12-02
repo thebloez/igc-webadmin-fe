@@ -44,7 +44,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
       control={control}
       rules={rules}
       render={({ field }) => (
-        <div className="tw-w-full tw-flex tw-justify-between tw-gap-2 tw-items-end">
+        <div className="tw-w-full tw-flex tw-justify-between tw-gap-2 tw-items-center">
           <Select
             variant="outlined"
             className="custom-select"

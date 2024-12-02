@@ -227,7 +227,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
 
               <div className="tw-w-[100%]">
                 <p className="tw-text-xs tw-text-center tw-font-bold tw-mt-2">
-                  Joe Doe
+                  Idris
                 </p>
               </div>
               <div className="tw-w-[100%]">
