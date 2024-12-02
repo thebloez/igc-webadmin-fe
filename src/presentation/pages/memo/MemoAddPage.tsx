@@ -7,7 +7,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MemoForm from "@components/memo/MemoForm";
-import { ISuggestionsState } from "@domain/entities/SuggestionEntity";
+import {
+  ISuggestionModalState,
+  ISuggestionsState,
+} from "@domain/entities/SuggestionEntity";
 import SuggestionViewModel from "@viewModels/SuggestionViewModel";
 import SuggestionUseCase from "@domain/useCases/SuggestionUseCase";
 import { ICustomerOption } from "@domain/entities/CustomerEntity";
@@ -16,6 +19,7 @@ import useMemoViewModel from "@lib/hooks/useMemoViewModel";
 import { setUserToken } from "@redux/user/userReduxReducer";
 import { useNavigate } from "react-router-dom";
 import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
+import SuggestionModal from "@components/suggestion/SuggestionModal";
 
 const MemoAddPage = () => {
   // get language and t function to change language
@@ -36,6 +40,11 @@ const MemoAddPage = () => {
     formState: { errors, isSubmitting },
   } = useForm<IMemoData>({
     mode: "onChange",
+  });
+
+  const [modal, setModal] = useState<ISuggestionModalState>({
+    visible: false,
+    type: "final_identification",
   });
 
   const [suggestions, setSuggestions] = useState<ISuggestionsState>({
@@ -94,39 +103,72 @@ const MemoAddPage = () => {
     navigate("/memo");
   };
 
+  const onAddNew = (name: ISuggestionModalState["type"]) => {
+    setModal((prevState) => ({ ...prevState, visible: true, type: name }));
+  };
+
+  const onClose = () => {
+    setModal((prevState) => ({ ...prevState, visible: false }));
+  };
+
+  const onSubmitSuggestion = async (data: any) => {
+    if (modal.type === "customer") {
+      await customerViewModel.createCustomer(data, message).then(() => {
+        getCustomerOption();
+        onClose();
+      });
+    } else {
+      await suggestionsViewModel
+        .createSuggestion(data, modal.type, message)
+        .then(() => {
+          getSuggestion();
+          onClose();
+        });
+    }
+  };
+
   return (
-    <Form
-      layout="vertical"
-      onFinish={handleSubmit(onSubmit)}
-      className="tw-m-0 tw-p-6"
-    >
-      <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
-        <HeaderContent
-          leftIcon={<ArrowLeftIcon onClick={goBack} />}
-          title={t("memo.add.title")}
-          description={t("memo.add.description")}
-        >
-          <div className="tw-w-full tw-flex tw-justify-end tw-items-center">
-            <Button
-              htmlType="submit"
-              type="primary"
-              loading={isSubmitting}
-              className="!tw-h-[40px] tw-w-full sm:tw-w-auto tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
-            >
-              {t("memo.add.button.submit")}
-            </Button>
+    <>
+      <SuggestionModal
+        onClose={onClose}
+        visible={modal.visible}
+        onSubmit={onSubmitSuggestion}
+        type={modal.type}
+      />
+      <Form
+        layout="vertical"
+        onFinish={handleSubmit(onSubmit)}
+        className="tw-m-0 tw-p-6"
+      >
+        <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
+          <HeaderContent
+            leftIcon={<ArrowLeftIcon onClick={goBack} />}
+            title={t("memo.add.title")}
+            description={t("memo.add.description")}
+          >
+            <div className="tw-w-full tw-flex tw-justify-end tw-items-center">
+              <Button
+                htmlType="submit"
+                type="primary"
+                loading={isSubmitting}
+                className="!tw-h-[40px] tw-w-full sm:tw-w-auto tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
+              >
+                {t("memo.add.button.submit")}
+              </Button>
+            </div>
+          </HeaderContent>
+          <div className="tw-p-4">
+            <MemoForm
+              onAddNew={onAddNew as any}
+              control={control}
+              errors={errors}
+              suggestions={suggestions}
+              customers={customers}
+            />
           </div>
-        </HeaderContent>
-        <div className="tw-p-4">
-          <MemoForm
-            control={control}
-            errors={errors}
-            suggestions={suggestions}
-            customers={customers}
-          />
         </div>
-      </div>
-    </Form>
+      </Form>
+    </>
   );
 };
 

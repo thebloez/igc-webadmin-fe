@@ -107,7 +107,7 @@ class CustomerViewModel {
         this.clearToken();
       }
 
-      message.error(error.message);
+      message.error(error?.response?.data?.meta?.message ?? "Failed to create customer");
 
       throw error;
     }

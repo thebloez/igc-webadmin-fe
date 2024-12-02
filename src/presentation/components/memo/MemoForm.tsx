@@ -14,6 +14,7 @@ export interface IMemoFormProps {
   suggestions: ISuggestionsState;
   customers: ICustomerOption;
   type?: "add" | "upgrade";
+  onAddNew: (name: string) => void;
 }
 
 const MemoForm: React.FC<IMemoFormProps> = ({
@@ -22,6 +23,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
   suggestions,
   customers,
   type = "add",
+  onAddNew,
 }) => {
   const { t } = useLanguage();
 
@@ -46,6 +48,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           loading={customers.isLoading}
           rules={{ required: t("memo.form.customer.required") }}
           error={errors.member_phone_number}
+          onAddNew={() => onAddNew("customer")}
         />
 
         <FormInput
@@ -66,6 +69,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.final_identification.required") }}
           error={errors.attributes?.final_identification}
+          onAddNew={() => onAddNew("final_identification")}
         />
 
         <FormSelect
@@ -77,6 +81,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.cut.required") }}
           error={errors.attributes?.cut}
+          onAddNew={() => onAddNew("cut")}
         />
 
         <FormSelect
@@ -88,6 +93,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.shape.required") }}
           error={errors.attributes?.shape}
+          onAddNew={() => onAddNew("shape")}
         />
       </div>
       <div className="tw-w-full">
@@ -100,6 +106,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.color.required") }}
           error={errors.attributes?.color}
+          onAddNew={() => onAddNew("color")}
         />
 
         <FormInput
@@ -120,6 +127,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.comments.required") }}
           error={errors.attributes?.comments}
+          onAddNew={() => onAddNew("comment")}
         />
 
         <FormSelect
@@ -137,6 +145,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
             },
           }}
           error={errors.attributes?.origins}
+          onAddNew={() => onAddNew("origin")}
         />
 
         <FormTextArea
