@@ -1,6 +1,6 @@
 import { Control, FieldErrors } from "react-hook-form";
 import { IResponseEntity, IResponsePaginationEntity } from "./ResponseEntity";
-import { Attributes, IBaseState, Member } from "./SharedEntity";
+import { Attributes, IBaseState, IOption, Member } from "./SharedEntity";
 import { ISuggestionsState } from "./SuggestionEntity";
 import { ICustomerOption } from "./CustomerEntity";
 
@@ -59,4 +59,5 @@ export interface ICertificateFormProps {
   suggestions: ISuggestionsState;
   customers: ICustomerOption;
   onAddNew: (name: string) => void;
+  onDelete: (option: IOption, type: string) => void;
 }

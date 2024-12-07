@@ -342,5 +342,20 @@
         }
       }
     }
+  },
+  "suggestion": {
+    "modal": {
+      "delete": {
+        "description": "Apakah Anda yakin ingin menghapus ini?",
+        "warning": {
+          "title": "Peringatan",
+          "description": "Saran yang dihapus tidak dapat dipulihkan kembali."
+        },
+        "button": {
+          "no": "Tidak",
+          "yes": "Ya"
+        }
+      }
+    }
   }
 }

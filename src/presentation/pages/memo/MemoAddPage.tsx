@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MemoForm from "@components/memo/MemoForm";
 import {
+  ISuggestionModalDeleteState,
   ISuggestionModalState,
   ISuggestionsState,
 } from "@domain/entities/SuggestionEntity";
@@ -20,6 +21,8 @@ import { setUserToken } from "@redux/user/userReduxReducer";
 import { useNavigate } from "react-router-dom";
 import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
 import SuggestionModal from "@components/suggestion/SuggestionModal";
+import QuestionModal from "@components/modal/QuestionModal";
+import { IOption } from "@domain/entities/SharedEntity";
 
 const MemoAddPage = () => {
   // get language and t function to change language
@@ -59,6 +62,15 @@ const MemoAddPage = () => {
       shape: [],
       transparency: [],
     },
+  });
+
+  const [modalDelete, setModalDelete] = useState<ISuggestionModalDeleteState>({
+    visible: false,
+    type: "final_identification",
+    data: {
+      title: "",
+    },
+    isLoading: false,
   });
 
   const [customers, setCustomers] = useState<ICustomerOption>({
@@ -127,8 +139,59 @@ const MemoAddPage = () => {
     }
   };
 
+  const onSubmitDeleteSuggestion = async () => {
+    const type =
+      modalDelete.type?.split(".")[modalDelete.type.split(".").length - 1];
+    await suggestionsViewModel
+      .deleteSuggestion(
+        modalDelete.data.title as string,
+        type,
+        message,
+        setModalDelete
+      )
+      .then(() => {
+        getSuggestion();
+        onCloseModalDelete();
+      });
+  };
+
+  const onDelete = (option: IOption, type: string) => {
+    setModalDelete((prevState) => ({
+      ...prevState,
+      visible: true,
+      type: type as any,
+      data: {
+        title: option.label,
+      },
+    }));
+  };
+
+  const onCloseModalDelete = () => {
+    setModalDelete((prevState) => ({ ...prevState, visible: false }));
+  };
+
   return (
     <>
+      <QuestionModal
+        open={modalDelete.visible}
+        isLoading={modalDelete.isLoading}
+        onLeftClick={onCloseModalDelete}
+        onRightClick={onSubmitDeleteSuggestion}
+        title={modalDelete.data.title}
+        showWarning={true}
+        wording={{
+          description: t(`suggestion.modal.delete.description`),
+          warning: {
+            title: t(`suggestion.modal.delete.warning.title`),
+            description: t(`suggestion.modal.delete.warning.description`),
+          },
+          button: {
+            no: t(`suggestion.modal.delete.button.no`),
+            yes: t(`suggestion.modal.delete.button.yes`),
+          },
+        }}
+        data={modalDelete.data}
+      />
       <SuggestionModal
         onClose={onClose}
         visible={modal.visible}
@@ -164,6 +227,7 @@ const MemoAddPage = () => {
               errors={errors}
               suggestions={suggestions}
               customers={customers}
+              onDelete={onDelete}
             />
           </div>
         </div>

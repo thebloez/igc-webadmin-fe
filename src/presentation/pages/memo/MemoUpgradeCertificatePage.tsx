@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
+  ISuggestionModalDeleteState,
   ISuggestionModalState,
   ISuggestionsState,
 } from "@domain/entities/SuggestionEntity";
@@ -21,6 +22,8 @@ import SpinnerLoading from "@components/loader/SpinnerLoading";
 import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
 import SuggestionModal from "@components/suggestion/SuggestionModal";
 import CertificateForm from "@components/certificate/CertificateForm";
+import { IOption } from "@domain/entities/SharedEntity";
+import QuestionModal from "@components/modal/QuestionModal";
 
 const MemoUpgradeCertificatePage = () => {
   // get language and t function to change language
@@ -76,6 +79,15 @@ const MemoUpgradeCertificatePage = () => {
     type: "final_identification",
   });
 
+  const [modalDelete, setModalDelete] = useState<ISuggestionModalDeleteState>({
+    visible: false,
+    type: "final_identification",
+    data: {
+      title: "",
+    },
+    isLoading: false,
+  });
+
   const memoViewModel = useMemoViewModel(token, clearToken);
 
   const suggestionsViewModel = new SuggestionViewModel(
@@ -115,9 +127,11 @@ const MemoUpgradeCertificatePage = () => {
   };
 
   const onSubmit: SubmitHandler<IMemoFormData> = async (data) => {
-    await memoViewModel.upgradeMemo(data, message, navigate, "sertifikat").then(() => {
-      goBack();
-    });
+    await memoViewModel
+      .upgradeMemo(data, message, navigate, "sertifikat")
+      .then(() => {
+        goBack();
+      });
   };
 
   const goBack = () => {
@@ -148,8 +162,59 @@ const MemoUpgradeCertificatePage = () => {
     }
   };
 
+  const onSubmitDeleteSuggestion = async () => {
+    const type =
+      modalDelete.type?.split(".")[modalDelete.type.split(".").length - 1];
+    await suggestionsViewModel
+      .deleteSuggestion(
+        modalDelete.data.title as string,
+        type,
+        message,
+        setModalDelete
+      )
+      .then(() => {
+        getSuggestion();
+        onCloseModalDelete();
+      });
+  };
+
+  const onDelete = (option: IOption, type: string) => {
+    setModalDelete((prevState) => ({
+      ...prevState,
+      visible: true,
+      type: type as any,
+      data: {
+        title: option.label,
+      },
+    }));
+  };
+
+  const onCloseModalDelete = () => {
+    setModalDelete((prevState) => ({ ...prevState, visible: false }));
+  };
+
   return (
     <>
+      <QuestionModal
+        open={modalDelete.visible}
+        isLoading={modalDelete.isLoading}
+        onLeftClick={onCloseModalDelete}
+        onRightClick={onSubmitDeleteSuggestion}
+        title={modalDelete.data.title}
+        showWarning={true}
+        wording={{
+          description: t(`suggestion.modal.delete.description`),
+          warning: {
+            title: t(`suggestion.modal.delete.warning.title`),
+            description: t(`suggestion.modal.delete.warning.description`),
+          },
+          button: {
+            no: t(`suggestion.modal.delete.button.no`),
+            yes: t(`suggestion.modal.delete.button.yes`),
+          },
+        }}
+        data={modalDelete.data}
+      />
       <SuggestionModal
         onClose={onClose}
         visible={modal.visible}
@@ -187,6 +252,7 @@ const MemoUpgradeCertificatePage = () => {
               </div>
             ) : (
               <CertificateForm
+                onDelete={onDelete}
                 onAddNew={onAddNew as any}
                 control={control}
                 errors={errors}

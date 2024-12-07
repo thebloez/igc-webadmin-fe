@@ -7,6 +7,7 @@ export interface IQuestionModal {
   data: any;
   open: boolean;
   isLoading?: boolean;
+  title?: string;
   showWarning?: boolean;
   wording: {
     description: string;
@@ -44,9 +45,11 @@ const QuestionModal = ({ showWarning = true, ...props }: IQuestionModal) => {
           </p>
         </div>
 
-        <p className="tw-p-2 tw-rounded-lg tw-font-semibold tw-bg-slate-100 tw-w-full tw-text-center">
-          {props.data.id}
-        </p>
+        {props.title && (
+          <p className="tw-p-2 tw-rounded-lg tw-font-semibold tw-bg-slate-100 tw-w-full tw-text-center">
+            {props.title}
+          </p>
+        )}
         {showWarning && (
           <div className="tw-flex tw-items-center tw-w-full tw-bg-[#FFE9D9] tw-h-[90px] tw-justify-between tw-rounded-sm">
             <div className="tw-h-full tw-rounded-full tw-w-1 tw-bg-red-400" />

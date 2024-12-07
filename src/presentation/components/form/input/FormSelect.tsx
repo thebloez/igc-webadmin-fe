@@ -1,24 +1,27 @@
 import React from "react";
 import { Form, Select } from "antd";
 import { Control, Controller, FieldError } from "react-hook-form";
-
-const { Option } = Select;
-
+import { get } from "lodash";
 import "./FormSelect.style.css";
 import ArrowDownIcon from "@components/icon/ArrowDownIcon";
 import SpinnerLoading from "@components/loader/SpinnerLoading";
+import TrashIcon from "@components/icon/TrashIcon";
+import { IOption } from "@domain/entities/SharedEntity";
+
+const { Option } = Select;
 
 interface FormSelectProps {
   name: string;
   label: string;
   placeholder?: string;
-  options: { value: string; label: string }[];
+  options: IOption[];
   control: Control<any>;
   rules?: Record<string, any>;
   error?: FieldError;
   loading?: boolean;
   allowClear?: boolean;
   onAddNew?: () => void;
+  onDelete?: (option: IOption, type: string) => void; // Add this line to the existing code
 }
 
 const FormSelect: React.FC<FormSelectProps> = ({
@@ -32,6 +35,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
   loading,
   allowClear = false,
   onAddNew,
+  onDelete,
 }) => (
   <Form.Item
     label={label}
@@ -63,7 +67,25 @@ const FormSelect: React.FC<FormSelectProps> = ({
           >
             {options.map((option) => (
               <Option key={option.value} value={option.value}>
-                {option.label}
+                <div className="tw-flex tw-justify-between tw-items-center tw-w-full">
+                  <span>{option.label}</span>
+                  {onDelete &&
+                    get(control._formValues, name) !== option.value && (
+                      <div
+                        className="tw-p-2 hover:tw-bg-red-100 tw-rounded-full"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDelete(option, name);
+                        }}
+                      >
+                        <TrashIcon
+                          width={16}
+                          height={16}
+                          className="tw-text-red-500"
+                        />
+                      </div>
+                    )}
+                </div>
               </Option>
             ))}
           </Select>

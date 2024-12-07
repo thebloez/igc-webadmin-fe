@@ -1,5 +1,5 @@
 import { IResponsePaginationEntity } from "./ResponseEntity";
-import { IBaseState } from "./SharedEntity";
+import { IBaseState, IOption } from "./SharedEntity";
 
 export interface ICustomerData {
   mobile_phone: string;
@@ -12,10 +12,7 @@ export interface ICustomerTableState extends IBaseState {
 
 export interface ICustomerOption {
   isLoading: boolean;
-  data: {
-    label: string;
-    value: string;
-  }[];
+  data: IOption[];
 }
 
 export interface ICustomerResponse

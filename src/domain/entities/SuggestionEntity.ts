@@ -1,6 +1,7 @@
 import { IResponseEntity } from "./ResponseEntity";
 
 interface ISuggest {
+  id: number;
   value: string;
   label: string;
 }
@@ -41,6 +42,25 @@ export interface ISuggestionModalState {
     | "origin"
     | "clarity"
     | "transparency";
+}
+
+export interface ISuggestionModalDeleteState {
+  visible: boolean;
+  type:
+    | "customer"
+    | "final_identification"
+    | "cut"
+    | "shape"
+    | "color"
+    | "comment"
+    | "origin"
+    | "clarity"
+    | "transparency";
+
+  data: {
+    title?: string;
+  };
+  isLoading: boolean;
 }
 
 export interface ISuggestionsState {

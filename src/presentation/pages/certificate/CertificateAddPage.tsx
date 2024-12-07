@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CertificateForm from "@components/certificate/CertificateForm";
 import {
+  ISuggestionModalDeleteState,
   ISuggestionModalState,
   ISuggestionsState,
 } from "@domain/entities/SuggestionEntity";
@@ -20,6 +21,8 @@ import useCertificateViewModel from "@lib/hooks/useCertificateViewModel";
 import { useNavigate } from "react-router-dom";
 import SuggestionModal from "@components/suggestion/SuggestionModal";
 import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
+import QuestionModal from "@components/modal/QuestionModal";
+import { IOption } from "@domain/entities/SharedEntity";
 
 const CertificateAddPage = () => {
   // get language and t function to change language
@@ -38,6 +41,15 @@ const CertificateAddPage = () => {
   const [modal, setModal] = useState<ISuggestionModalState>({
     visible: false,
     type: "final_identification",
+  });
+
+  const [modalDelete, setModalDelete] = useState<ISuggestionModalDeleteState>({
+    visible: false,
+    type: "final_identification",
+    data: {
+      title: "",
+    },
+    isLoading: false,
   });
 
   const clearToken = () => dispatch(setUserToken(""));
@@ -125,6 +137,37 @@ const CertificateAddPage = () => {
     }
   };
 
+  const onSubmitDeleteSuggestion = async () => {
+    const type =
+      modalDelete.type?.split(".")[modalDelete.type.split(".").length - 1];
+    await suggestionsViewModel
+      .deleteSuggestion(
+        modalDelete.data.title as string,
+        type,
+        message,
+        setModalDelete
+      )
+      .then(() => {
+        getSuggestion();
+        onCloseModalDelete();
+      });
+  };
+
+  const onDelete = (option: IOption, type: string) => {
+    setModalDelete((prevState) => ({
+      ...prevState,
+      visible: true,
+      type: type as any,
+      data: {
+        title: option.label,
+      },
+    }));
+  };
+
+  const onCloseModalDelete = () => {
+    setModalDelete((prevState) => ({ ...prevState, visible: false }));
+  };
+
   return (
     <>
       <SuggestionModal
@@ -132,6 +175,27 @@ const CertificateAddPage = () => {
         visible={modal.visible}
         onSubmit={onSubmitSuggestion}
         type={modal.type}
+      />
+
+      <QuestionModal
+        open={modalDelete.visible}
+        isLoading={modalDelete.isLoading}
+        onLeftClick={onCloseModalDelete}
+        onRightClick={onSubmitDeleteSuggestion}
+        title={modalDelete.data.title}
+        showWarning={true}
+        wording={{
+          description: t(`suggestion.modal.delete.description`),
+          warning: {
+            title: t(`suggestion.modal.delete.warning.title`),
+            description: t(`suggestion.modal.delete.warning.description`),
+          },
+          button: {
+            no: t(`suggestion.modal.delete.button.no`),
+            yes: t(`suggestion.modal.delete.button.yes`),
+          },
+        }}
+        data={modalDelete.data}
       />
       <Form
         layout="vertical"
@@ -157,6 +221,7 @@ const CertificateAddPage = () => {
           </HeaderContent>
           <div className="tw-p-4">
             <CertificateForm
+              onDelete={onDelete}
               onAddNew={onAddNew as any}
               control={control}
               errors={errors}

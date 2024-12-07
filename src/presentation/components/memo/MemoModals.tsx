@@ -32,6 +32,7 @@ export const MemoModals = (modal: IMemoModal) => {
           onLeftClick={modal.onClose}
           onRightClick={modal.onRightClick}
           showWarning={modal.showWarning}
+          title={modal.data.title}
           wording={{
             description: t(`memo.list.modal.${modal.type}.description`),
             warning: {

@@ -7,6 +7,7 @@ import { IMemoFormData } from "@domain/entities/MemoEntity";
 import FormInput from "@components/form/input/FormInput";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import FormTextArea from "@components/form/input/FormTextArea";
+import { IOption } from "@domain/entities/SharedEntity";
 
 export interface IMemoFormProps {
   control: Control<IMemoFormData, any>;
@@ -15,6 +16,7 @@ export interface IMemoFormProps {
   customers: ICustomerOption;
   type?: "add" | "upgrade";
   onAddNew: (name: string) => void;
+  onDelete?: (option: IOption, type: string) => void;
 }
 
 const MemoForm: React.FC<IMemoFormProps> = ({
@@ -24,6 +26,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
   customers,
   type = "add",
   onAddNew,
+  onDelete,
 }) => {
   const { t } = useLanguage();
 
@@ -70,6 +73,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           rules={{ required: t("memo.form.final_identification.required") }}
           error={errors.attributes?.final_identification}
           onAddNew={() => onAddNew("final_identification")}
+          onDelete={onDelete}
         />
 
         <FormSelect
@@ -82,6 +86,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           rules={{ required: t("memo.form.cut.required") }}
           error={errors.attributes?.cut}
           onAddNew={() => onAddNew("cut")}
+          onDelete={onDelete}
         />
 
         <FormSelect
@@ -94,6 +99,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           rules={{ required: t("memo.form.shape.required") }}
           error={errors.attributes?.shape}
           onAddNew={() => onAddNew("shape")}
+          onDelete={onDelete}
         />
       </div>
       <div className="tw-w-full">
@@ -107,6 +113,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           rules={{ required: t("memo.form.color.required") }}
           error={errors.attributes?.color}
           onAddNew={() => onAddNew("color")}
+          onDelete={onDelete}
         />
 
         <FormInput
@@ -128,6 +135,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           rules={{ required: t("memo.form.comments.required") }}
           error={errors.attributes?.comments}
           onAddNew={() => onAddNew("comment")}
+          onDelete={onDelete}
         />
 
         <FormSelect
@@ -146,6 +154,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           }}
           error={errors.attributes?.origins}
           onAddNew={() => onAddNew("origin")}
+          onDelete={onDelete}
         />
 
         <FormTextArea

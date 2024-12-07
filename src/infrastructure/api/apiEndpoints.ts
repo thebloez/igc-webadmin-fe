@@ -27,6 +27,8 @@ const APIEndpoints = {
   suggestions: {
     all: "api/suggestion/all",
     create: (type: ISuggestionModalState["type"]) => `api/suggestion/${type}`,
+    delete: (name: string | number, type: ISuggestionModalState["type"]) =>
+      `api/suggestion/${type}/${name}`,
   },
   insight: "api/insight",
 };

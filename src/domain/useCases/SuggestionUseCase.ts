@@ -25,7 +25,6 @@ export default class SuggestionUseCase {
 
   async createSuggestion(props: { token: string; data: any; id: string }) {
     try {
-      
       logger("SuggestionUseCase.createSuggestion | payload =>", props);
 
       const result = await this.suggestionService.post({
@@ -45,6 +44,24 @@ export default class SuggestionUseCase {
       return result;
     } catch (error: any) {
       logger("SuggestionUseCase.createSuggestion | error =>", error);
+
+      throw error;
+    }
+  }
+
+  async deleteSuggestion(props: { token: string; name: string; type: string }) {
+    try {
+      const result = await this.suggestionService.delete({
+        id: props.name,
+        token: props.token,
+        type: props.type,
+      });
+
+      logger("SuggestionUseCase.deleteSuggestion | response =>", result);
+
+      return result;
+    } catch (error: any) {
+      logger("SuggestionUseCase.deleteSuggestion | error =>", error);
 
       throw error;
     }

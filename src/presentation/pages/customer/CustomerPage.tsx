@@ -1,24 +1,17 @@
 import CustomerColumn from "@components/customer/CustomerColumn";
 import CustomerTable from "@components/customer/CustomerTable";
 import HeaderContent from "@components/dashboard/layout/HeaderContent";
-import {
-  ICustomerData,
-  ICustomerTableState,
-} from "@domain/entities/CustomerEntity";
+import { ICustomerTableState } from "@domain/entities/CustomerEntity";
 import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { setUserToken } from "@redux/user/userReduxReducer";
 import { selectToken } from "@redux/user/userReduxSelector";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 const CustomerPage = () => {
   // get language and t function to change language
   const { t } = useLanguage();
-
-  // navigate function from react-router-dom
-  const navigate = useNavigate();
 
   // get token from redux
   const token = useSelector(selectToken);
@@ -47,9 +40,6 @@ const CustomerPage = () => {
     await customerViewModel.getCustomer(setTable);
   };
 
-  const onEdit = (data: ICustomerData) => {
-    navigate(`/customer/edit/${data.mobile_phone}`);
-  };
   return (
     <div className="tw-m-0 tw-p-6 ">
       <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
@@ -63,9 +53,7 @@ const CustomerPage = () => {
           currentPage={table.currentPage}
           pageSize={table.pageSize}
           total={table.total}
-          columns={CustomerColumn({
-            onEdit,
-          })}
+          columns={CustomerColumn()}
         />
       </div>
     </div>

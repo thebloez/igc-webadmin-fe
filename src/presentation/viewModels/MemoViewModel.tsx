@@ -174,7 +174,7 @@ class MemoViewModel {
       }));
       const response = await this.memoUseCase.delete({
         token: this.token,
-        id,
+        id: id as any,
       });
 
       logger("MemoViewModel.deleteMemo | response => ", response);

@@ -69,6 +69,7 @@ class CustomerViewModel {
         const data = response.data.map((item) => ({
           value: item.mobile_phone,
           label: item.nama + " - " + item.mobile_phone,
+          id: item.mobile_phone,
         }));
         setOption((prevState) => ({
           ...prevState,
@@ -107,7 +108,9 @@ class CustomerViewModel {
         this.clearToken();
       }
 
-      message.error(error?.response?.data?.meta?.message ?? "Failed to create customer");
+      message.error(
+        error?.response?.data?.meta?.message ?? "Failed to create customer"
+      );
 
       throw error;
     }

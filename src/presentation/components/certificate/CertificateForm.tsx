@@ -11,6 +11,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
   suggestions,
   customers,
   onAddNew,
+  onDelete,
 }) => {
   const { t } = useLanguage();
   return (
@@ -58,6 +59,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           }}
           error={errors.attributes?.final_identification}
           onAddNew={() => onAddNew("final_identification")}
+          onDelete={onDelete}
         />
         <FormInput
           name="attributes.measurement"
@@ -80,6 +82,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           rules={{ required: t("certificate.form.clarity.required") }}
           error={errors.attributes?.clarity}
           onAddNew={() => onAddNew("clarity")}
+          onDelete={onDelete}
         />
         <FormSelect
           name="attributes.transparency"
@@ -91,6 +94,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           rules={{ required: t("certificate.form.transparency.required") }}
           error={errors.attributes?.transparency}
           onAddNew={() => onAddNew("transparency")}
+          onDelete={onDelete}
         />
         <FormSelect
           name="attributes.cut"
@@ -102,6 +106,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           rules={{ required: t("memo.form.cut.required") }}
           error={errors.attributes?.cut}
           onAddNew={() => onAddNew("cut")}
+          onDelete={onDelete}
         />
       </div>
       <div className="tw-w-full">
@@ -115,6 +120,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           rules={{ required: t("memo.form.shape.required") }}
           error={errors.attributes?.shape}
           onAddNew={() => onAddNew("shape")}
+          onDelete={onDelete}
         />
         <FormSelect
           name="attributes.color"
@@ -126,6 +132,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           rules={{ required: t("memo.form.color.required") }}
           error={errors.attributes?.color}
           onAddNew={() => onAddNew("color")}
+          onDelete={onDelete}
         />
 
         <FormInput
@@ -159,6 +166,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           rules={{ required: t("memo.form.comments.required") }}
           error={errors.attributes?.comments}
           onAddNew={() => onAddNew("comment")}
+          onDelete={onDelete}
         />
 
         <FormTextArea
