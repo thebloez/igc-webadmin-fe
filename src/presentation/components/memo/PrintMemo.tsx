@@ -17,14 +17,6 @@ export interface IPrintMemo {
   onClose: () => void;
 }
 
-const excludes = [
-  "object_name",
-  "object_image",
-  "measurement",
-  "shape",
-  "id_master",
-];
-
 const PrintMemo: React.FC<IPrintMemo> = ({
   title,
   data,
@@ -68,7 +60,7 @@ const PrintMemo: React.FC<IPrintMemo> = ({
       className="tw-font-sans"
     >
       <div ref={contentRef}>
-        <MemoSection data={data} identifier={identifier} excludes={excludes} />
+        <MemoSection data={data} identifier={identifier}  />
       </div>
 
       <div>
