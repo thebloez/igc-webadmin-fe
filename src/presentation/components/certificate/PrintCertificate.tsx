@@ -115,7 +115,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               </div>
               <div>
                 <h1 className="tw-text-base tw-font-semibold tw-text-gray-900">
-                  Complete Gemstone Analysis
+                  Certificate
                 </h1>
                 <p className="tw-text-sm tw-text-gray-600">{`${data.id}-${identifier}`}</p>
               </div>
