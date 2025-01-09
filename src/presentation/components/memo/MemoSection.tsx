@@ -7,6 +7,7 @@ import LogoWhiteIcon from "@components/icon/LogoWhiteIcon";
 import { IMemoData } from "@domain/entities/MemoEntity";
 import objectToArray from "@lib/utils/objectToArray";
 import { PrintMemoItem } from "./PrintMemoItem";
+import config from "@config/app.config";
 
 interface MemoSectionProps {
   data: IMemoData;
@@ -14,11 +15,13 @@ interface MemoSectionProps {
   excludes: string[];
 }
 
-const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier, excludes }) => {
+const MemoSection: React.FC<MemoSectionProps> = ({
+  data,
+  identifier,
+  excludes,
+}) => {
   return (
-    <div
-      className="tw-bg-white !tw-w-[800px] tw-rounded-lg tw-shadow-lg tw-font-sans"
-    >
+    <div className="tw-bg-white !tw-w-[800px] tw-rounded-lg tw-shadow-lg tw-font-sans">
       <div
         style={{
           background:
@@ -33,7 +36,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier, excludes })
         <div className=" tw-p-2 tw-bg-white tw-rounded-sm">
           <QRCode
             value={
-              "https://igc-lab.com/certificate?id=" +
+              `${config.qrHost}certificate?id=` +
               data.attributes.id_master +
               "-" +
               identifier
@@ -63,9 +66,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier, excludes })
                     : detail.label
                 }
                 value={
-                  detail.label === "origins"
-                    ? detail.value.name
-                    : detail.value
+                  detail.label === "origins" ? detail.value.name : detail.value
                 }
               />
             ))}

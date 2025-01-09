@@ -1,4 +1,5 @@
 const config = {
+  qrHost: "https://igclab.com/",
   colors: {
     primary: "#0984E3", //#f43f5e
     secondary: "#3b9adf",

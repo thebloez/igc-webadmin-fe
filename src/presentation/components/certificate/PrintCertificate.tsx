@@ -16,6 +16,7 @@ import "./PrintCertificate.style.css";
 import HologramFlatIcon from "@components/icon/HologramFlatIcon";
 import QRCode from "react-qr-code";
 import randomString from "@lib/utils/randomString";
+import config from "@config/app.config";
 
 export interface IPrintCertificate {
   title: string;
@@ -213,7 +214,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               <div className="tw-w-[100%] tw-flex tw-flex-col tw-items-center">
                 <QRCode
                   value={
-                    "https://igc-lab.com/certificate?id=" +
+                    `${config.qrHost}certificate?id=` +
                     data.attributes.id_master +
                     "-" +
                     identifier
