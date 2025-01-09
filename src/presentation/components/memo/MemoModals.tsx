@@ -14,41 +14,38 @@ export const MemoModals = (modal: IMemoModal) => {
 
   return (
     <>
-      {modal.type === "print" && (
-        <PrintMemo
-          onAfterPrint={modal.onAfterPrint}
-          open={modal.open}
-          onClose={modal.onClose}
-          showPrint
-          title="Print Memo"
-          data={modal.data}
-        />
-      )}
+      <PrintMemo
+        onAfterPrint={modal.onAfterPrint}
+        open={modal.open && modal.type === "print"}
+        onClose={modal.onClose}
+        showPrint
+        title="Print Memo"
+        data={modal.data}
+      />
 
-      {(modal.type === "delete" || modal.type === "after-print") && (
-        <QuestionModal
-          open={modal.open}
-          isLoading={modal.isLoading}
-          onLeftClick={modal.onClose}
-          onRightClick={modal.onRightClick}
-          showWarning={modal.showWarning}
-          title={modal.data.title}
-          wording={{
-            description: t(`memo.list.modal.${modal.type}.description`),
-            warning: {
-              title: t(`memo.list.modal.${modal.type}.warning.title`),
-              description: t(
-                `memo.list.modal.${modal.type}.warning.description`
-              ),
-            },
-            button: {
-              no: t(`memo.list.modal.${modal.type}.button.no`),
-              yes: t(`memo.list.modal.${modal.type}.button.yes`),
-            },
-          }}
-          data={modal.data}
-        />
-      )}
+      <QuestionModal
+        open={
+          modal.open &&
+          (modal.type === "delete" || modal.type === "after-print")
+        }
+        isLoading={modal.isLoading}
+        onLeftClick={modal.onClose}
+        onRightClick={modal.onRightClick}
+        showWarning={modal.showWarning}
+        title={modal.data.title}
+        wording={{
+          description: t(`memo.list.modal.${modal.type}.description`),
+          warning: {
+            title: t(`memo.list.modal.${modal.type}.warning.title`),
+            description: t(`memo.list.modal.${modal.type}.warning.description`),
+          },
+          button: {
+            no: t(`memo.list.modal.${modal.type}.button.no`),
+            yes: t(`memo.list.modal.${modal.type}.button.yes`),
+          },
+        }}
+        data={modal.data}
+      />
     </>
   );
 };

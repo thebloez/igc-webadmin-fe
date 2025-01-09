@@ -136,7 +136,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               />
               <PrintItemCertificate
                 title="Measurements"
-                value={data.attributes.measurement}
+                value={`${data.attributes.measurement} (mm)`}
                 color="#D7BF2A"
               />
               <PrintItemCertificate
@@ -168,7 +168,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               />
               <PrintItemCertificate
                 title="Weight"
-                value={data.attributes.weight}
+                value={`${data.attributes.weight} carat`}
                 color="#D7BF2A"
               />
               <PrintItemCertificate
@@ -214,7 +214,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               <div className="tw-w-[100%] tw-flex tw-flex-col tw-items-center">
                 <QRCode
                   value={
-                    `${config.qrHost}certificate?id=` +
+                    `${config.qrHost}certificate?code=` +
                     data.attributes.id_master +
                     "-" +
                     identifier

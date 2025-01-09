@@ -5,21 +5,15 @@ import { id } from "date-fns/locale";
 import HologramIcon from "@components/icon/HologramIcon";
 import LogoWhiteIcon from "@components/icon/LogoWhiteIcon";
 import { IMemoData } from "@domain/entities/MemoEntity";
-import objectToArray from "@lib/utils/objectToArray";
 import { PrintMemoItem } from "./PrintMemoItem";
 import config from "@config/app.config";
 
 interface MemoSectionProps {
   data: IMemoData;
   identifier: string;
-  excludes: string[];
 }
 
-const MemoSection: React.FC<MemoSectionProps> = ({
-  data,
-  identifier,
-  excludes,
-}) => {
+const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
   return (
     <div className="tw-bg-white !tw-w-[800px] tw-rounded-lg tw-shadow-lg tw-font-sans">
       <div
@@ -36,7 +30,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({
         <div className=" tw-p-2 tw-bg-white tw-rounded-sm">
           <QRCode
             value={
-              `${config.qrHost}certificate?id=` +
+              `${config.qrHost}certificate?code=` +
               data.attributes.id_master +
               "-" +
               identifier
@@ -55,21 +49,32 @@ const MemoSection: React.FC<MemoSectionProps> = ({
         }}
       >
         <div className="tw-w-[60%]">
-          {objectToArray(data.attributes, excludes)
-            .filter((res) => res.value)
-            .map((detail, index) => (
-              <PrintMemoItem
-                key={index}
-                label={
-                  detail.label === "final_identification"
-                    ? "identification"
-                    : detail.label
-                }
-                value={
-                  detail.label === "origins" ? detail.value.name : detail.value
-                }
-              />
-            ))}
+          <PrintMemoItem label="Color" value={data.attributes.color} />
+
+          <PrintMemoItem
+            label="Weight"
+            value={`${data.attributes.weight} carat`}
+          />
+          <PrintMemoItem
+            label="Measurement"
+            value={`${data.attributes.measurement} (mm)`}
+          />
+
+          <PrintMemoItem label="Shape" value={`${data.attributes.shape}`} />
+
+          <PrintMemoItem label="Cut" value={`${data.attributes.cut}`} />
+
+          <PrintMemoItem
+            label="Comments"
+            value={`${data.attributes.cut ?? "-"}`}
+          />
+
+          {data.attributes.origins && (
+            <PrintMemoItem
+              label="Origins"
+              value={data.attributes.origins.name}
+            />
+          )}
         </div>
         <div className="tw-flex tw-items-center tw-w-[40%] tw-flex-col tw-justify-center tw-gap-4 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
           <div
