@@ -117,7 +117,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
         </div>
       </div>
       <div className="tw-bg-black tw-p-4">
-        <p className="tw-text-xs tw-text-gray-400 tw-text-center">
+        <p className="tw-text-sm tw-text-gray-400 tw-text-center">
           All Information represent the opinion of{" "}
           <span className="tw-text-[#F6AE28]">IGC Lab</span> at the time of
           testing
