@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import { id } from "date-fns/locale"; // Indonesian locale if needed
 
 const CertificateColumn = (
-  props: Pick<IColumn<ICertificateData>, "onPrint" | "onDelete">
+  props: Pick<IColumn<ICertificateData>, "onPrint" | "onDelete" | "onDetail">
 ): ColumnsType<ICertificateData> => {
   const { t } = useLanguage();
 
@@ -17,6 +17,16 @@ const CertificateColumn = (
       dataIndex: "id",
       width: 200,
       key: "id",
+      render: (value, record) => {
+        return (
+          <p
+            className="tw-text-blue-500 tw-cursor-pointer tw-font-semibold"
+            onClick={() => props.onDetail?.(record)}
+          >
+            {value}
+          </p>
+        );
+      },
     },
     {
       title: t("certificate.list.column.name"),
@@ -28,9 +38,10 @@ const CertificateColumn = (
     },
     {
       title: t("certificate.list.column.customer"),
-      dataIndex: "member_phone_number",
       width: 150,
-      key: "member_phone_number",
+      dataIndex: "member.nama",
+      key: "member.nama",
+      render: (_, record) => record.member.nama,
     },
     {
       title: t("certificate.list.column.creator"),
@@ -45,9 +56,7 @@ const CertificateColumn = (
       key: "created_at",
       width: 150,
       render: (date: string) => (
-        <span>
-          {format(new Date(date), "dd-MMM-yyyy", { locale: id })}
-        </span>
+        <span>{format(new Date(date), "dd-MMM-yyyy", { locale: id })}</span>
       ),
     },
     {

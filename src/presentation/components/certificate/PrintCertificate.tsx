@@ -11,12 +11,11 @@ import DotIcon from "@components/icon/DotIcon";
 import PrintItemCertificate from "./PrintItemCertificate";
 import WorldMap from "@components/map/WorldMap";
 import LogoTransparentIcon from "@components/icon/LogoTransparentIcon";
-
-import "./PrintCertificate.style.css";
-import HologramFlatIcon from "@components/icon/HologramFlatIcon";
 import QRCode from "react-qr-code";
 import randomString from "@lib/utils/randomString";
 import config from "@config/app.config";
+
+import "./PrintCertificate.style.css";
 
 export interface IPrintCertificate {
   title: string;
@@ -42,6 +41,15 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
     onAfterPrint: () => {
       onAfterPrint(identifier);
     },
+    pageStyle: `
+      @page {
+        size: A4 landscape;
+        margin: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+      }
+    `,
   });
 
   const { t } = useLanguage();
@@ -73,9 +81,12 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
     >
       <div
         ref={contentRef}
-        className="tw-shadow-lg tw-w-[853px] tw-font-sans tw-relative"
+        className="tw-shadow-lg tw-font-sans tw-relative"
         style={{
           background: "linear-gradient(180deg, #F1F1F1 43%, #BABCBE 100%)",
+          width: "29.7cm", // A4 width for landscape
+          height: "21cm", // A4 height for landscape
+          boxSizing: "border-box",
         }}
       >
         {/* background */}
@@ -114,10 +125,10 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 <DotIcon className="tw-text-[#E7375A]" />
               </div>
               <div>
-                <h1 className="tw-text-base tw-font-semibold tw-text-gray-900">
+                <h1 className="tw-text-lg tw-font-semibold tw-text-gray-900">
                   Certificate
                 </h1>
-                <p className="tw-text-sm tw-text-gray-600">{`${data.id}-${identifier}`}</p>
+                <p className="tw-text-base tw-text-gray-600">{`${data.id}-${identifier}`}</p>
               </div>
             </div>
 
@@ -191,7 +202,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 />
               </div>
               <div>
-                <p className="tw-text-xxs tw-text-[#444444]">
+                <p className="tw-text-sm tw-text-[#444444]">
                   "Based on our gemological analysis and equipment, we believe
                   that this sapphire is originated fromWest Sumatra in
                   Indonesia"
@@ -200,13 +211,8 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
             </div>
           </div>
           <div className="tw-flex tw-items-center tw-w-[50%] tw-flex-col tw-justify-center tw-gap-10 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
-            <div className="tw-w-[220px] tw-h-[200px]">
-              <img
-                src={data.attributes.object_image as any}
-                alt="Gem"
-                className="tw-w-full tw-h-full tw-object-cover tw-rounded-md"
-              />
-              <p className="tw-text-center tw-text-[#444444] tw-text-xl tw-font-bold tw-py-2">
+            <div className="tw-w-full tw-flex tw-justify-center tw-items-center tw-gap-2 tw-flex-col">
+              <p className="tw-text-center tw-text-[#444444] tw-text-2xl tw-font-bold tw-py-2">
                 {data.attributes.final_identification}
               </p>
             </div>
@@ -227,16 +233,13 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               </div>
 
               <div className="tw-w-[100%]">
-                <p className="tw-text-xs tw-text-center tw-font-bold tw-mt-2">
-                  Idris
+                <p className="tw-text-sm tw-text-center tw-font-bold tw-mt-2">
+                  Mohammad Idris B.CSc., G.C.S.(GIA)
                 </p>
-              </div>
-              <div className="tw-w-[100%]">
-                <HologramFlatIcon width={50} height={50} />
               </div>
             </div>
             <div>
-              <p className="tw-text-xxxs tw-text-[#444444] tw-px-4 tw-text-center">
+              <p className="tw-text-xs tw-text-[#444444] tw-px-4 tw-text-center">
                 This certification and the information written in it reflects
                 upon the identification and the characteristics of the gemstone
                 at the time of checking. The verification process strictly

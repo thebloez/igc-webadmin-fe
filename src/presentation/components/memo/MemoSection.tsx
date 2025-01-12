@@ -2,7 +2,6 @@ import React from "react";
 import QRCode from "react-qr-code";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
-import HologramIcon from "@components/icon/HologramIcon";
 import LogoWhiteIcon from "@components/icon/LogoWhiteIcon";
 import { IMemoData } from "@domain/entities/MemoEntity";
 import { PrintMemoItem } from "./PrintMemoItem";
@@ -15,7 +14,15 @@ interface MemoSectionProps {
 
 const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
   return (
-    <div className="tw-bg-white !tw-w-[800px] tw-rounded-lg tw-shadow-lg tw-font-sans">
+    <div
+      className="tw-bg-white tw-rounded-lg tw-shadow-lg tw-font-sans tw-flex tw-flex-col tw-justify-between"
+      style={{
+        height: "5.4in", // Page width in cm
+        width: "8.5in", // Page height in cm
+        padding: "0", // Optional padding
+        boxSizing: "border-box",
+      }}
+    >
       <div
         style={{
           background:
@@ -42,7 +49,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
         </div>
       </div>
       <div
-        className=" tw-py-4 tw-pl-[50px] tw-flex tw-justify-between"
+        className=" tw-py-4 tw-pl-[50px] tw-flex tw-justify-between tw-h-full"
         style={{
           background:
             "linear-gradient(90deg, #E7E7E7 12%, #FCFCFC 39%, #F8F8F8 56%, #EEEEEE 69%, #DDDDDD 82%, #C6C6C6 94%, #BDBDBD 98%)",
@@ -93,19 +100,16 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
               className="tw-w-full tw-h-full tw-object-fill tw-rounded-md"
             />
           </div>
-          <div className="tw-justify-center tw-items-center tw-gap-2 tw-flex tw-w-full">
+          <div className="tw-justify-between tw-items-center tw-gap-2 tw-flex tw-w-full">
             <div className="">
-              <p className="tw-text-xxs tw-font-semibold">
+              <p className="tw-text-xs tw-font-semibold">
                 {format(new Date(data.created_at), "d MMM yyyy", {
                   locale: id,
                 })}
               </p>
             </div>
-            <div className="tw-w-50">
-              <HologramIcon width={50} height={50} />
-            </div>
             <div className="">
-              <p className="tw-text-xxs tw-font-semibold">
+              <p className="tw-text-xs tw-font-semibold">
                 {data.attributes.id_master}-{identifier}
               </p>
             </div>

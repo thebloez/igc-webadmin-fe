@@ -60,7 +60,7 @@ const PrintMemo: React.FC<IPrintMemo> = ({
       className="tw-font-sans"
     >
       <div ref={contentRef}>
-        <MemoSection data={data} identifier={identifier}  />
+        <MemoSection data={data} identifier={identifier} />
       </div>
 
       <div>

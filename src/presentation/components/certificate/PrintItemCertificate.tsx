@@ -29,16 +29,16 @@ const PrintItemCertificate = ({
         />
       </div>
       <div
-        className={tailwindMerge("tw-flex tw-w-full tw-justify-between", {
+        className={tailwindMerge("tw-flex tw-w-full  tw-justify-between", {
           "tw-flex-col": direction === "col",
-          "tw-flex-row": direction === "row",
+          "tw-flex-row tw-items-center": direction === "row",
         })}
       >
         <div className="tw-w-[35%]">
-          <p className="tw-font-semibold tw-text-sm">{title}</p>
+          <p className="tw-font-semibold tw-text-base">{title}</p>
         </div>
         <div className="tw-w-[65%]">
-          <p className="tw-text-xxs tw-text-[#444444]">{value}</p>
+          <p className="tw-text-sm tw-text-[#444444]">{value}</p>
         </div>
       </div>
     </div>

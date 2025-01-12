@@ -37,7 +37,17 @@ const MemoColumn = (props: IColumn<IMemoData>): ColumnsType<IMemoData> => {
       title: "Kode",
       dataIndex: "id",
       key: "id",
-      responsive: ["xs", "sm", "md", "lg"],
+      width: 200,
+      render: (value, record) => {
+        return (
+          <p
+            className="tw-text-blue-500 tw-cursor-pointer tw-font-semibold"
+            onClick={() => props.onDetail?.(record)}
+          >
+            {value}
+          </p>
+        );
+      },
     },
     {
       title: "Nama",
@@ -48,8 +58,9 @@ const MemoColumn = (props: IColumn<IMemoData>): ColumnsType<IMemoData> => {
     },
     {
       title: "Pelanggan",
-      dataIndex: "member_phone_number",
-      key: "member_phone_number",
+      dataIndex: "member.nama",
+      key: "member.nama",
+      render: (_, record) => record.member.nama,
       responsive: ["lg"], // Show only on medium and larger screens
     },
     {
