@@ -95,6 +95,13 @@ class MemoViewModel {
       if (error?.response?.status === 401) {
         this.clearToken();
       }
+      setTable((prevState) => ({
+        ...prevState,
+        error: {
+          status: true,
+          message: error.message,
+        },
+      }));
     } finally {
       setTable((prevState) => ({
         ...prevState,

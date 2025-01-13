@@ -24,6 +24,7 @@ import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
 import SuggestionModal from "@components/suggestion/SuggestionModal";
 import QuestionModal from "@components/modal/QuestionModal";
 import { IOption } from "@domain/entities/SharedEntity";
+import NotFoundMessage from "@components/not-found/NotFoundMessage";
 
 const MemoUpgradeOriginPage = () => {
   // get language and t function to change language
@@ -248,7 +249,7 @@ const MemoUpgradeOriginPage = () => {
               <div className="tw-w-full tw-flex tw-justify-center tw-h-[200px] tw-items-center">
                 <SpinnerLoading width={32} height={32} type="primary-spinner" />
               </div>
-            ) : (
+            ) : !state.error.status ? (
               <MemoForm
                 onAddNew={onAddNew as any}
                 type="upgrade"
@@ -257,6 +258,11 @@ const MemoUpgradeOriginPage = () => {
                 suggestions={suggestions}
                 customers={customers}
                 onDelete={onDelete}
+              />
+            ) : (
+              <NotFoundMessage
+                title="Memo Not Found"
+                message="Memo not found or has been deleted"
               />
             )}
           </div>
