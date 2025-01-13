@@ -50,7 +50,7 @@ const MemoColumn = (props: IColumn<IMemoData>): ColumnsType<IMemoData> => {
       },
     },
     {
-      title: "Nama",
+      title: "Nama Objek",
       dataIndex: "attributes.object_name",
       key: "attributes.object_name",
       responsive: ["xs", "sm", "md", "lg"],

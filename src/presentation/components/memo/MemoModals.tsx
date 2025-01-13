@@ -1,10 +1,13 @@
 import QuestionModal, { IQuestionModal } from "@components/modal/QuestionModal";
 import { useTranslation } from "react-i18next";
 import PrintMemo, { IPrintMemo } from "./PrintMemo";
+import MemoDetail, { IMemoDetail } from "./MemoDetail";
+import { IMemoModalState } from "@domain/entities/MemoEntity";
 
 type IMemoModal = IPrintMemo &
+  IMemoDetail &
   Omit<IQuestionModal, "wording" | "onLeftClick"> & {
-    type: "print" | "delete" | "upgrade" | "after-print";
+    type: IMemoModalState["type"];
   };
 
 export const MemoModals = (modal: IMemoModal) => {
@@ -45,6 +48,13 @@ export const MemoModals = (modal: IMemoModal) => {
           },
         }}
         data={modal.data}
+      />
+
+      <MemoDetail
+        open={modal.open && modal.type === "detail"}
+        onClose={modal.onClose}
+        data={modal.data}
+        onEdit={modal.onEdit}
       />
     </>
   );

@@ -9,6 +9,7 @@ export interface IMemoData {
   identifier: string;
   type: string;
   status: string;
+  isEditable: boolean;
   member_phone_number: string;
   created_by: string;
   created_at: string;
@@ -37,7 +38,7 @@ export interface IMemoFormData {
 export interface IMemoModalState {
   visible: boolean;
   isLoading: boolean;
-  type: "delete" | "print" | "upgrade" | "after-print";
+  type: "delete" | "print" | "upgrade" | "after-print" | "detail";
   data: IMemoData;
   showWarning?: boolean;
 }

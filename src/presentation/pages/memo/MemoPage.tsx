@@ -161,6 +161,15 @@ const MemoPage = () => {
     }));
   };
 
+  const onDetail = (record: any) => {
+    setModal((prevState) => ({
+      ...prevState,
+      visible: true,
+      type: "detail",
+      data: record,
+    }));
+  };
+
   return (
     <div className="tw-m-0 tw-p-6 ">
       <MemoModals
@@ -174,7 +183,9 @@ const MemoPage = () => {
         type={modal.type}
         showPrint
         title={modal.type === "print" ? "Print Memo" : ""}
+        onEdit={() => {}}
       />
+
       <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
         <HeaderContent
           title={t("memo.list.title")}
@@ -204,6 +215,7 @@ const MemoPage = () => {
             onDelete,
             onPrint,
             onEdit,
+            onDetail,
           })}
         />
       </div>
