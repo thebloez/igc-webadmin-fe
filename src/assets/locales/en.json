@@ -100,7 +100,7 @@
       },
       "measurement": {
         "label": "Measurement",
-        "placeholder": "10 x 20 x 30cm",
+        "placeholder": "10 x 20 x 30mm",
         "required": "Measurement is required"
       },
       "clarity": {
@@ -238,7 +238,7 @@
       },
       "measurement": {
         "label": "Measurement",
-        "placeholder": "10 x 20 x 30cm",
+        "placeholder": "10 x 20 x 30mm",
         "required": "Measurement is required"
       },
       "clarity": {
