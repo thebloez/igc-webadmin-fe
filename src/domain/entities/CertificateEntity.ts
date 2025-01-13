@@ -13,6 +13,7 @@ export interface ICertificateData {
   created_by: string;
   created_at: string;
   updated_at: string;
+  isEditable: boolean;
   updated_by: any;
   printed_at: any;
   print_version: number;
@@ -38,7 +39,7 @@ export interface ICertificateModalState {
   visible: boolean;
   isLoading: boolean;
   showWarning?: boolean;
-  type: "delete" | "print" | "after-print";
+  type: "delete" | "print" | "after-print" | "detail";
   data: ICertificateData;
 }
 
