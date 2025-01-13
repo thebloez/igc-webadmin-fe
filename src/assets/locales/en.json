@@ -99,9 +99,9 @@
         "required": "Identification is required"
       },
       "measurement": {
-        "label": "Size",
+        "label": "Measurement",
         "placeholder": "10 x 20 x 30cm",
-        "required": "Size is required"
+        "required": "Measurement is required"
       },
       "clarity": {
         "label": "Clarity",
@@ -237,9 +237,9 @@
         "required": "Identification is required"
       },
       "measurement": {
-        "label": "Size",
+        "label": "Measurement",
         "placeholder": "10 x 20 x 30cm",
-        "required": "Size is required"
+        "required": "Measurement is required"
       },
       "clarity": {
         "label": "Clarity",
