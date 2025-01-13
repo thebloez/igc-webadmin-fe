@@ -6,6 +6,7 @@ import {
   IDeleteRequest,
   IGetRequest,
   IPostRequest,
+  IPutRequest,
 } from "@domain/entities/ResponseEntity";
 
 export default class CertificateUseCase {
@@ -31,6 +32,41 @@ export default class CertificateUseCase {
       return result;
     } catch (error: any) {
       logger("CertificateUseCase.get | error =>", error);
+
+      throw error;
+    }
+  }
+
+  async edit(props: IPutRequest<ICertificateFormData>) {
+    try {
+      const certData = new FormData();
+
+      certData.append("member_phone_number", props.data.member_phone_number);
+      certData.append("additional_comment", props.data.additional_comment);
+      certData.append("status", "active");
+      certData.append("type", "Sertifikat");
+
+      Object.entries(props.data.attributes).forEach(([key, value]) => {
+        certData.append(`attributes[${key}]`, value as any);
+      });
+
+      logger("CertificateUseCase.payload | response =>", certData);
+
+      const result = await this.certificateService.editCertificate({
+        token: props.token,
+        data: certData,
+        id: props.id,
+      });
+
+      logger("CertificateUseCase.edit | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(result?.meta?.message ?? "Failed to certificate edit");
+      }
+
+      return result;
+    } catch (error: any) {
+      logger("CertificateUseCase.edit | error =>", error);
 
       throw error;
     }
@@ -112,6 +148,27 @@ export default class CertificateUseCase {
       return result;
     } catch (error: any) {
       logger("CertificateUseCase.printCertificate | error =>", error);
+
+      throw error;
+    }
+  }
+
+  async findCertificate(props: IGetRequest) {
+    try {
+      const result = await this.certificateService.findCertificate({
+        token: props.token,
+        params: props.params,
+      });
+
+      logger("CertificateUseCase.find | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(result?.meta?.message ?? "Failed to find certificate");
+      }
+
+      return result;
+    } catch (error: any) {
+      logger("CertificateUseCase.find | error =>", error);
 
       throw error;
     }

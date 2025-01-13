@@ -58,27 +58,6 @@ export default class MemoUseCase {
     }
   }
 
-  async find(props: IGetRequest) {
-    try {
-      const result = await this.memoService.findMemo({
-        token: props.token,
-        params: props.params,
-      });
-
-      logger("MemoUseCase.get | response =>", result);
-
-      if (isNullOrEmpty(result?.data)) {
-        throw new Error(result?.meta?.message ?? "Failed to memo get");
-      }
-
-      return result;
-    } catch (error: any) {
-      logger("MemoUseCase.get | error =>", error);
-
-      throw error;
-    }
-  }
-
   async createMemo(props: IPostRequest<IMemoFormData>) {
     try {
       const certData = new FormData();

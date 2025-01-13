@@ -1,4 +1,5 @@
 import CertificateAddPage from "@pages/certificate/CertificateAddPage";
+import CertificateEditPage from "@pages/certificate/CertificateEditPage";
 import CertificatePage from "@pages/certificate/CertificatePage";
 import CustomerPage from "@pages/customer/CustomerPage";
 import DashboardPage from "@pages/dashboard/DashboardPage";
@@ -36,6 +37,11 @@ const routes: TRoutes = [
     path: "/certificate/add",
     isAuth: true,
     element: <CertificateAddPage />,
+  },
+  {
+    path: "/certificate/edit/:id",
+    isAuth: true,
+    element: <CertificateEditPage />,
   },
   {
     path: "/memo",

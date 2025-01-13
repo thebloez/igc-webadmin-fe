@@ -48,8 +48,19 @@ export interface ICertificateTableState extends IBaseState {
   search: string;
 }
 
-export interface ICertificateResponse
+export interface ICertificateEditState {
+  isLoading: boolean;
+  id: string;
+  error: {
+    status: boolean;
+    message: string;
+  };
+}
+
+export interface ICertificateResponsePagination
   extends IResponsePaginationEntity<ICertificateData> {}
+
+  export interface ICertificateResponse extends IResponseEntity<ICertificateData> {}
 
 export interface ICertificateCreateResponse
   extends IResponseEntity<ICertificateData> {}

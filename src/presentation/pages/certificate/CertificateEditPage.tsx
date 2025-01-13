@@ -15,7 +15,6 @@ import SuggestionViewModel from "@viewModels/SuggestionViewModel";
 import SuggestionUseCase from "@domain/useCases/SuggestionUseCase";
 import { ICustomerOption } from "@domain/entities/CustomerEntity";
 import ArrowLeftIcon from "@components/icon/ArrowLeftIcon";
-import useMemoViewModel from "@lib/hooks/useMemoViewModel";
 import { setUserToken } from "@redux/user/userReduxReducer";
 import { useNavigate, useParams } from "react-router-dom";
 import SpinnerLoading from "@components/loader/SpinnerLoading";
@@ -25,8 +24,9 @@ import CertificateForm from "@components/certificate/CertificateForm";
 import { IOption } from "@domain/entities/SharedEntity";
 import QuestionModal from "@components/modal/QuestionModal";
 import NotFoundMessage from "@components/not-found/NotFoundMessage";
+import useCertificateViewModel from "@lib/hooks/useCertificateViewModel";
 
-const MemoUpgradeCertificatePage = () => {
+const CertificateEditPage = () => {
   // get language and t function to change language
   const { t } = useLanguage();
 
@@ -89,7 +89,7 @@ const MemoUpgradeCertificatePage = () => {
     isLoading: false,
   });
 
-  const memoViewModel = useMemoViewModel(token, clearToken);
+  const certificateViewModel = useCertificateViewModel(token, clearToken);
 
   const suggestionsViewModel = new SuggestionViewModel(
     new SuggestionUseCase(),
@@ -118,25 +118,21 @@ const MemoUpgradeCertificatePage = () => {
 
   useEffect(() => {
     if (state.id) {
-      findMemo();
+      findCertificate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.id]);
 
-  const findMemo = async () => {
-    await memoViewModel.findMemo(state, setState, setValue);
+  const findCertificate = async () => {
+    await certificateViewModel.findCertificate(state, setState, setValue);
   };
 
   const onSubmit: SubmitHandler<IMemoFormData> = async (data) => {
-    await memoViewModel
-      .upgradeMemo(data, message, navigate, "sertifikat")
-      .then(() => {
-        goBack();
-      });
+    await certificateViewModel.editCertificate(data, message, navigate);
   };
 
   const goBack = () => {
-    navigate("/memo");
+    navigate("/certificate");
   };
 
   const onAddNew = (name: ISuggestionModalState["type"]) => {
@@ -230,7 +226,7 @@ const MemoUpgradeCertificatePage = () => {
         <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
           <HeaderContent
             leftIcon={<ArrowLeftIcon onClick={goBack} />}
-            title={t("memo.upgrade-to-certificate.title")}
+            title={t("certificate.edit.title")}
             description={state.id ?? "-"}
           >
             {!state.isLoading && (
@@ -241,7 +237,7 @@ const MemoUpgradeCertificatePage = () => {
                   loading={isSubmitting}
                   className="!tw-h-[40px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
                 >
-                  {t("memo.upgrade-to-certificate.button.submit")}
+                  {t("certificate.edit.button.submit")}
                 </Button>
               </div>
             )}
@@ -273,4 +269,4 @@ const MemoUpgradeCertificatePage = () => {
   );
 };
 
-export default MemoUpgradeCertificatePage;
+export default CertificateEditPage;

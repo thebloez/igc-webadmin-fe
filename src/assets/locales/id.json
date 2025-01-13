@@ -77,6 +77,14 @@
         "submit": "Simpan"
       }
     },
+    "edit": {
+      "title": "Edit Sertifikat",
+      "description": "Edit sertifikat yang telah dibuat",
+      "button": {
+        "preview": "Pratinjau",
+        "submit": "Simpan"
+      }
+    },
     "form": {
       "object_image": {
         "label": "Gambar Objek",

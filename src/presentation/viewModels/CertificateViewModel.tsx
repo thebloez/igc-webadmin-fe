@@ -1,4 +1,5 @@
 import {
+  ICertificateEditState,
   ICertificateFormData,
   ICertificateModalState,
   ICertificateTableState,
@@ -6,7 +7,8 @@ import {
 import CertificateUseCase from "@domain/useCases/CertificateUseCase";
 import logger from "@lib/utils/logger";
 import { SetStateAction } from "react";
-import { UseFormReset } from "react-hook-form";
+import { UseFormReset, UseFormSetValue } from "react-hook-form";
+import { NavigateFunction } from "react-router-dom";
 
 class CertificateViewModel {
   private certificateUseCase: CertificateUseCase;
@@ -165,6 +167,81 @@ class CertificateViewModel {
       }));
     }
   };
+
+  async editCertificate(
+    data: ICertificateFormData,
+    message: any,
+    navigate: NavigateFunction
+  ) {
+    try {
+      const response = await this.certificateUseCase.edit({
+        token: this.token,
+        data,
+        id: data.id,
+      });
+
+      logger("CertificateViewModel.editCertificate | response => ", response);
+
+      if (response) {
+        message.success("Sertifikat berhasil diubah");
+        navigate("/certificate");
+      }
+    } catch (error: any) {
+      logger("CertificateViewModel.editCertificate | error => ", error);
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
+      message.error("Gagal mengubah sertifikat");
+    }
+  }
+
+  async findCertificate(
+    state: ICertificateEditState,
+    setTable: (value: SetStateAction<ICertificateEditState>) => void,
+    setValue: UseFormSetValue<ICertificateFormData>
+  ) {
+    try {
+      setTable((prevState) => ({
+        ...prevState,
+        isLoading: true,
+      }));
+
+      const response = await this.certificateUseCase.findCertificate({
+        token: this.token,
+        params: {
+          id: state.id,
+        },
+      });
+
+      logger("CertificateViewModel.findCertificate | response => ", response);
+
+      if (response) {
+        setValue("attributes", response.data.attributes as any);
+        setValue("additional_comment", response.data.additional_comment);
+        setValue("id", response.data.id);
+        setValue("member_phone_number", response.data.member_phone_number);
+        setValue("type", response.data.type);
+      }
+    } catch (error: any) {
+      logger("CertificateViewModel.findCertificate | error => ", error);
+
+      if (error?.response?.status === 401) {
+        this.clearToken();
+      }
+      setTable((prevState) => ({
+        ...prevState,
+        error: {
+          status: true,
+          message: error.message,
+        },
+      }));
+    } finally {
+      setTable((prevState) => ({
+        ...prevState,
+        isLoading: false,
+      }));
+    }
+  }
 }
 
 export default CertificateViewModel;
