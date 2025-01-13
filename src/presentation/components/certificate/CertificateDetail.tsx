@@ -1,7 +1,7 @@
 import PencilIcon from "@components/icon/PencilIcon";
 import { ICertificateData } from "@domain/entities/CertificateEntity";
 import isNullOrEmpty from "@lib/utils/isNullOrEmpty";
-import { Button, Modal, Tag } from "antd";
+import { Button, Modal } from "antd";
 
 export interface ICertificateDetail {
   data: ICertificateData;
@@ -42,15 +42,6 @@ const CertificateDetail = (props: ICertificateDetail) => {
                   props.data.identifier ? "-" + props.data.identifier : ""
                 }`}
               </h2>
-              {!isNullOrEmpty(props.data?.attributes.origins) ? (
-                <Tag className="tw-rounded-full tw-font-semibold" color="green">
-                  Certificate Origin
-                </Tag>
-              ) : (
-                <Tag className="tw-rounded-full tw-font-semibold" color="red">
-                  Certificate Non Origin
-                </Tag>
-              )}
             </div>
             <p className="tw-text-sm tw-font-medium">
               Print Version: {props.data.print_version}
