@@ -103,6 +103,15 @@ const CertificateDetail = (props: ICertificateDetail) => {
                   : props.data.member.mobile_phone}
               </p>
             </div>
+
+            <div>
+              <p className="tw-text-gray-500 tw-text-sm">Origins</p>
+              <p className="tw-font-medium">
+                {isNullOrEmpty(props.data.attributes.origins.name)
+                  ? "-"
+                  : props.data.attributes.origins.name}
+              </p>
+            </div>
           </div>
 
           <div className="tw-w-full tw-flex tw-flex-col tw-gap-2">
@@ -153,6 +162,14 @@ const CertificateDetail = (props: ICertificateDetail) => {
                 {isNullOrEmpty(props.data?.attributes.comments)
                   ? "-"
                   : props.data?.attributes.comments}
+              </p>
+            </div>
+            <div>
+              <p className="tw-text-gray-500 tw-text-sm">Additional Cooments</p>
+              <p className="tw-font-medium">
+                {isNullOrEmpty(props.data?.additional_comment)
+                  ? "-"
+                  : props.data?.additional_comment}
               </p>
             </div>
           </div>
