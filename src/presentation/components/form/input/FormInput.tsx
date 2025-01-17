@@ -14,6 +14,7 @@ interface FormInputProps {
   error?: FieldError;
   allowClear?: boolean;
   note?: React.ReactNode;
+  suffix?: React.ReactNode;
 }
 
 const FormInput: React.FC<FormInputProps> = ({
@@ -27,6 +28,7 @@ const FormInput: React.FC<FormInputProps> = ({
   error,
   allowClear = false,
   note,
+  suffix
 }) => {
   return (
     <Form.Item
@@ -46,6 +48,7 @@ const FormInput: React.FC<FormInputProps> = ({
               {...field}
               placeholder={placeholder}
               disabled={disabled}
+              suffix={suffix}
               iconRender={(visible) =>
                 visible ? (
                   <EyeIcon width={16} className="tw-text-red-500" />
@@ -62,6 +65,7 @@ const FormInput: React.FC<FormInputProps> = ({
               placeholder={placeholder}
               type={type}
               disabled={disabled}
+              suffix={suffix}
             />
           )
         }

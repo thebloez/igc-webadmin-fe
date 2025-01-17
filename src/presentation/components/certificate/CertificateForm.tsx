@@ -70,6 +70,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
             required: t("certificate.form.measurement.required"),
           }}
           error={errors.attributes?.measurement}
+          suffix={<span className="tw-text-gray-400">(mm)</span>}
         />
 
         <FormSelect
@@ -142,6 +143,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.weight.required") }}
           error={errors.attributes?.weight}
+          suffix={<span className="tw-text-gray-400">carat</span>}
         />
 
         <FormSelect

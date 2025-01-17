@@ -66,7 +66,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           onAddNew={() => onAddNew("final_identification")}
           onDelete={onDelete}
         />
-        
+
         <FormInput
           name="attributes.measurement"
           label={t("certificate.form.measurement.label")}
@@ -76,8 +76,8 @@ const MemoForm: React.FC<IMemoFormProps> = ({
             required: t("certificate.form.measurement.required"),
           }}
           error={errors.attributes?.measurement}
+          suffix={<span className="tw-text-gray-400">(mm)</span>}
         />
-
 
         <FormSelect
           name="attributes.cut"
@@ -126,6 +126,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           control={control}
           rules={{ required: t("memo.form.weight.required") }}
           error={errors.attributes?.weight}
+          suffix={<span className="tw-text-gray-400">carat</span>}
         />
 
         <FormSelect

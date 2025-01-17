@@ -108,7 +108,7 @@
       },
       "measurement": {
         "label": "Ukuran",
-        "placeholder": "10 x 20 x 30mm",
+        "placeholder": "10 x 20 ",
         "required": "Ukuran wajib diisi"
       },
       "clarity": {
@@ -246,7 +246,7 @@
       },
       "measurement": {
         "label": "Ukuran",
-        "placeholder": "10 x 20 x 30mm",
+        "placeholder": "10 x 20 ",
         "required": "Ukuran wajib diisi"
       },
       "clarity": {

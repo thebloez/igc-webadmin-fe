@@ -100,7 +100,7 @@
       },
       "measurement": {
         "label": "Measurement",
-        "placeholder": "10 x 20 x 30mm",
+        "placeholder": "10 x 20 ",
         "required": "Measurement is required"
       },
       "clarity": {
@@ -130,7 +130,7 @@
       },
       "weight": {
         "label": "Weight",
-        "placeholder": "10 carat",
+        "placeholder": "10",
         "required": "Weight is required"
       },
       "origins": {
@@ -238,7 +238,7 @@
       },
       "measurement": {
         "label": "Measurement",
-        "placeholder": "10 x 20 x 30mm",
+        "placeholder": "10 x 20 ",
         "required": "Measurement is required"
       },
       "clarity": {
@@ -268,7 +268,7 @@
       },
       "weight": {
         "label": "Weight",
-        "placeholder": "10 carat",
+        "placeholder": "10",
         "required": "Weight is required"
       },
       "origins": {

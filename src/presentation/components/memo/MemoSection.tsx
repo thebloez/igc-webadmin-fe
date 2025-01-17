@@ -17,8 +17,8 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
     <div
       className="tw-bg-white tw-rounded-lg tw-shadow-lg tw-font-sans tw-flex tw-flex-col tw-justify-between"
       style={{
-        height: "5.4in", // Page width in cm
-        width: "8.5in", // Page height in cm
+        height: "637.80px", // Page width in cm
+        width: "1003.94px", // Page height in cm
         padding: "0", // Optional padding
         boxSizing: "border-box",
         borderRadius: "0.2cm", // Optional border radius
@@ -27,31 +27,18 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
     >
       <div
         style={{
-          background:
-            "linear-gradient(97.83deg, #262626 1.52%, #515151 26.73%, #292929 50.97%)",
+          background: "#262626",
         }}
-        className="tw-flex tw-p-4 tw-w-full tw-items-center tw-justify-between"
+        className="tw-flex tw-py-2 tw-px-6 tw-w-full tw-items-center tw-justify-between"
       >
-        <LogoWhiteIcon width={100} height={100} />
-        <h1 className="tw-text-xl tw-text-[#F5AE26] tw-font-bold">
+        <LogoWhiteIcon width={180} height={180} />
+        <h1 className="tw-text-4xl tw-text-[#F5AE26] tw-font-bold">
           {data.attributes.final_identification}
         </h1>
-        <div className=" tw-p-2 tw-bg-white tw-rounded-sm">
-          <QRCode
-            value={
-              `${config.qrHost}certificate?code=` +
-              data.attributes.id_master +
-              "-" +
-              identifier
-            }
-            size={64}
-            bgColor="#FFFFFF"
-            fgColor="#000000"
-          />
-        </div>
+        <div className="tw-w-1/6" />
       </div>
       <div
-        className=" tw-py-4 tw-pl-[50px] tw-flex tw-justify-between tw-h-full"
+        className=" tw-py-4 tw-pl-[50px] tw-flex tw-justify-between tw-items-center tw-h-full"
         style={{
           background:
             "linear-gradient(90deg, #E7E7E7 12%, #FCFCFC 39%, #F8F8F8 56%, #EEEEEE 69%, #DDDDDD 82%, #C6C6C6 94%, #BDBDBD 98%)",
@@ -85,41 +72,43 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
             />
           )}
         </div>
-        <div className="tw-flex tw-items-center tw-w-[40%] tw-flex-col tw-justify-center tw-gap-4 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
-          <div
-            className="tw-w-5 tw-h-[80%] tw-absolute tw-left-0 tw-top-0 tw-rounded-r-full"
-            style={{
-              boxShadow: "inset 2px 0 6px -6px rgba(0, 0, 0, 1)",
-              background:
-                "linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.01), transparent)",
-              zIndex: 1, // Optional if layering is required
-            }}
-          />
-          <div className="tw-bg-[#424242] tw-border-[2px] tw-rounded-lg tw-border-[#F5AE26] tw-w-[220px] tw-h-[150px]">
+        <div className="tw-flex tw-items-center tw-w-[50%] tw-flex-col tw-justify-center tw-gap-4 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
+          <div className="tw-border-[2px] tw-rounded-xl tw-border-[#F5AE26] tw-bg-white tw-w-[95%] tw-h-[180px]">
             <img
               src={data.attributes.object_image as any}
               alt="Gem"
-              className="tw-w-full tw-h-full tw-object-fill tw-rounded-md"
+              className="tw-w-full tw-h-full tw-object-scale-down tw-rounded-md"
             />
           </div>
-          <div className="tw-justify-between tw-items-center tw-gap-2 tw-flex tw-w-full">
+          <div className="tw-justify-start tw-items-center tw-gap-2 tw-flex tw-w-full">
+            <div className=" tw-p-2 tw-bg-white tw-rounded-sm">
+              <QRCode
+                value={
+                  `${config.qrHost}certificate?code=` +
+                  data.attributes.id_master +
+                  "-" +
+                  identifier
+                }
+                size={102}
+                bgColor="#FFFFFF"
+                fgColor="#000000"
+              />
+            </div>
             <div className="">
-              <p className="tw-text-xs tw-font-semibold">
+              <p className="tw-text-base tw-font-bold">
+                {data.attributes.id_master}-{identifier}
+              </p>
+              <p className="tw-text-base tw-font-bold">
                 {format(new Date(data.created_at), "d MMM yyyy", {
                   locale: id,
                 })}
               </p>
             </div>
-            <div className="">
-              <p className="tw-text-xs tw-font-semibold">
-                {data.attributes.id_master}-{identifier}
-              </p>
-            </div>
           </div>
         </div>
       </div>
-      <div className="tw-bg-black tw-p-4">
-        <p className="tw-text-sm tw-text-gray-400 tw-text-center">
+      <div className="tw-bg-black tw-px-4 tw-py-2">
+        <p className="tw-text-sm tw-text-white tw-font-bold tw-text-center">
           All Information represent the opinion of{" "}
           <span className="tw-text-[#F6AE28]">IGC Lab</span> at the time of
           testing
