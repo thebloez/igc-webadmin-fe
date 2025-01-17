@@ -154,6 +154,7 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           rules={{ required: t("memo.form.origins.required") }}
           error={errors.attributes?.origins}
           onAddNew={() => onAddNew("origin")}
+          onDelete={onDelete}
         />
 
         <FormSelect
@@ -174,9 +175,6 @@ const CertificateForm: React.FC<ICertificateFormProps> = ({
           label={t("certificate.form.additional_comment.label")}
           placeholder={t("certificate.form.additional_comment.placeholder")}
           control={control}
-          rules={{
-            required: t("certificate.form.additional_comment.required"),
-          }}
           error={errors.additional_comment}
         />
       </div>
