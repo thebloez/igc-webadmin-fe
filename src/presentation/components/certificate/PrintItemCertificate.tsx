@@ -35,10 +35,10 @@ const PrintItemCertificate = ({
         })}
       >
         <div className="tw-w-[35%]">
-          <p className="tw-font-semibold tw-text-base">{title}</p>
+          <p className="tw-font-bold tw-text-base">{title}</p>
         </div>
         <div className="tw-w-[65%]">
-          <p className="tw-text-sm tw-text-[#444444]">{value}</p>
+          <p className="tw-text-base tw-text-[#444444]">{value}</p>
         </div>
       </div>
     </div>

@@ -25,14 +25,34 @@ const PrintMemo: React.FC<IPrintMemo> = ({
   onAfterPrint,
   onClose,
 }) => {
+  
   const identifier = randomString();
 
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({
-    contentRef,
-    onAfterPrint: () => {
-      onAfterPrint(identifier);
-    },
+      contentRef,
+      onAfterPrint: () => {
+        onAfterPrint(identifier);
+      },
+      pageStyle: `
+        @page {
+          size: 1003.94px 637.80px;
+          margin: 0;
+          padding: 0;
+          border-radius: 10px;
+        }
+        @media print {
+          body {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+        }
+        body {
+          font-family: Arial, sans-serif;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      `,
   });
   const { t } = useLanguage();
 
@@ -49,32 +69,31 @@ const PrintMemo: React.FC<IPrintMemo> = ({
         },
       }}
       title={
-        <div className="tw-p-4 tw-border-b tw-flex tw-items-start tw-flex-col tw-justify-between">
-          <h2 className="tw-text-lg tw-font-bold">{title}</h2>
-          <p className="tw-text-xxs tw-text-gray-600 tw-p-2 tw-bg-primary-500 tw-bg-opacity-10 tw-rounded-md">
-            Print Version:{" "}
-            <span className="tw-font-semibold">{data.print_version}</span>
-          </p>
+        <div className="tw-flex tw-items-center tw-justify-between tw-w-full">
+          <div className="tw-p-4 tw-border-b tw-flex tw-items-start tw-flex-col tw-justify-between tw-w-1/2">
+            <h2 className="tw-text-lg tw-font-bold">{title}</h2>
+            <p className="tw-text-xxs tw-text-gray-600 tw-p-2 tw-bg-primary-500 tw-bg-opacity-10 tw-rounded-md">
+              Print Version:{" "}
+              <span className="tw-font-semibold">{data.print_version}</span>
+            </p>
+          </div>
+          <div className="tw-flex tw-items-center tw-justify-end tw-w-1/2">
+            {showPrint && (
+              <Button
+                onClick={() => reactToPrintFn()}
+                type="primary"
+                className="!tw-h-[35px] tw-mr-[50px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold !tw-bg-green-500 hover:!tw-bg-green-600"
+              >
+                {t("certificate.list.button.print")}
+              </Button>
+            )}
+          </div>
         </div>
       }
       className="tw-font-sans"
     >
       <div ref={contentRef}>
         <MemoSection data={data} identifier={identifier} />
-      </div>
-
-      <div>
-        {showPrint && (
-          <div className="tw-flex tw-w-full tw-justify-end tw-p-2">
-            <Button
-              onClick={() => reactToPrintFn()}
-              type="primary"
-              className="!tw-h-[35px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold !tw-bg-green-500 hover:!tw-bg-green-600"
-            >
-              {t("memo.list.button.print")}
-            </Button>
-          </div>
-        )}
       </div>
     </Modal>
   );

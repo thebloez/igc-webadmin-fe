@@ -21,7 +21,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
         width: "1003.94px", // Page height in cm
         padding: "0", // Optional padding
         boxSizing: "border-box",
-        borderRadius: "0.2cm", // Optional border radius
+        borderRadius: "10px", // Optional border radius
         overflow: "hidden",
       }}
     >

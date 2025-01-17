@@ -45,6 +45,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
       @page {
         size: A4 landscape;
         margin: 0;
+        padding: 0;
       }
       body {
         font-family: Arial, sans-serif;
@@ -68,13 +69,29 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
           margin: 0,
         },
       }}
+      wrapStyle={{
+        padding: "10px",
+      }}
       title={
-        <div className="tw-p-4 tw-border-b tw-flex tw-items-start tw-flex-col tw-justify-between">
-          <h2 className="tw-text-lg tw-font-bold">{title}</h2>
-          <p className="tw-text-xxs tw-text-gray-600 tw-p-2 tw-bg-primary-500 tw-bg-opacity-10 tw-rounded-md">
-            Print Version:{" "}
-            <span className="tw-font-semibold">{data.print_version}</span>
-          </p>
+        <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-gap-2 tw-relative">
+          <div className="tw-p-4 tw-border-b tw-flex tw-items-start tw-flex-col tw-justify-between tw-w-1/2">
+            <h2 className="tw-text-lg tw-font-bold">{title}</h2>
+            <p className="tw-text-xxs tw-text-gray-600 tw-p-2 tw-bg-primary-500 tw-bg-opacity-10 tw-rounded-md">
+              Print Version:{" "}
+              <span className="tw-font-semibold">{data.print_version}</span>
+            </p>
+          </div>
+          <div className="tw-flex tw-flex-row tw-justify-end tw-items-center tw-w-1/2 tw-relative tw-p-4">
+            {showPrint && (
+              <Button
+                onClick={() => reactToPrintFn()}
+                type="primary"
+                className="!tw-h-[35px] tw-mr-[40px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold !tw-bg-green-500 hover:!tw-bg-green-600"
+              >
+                {t("certificate.list.button.print")}
+              </Button>
+            )}
+          </div>
         </div>
       }
       className="tw-font-sans"
@@ -95,7 +112,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
           <LogoTransparentIcon className="tw-w-1/2" />
         </div>
         <div className="tw-flex tw-px-10 tw-w-full tw-mb-2 tw-items-end tw-justify-between">
-          <LogoBlackIcon width={120} />
+          <LogoBlackIcon className="tw-w-[200px]" />
           <div className="tw-flex tw-items-center tw-justify-center tw-gap-2">
             <svg
               width="15"
@@ -124,22 +141,26 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               <div className="tw-py-3">
                 <DotIcon className="tw-text-[#E7375A]" />
               </div>
-              <div>
+              <div className="tw-w-full">
                 <h1 className="tw-text-lg tw-font-semibold tw-text-gray-900">
                   Certificate
                 </h1>
-                <p className="tw-text-base tw-text-gray-600">{`${data.id}-${identifier}`}</p>
+                <div className="tw-flex tw-justify-between tw-gap-2 tw-text-base">
+                  <div className="tw-w-1/2">
+                    <p>{`${data.id}-${identifier}`}</p>
+                  </div>
+                  <div className="tw-w-1/2">
+                    <p>
+                      {format(new Date(data.created_at), "dd-MM-yyyy", {
+                        locale: id,
+                      })}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div className="tw-mt-2 tw-w-full">
-              <PrintItemCertificate
-                title="Date"
-                value={format(new Date(data.created_at), "d MMM yyyy", {
-                  locale: id,
-                })}
-                color="#E7375A"
-              />
               <PrintItemCertificate
                 title="Object"
                 value={data.attributes.object_name}
@@ -189,7 +210,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               />
               <PrintItemCertificate
                 title="Origins"
-                value={`The Origins of this Stone is from ${data.attributes.origins.name}`}
+                value={``}
                 direction="col"
                 color="#4261AB"
               />
@@ -204,14 +225,17 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               <div>
                 <p className="tw-text-sm tw-text-[#444444]">
                   "Based on our gemological analysis and equipment, we believe
-                  that this sapphire is originated fromWest Sumatra in
-                  Indonesia"
+                  that this sapphire is originated from{" "}
+                  <span className="tw-font-semibold">
+                    {data.attributes.origins.name}
+                  </span>
                 </p>
               </div>
             </div>
           </div>
           <div className="tw-flex tw-items-center tw-w-[50%] tw-flex-col tw-justify-center tw-gap-10 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
             <div className="tw-w-full tw-flex tw-justify-center tw-items-center tw-gap-2 tw-flex-col">
+              <div className="tw-w-[220px] tw-h-[130px]"></div>
               <p className="tw-text-center tw-text-[#444444] tw-text-2xl tw-font-bold tw-py-2">
                 {data.attributes.final_identification}
               </p>
@@ -225,7 +249,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                     "-" +
                     identifier
                   }
-                  size={70}
+                  size={120}
                   bgColor="transparent"
                   fgColor="#000000"
                 />
@@ -250,20 +274,6 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
             </div>
           </div>
         </div>
-      </div>
-
-      <div>
-        {showPrint && (
-          <div className="tw-flex tw-w-full tw-justify-end tw-p-2">
-            <Button
-              onClick={() => reactToPrintFn()}
-              type="primary"
-              className="!tw-h-[35px] !tw-w-[80px] tw-rounded-md tw-shadow tw-font-semibold !tw-bg-green-500 hover:!tw-bg-green-600"
-            >
-              {t("certificate.list.button.print")}
-            </Button>
-          </div>
-        )}
       </div>
     </Modal>
   );
