@@ -27,7 +27,12 @@ export default class TrashUseCase {
     } catch (error: any) {
       logger("TrashUseCase.get | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
   async restoreTrash(props: IGetRequest) {
@@ -47,7 +52,12 @@ export default class TrashUseCase {
     } catch (error: any) {
       logger("TrashUseCase.restore | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
   async destroyTrash(props: IGetRequest) {
@@ -67,7 +77,12 @@ export default class TrashUseCase {
     } catch (error: any) {
       logger("TrashUseCase.destroy | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 }

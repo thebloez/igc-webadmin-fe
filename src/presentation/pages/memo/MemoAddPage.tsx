@@ -140,8 +140,11 @@ const MemoAddPage = () => {
   };
 
   const onSubmitDeleteSuggestion = async () => {
-    const type =
+    const typeSplit =
       modalDelete.type?.split(".")[modalDelete.type.split(".").length - 1];
+
+    const type = typeSplit === "origins" ? "origin" : typeSplit;
+
     await suggestionsViewModel
       .deleteSuggestion(
         modalDelete.data.title as string,

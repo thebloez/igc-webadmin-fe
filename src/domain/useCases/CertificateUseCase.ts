@@ -33,7 +33,12 @@ export default class CertificateUseCase {
     } catch (error: any) {
       logger("CertificateUseCase.get | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -68,7 +73,12 @@ export default class CertificateUseCase {
     } catch (error: any) {
       logger("CertificateUseCase.edit | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -102,7 +112,12 @@ export default class CertificateUseCase {
     } catch (error: any) {
       logger("CertificateUseCase.post | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -125,7 +140,12 @@ export default class CertificateUseCase {
     } catch (error: any) {
       logger("CertificateUseCase.delete | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -149,7 +169,12 @@ export default class CertificateUseCase {
     } catch (error: any) {
       logger("CertificateUseCase.printCertificate | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -170,7 +195,12 @@ export default class CertificateUseCase {
     } catch (error: any) {
       logger("CertificateUseCase.find | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 }

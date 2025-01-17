@@ -53,7 +53,7 @@ class MemoViewModel {
     } catch (error: any) {
       logger("MemoViewModel.getMemo | error => ", error);
 
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
     } finally {
@@ -92,7 +92,7 @@ class MemoViewModel {
     } catch (error: any) {
       logger("MemoViewModel.findMemo | error => ", error);
 
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
       setTable((prevState) => ({
@@ -128,7 +128,7 @@ class MemoViewModel {
         reset();
       }
     } catch (error: any) {
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
 
@@ -159,7 +159,7 @@ class MemoViewModel {
         navigate("/memo");
       }
     } catch (error: any) {
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
 
@@ -191,7 +191,7 @@ class MemoViewModel {
       }
     } catch (error: any) {
       logger("MemoViewModel.deleteMemo | error => ", error);
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
       message.error(error.message);
@@ -231,7 +231,7 @@ class MemoViewModel {
       }
     } catch (error: any) {
       logger("MemoViewModel.printMemo | error => ", error);
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
       message.error(error.message);

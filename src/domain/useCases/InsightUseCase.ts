@@ -34,7 +34,12 @@ export default class InsightUseCase implements IInsightUseCase {
     } catch (error: any) {
       logger("InsightUseCase.get | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 }

@@ -54,15 +54,6 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           onAddNew={() => onAddNew("customer")}
         />
 
-        <FormInput
-          name="attributes.object_name"
-          label={t("memo.form.object_name.label")}
-          placeholder={t("memo.form.object_name.placeholder")}
-          control={control}
-          rules={{ required: t("memo.form.object_name.required") }}
-          error={errors.attributes?.object_name}
-        />
-
         <FormSelect
           name="attributes.final_identification"
           label={t("memo.form.final_identification.label")}
@@ -75,6 +66,18 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           onAddNew={() => onAddNew("final_identification")}
           onDelete={onDelete}
         />
+        
+        <FormInput
+          name="attributes.measurement"
+          label={t("certificate.form.measurement.label")}
+          placeholder={t("certificate.form.measurement.placeholder")}
+          control={control}
+          rules={{
+            required: t("certificate.form.measurement.required"),
+          }}
+          error={errors.attributes?.measurement}
+        />
+
 
         <FormSelect
           name="attributes.cut"

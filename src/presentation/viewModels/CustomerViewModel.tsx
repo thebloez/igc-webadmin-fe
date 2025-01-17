@@ -78,7 +78,7 @@ class CustomerViewModel {
       }
     } catch (error: any) {
       logger("CustomerViewModel.getCustomerOption | error => ", error);
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
       throw error;
@@ -104,7 +104,7 @@ class CustomerViewModel {
       }
     } catch (error: any) {
       logger("CustomerViewModel.createCustomer | error => ", error);
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
 

@@ -56,7 +56,7 @@ class CertificateViewModel {
     } catch (error: any) {
       logger("CertificateViewModel.getCertificate | error => ", error);
 
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
     } finally {
@@ -86,7 +86,7 @@ class CertificateViewModel {
       }
     } catch (error: any) {
       logger("CertificateViewModel.createCertificate | error => ", error);
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
       message.error("Gagal membuat sertifikat");
@@ -115,7 +115,7 @@ class CertificateViewModel {
       }
     } catch (error: any) {
       logger("CertificateViewModel.deleteCertificate | error => ", error);
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
       message.error(error.message);
@@ -155,7 +155,7 @@ class CertificateViewModel {
       }
     } catch (error: any) {
       logger("CertificateViewModel.printCertificate | error => ", error);
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
       message.error(error.message);
@@ -188,7 +188,7 @@ class CertificateViewModel {
       }
     } catch (error: any) {
       logger("CertificateViewModel.editCertificate | error => ", error);
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
       message.error("Gagal mengubah sertifikat");
@@ -225,7 +225,7 @@ class CertificateViewModel {
     } catch (error: any) {
       logger("CertificateViewModel.findCertificate | error => ", error);
 
-      if (error?.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
       setTable((prevState) => ({

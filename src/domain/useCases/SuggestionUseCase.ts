@@ -19,7 +19,12 @@ export default class SuggestionUseCase {
     } catch (error: any) {
       logger("SuggestionUseCase.get | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -45,7 +50,12 @@ export default class SuggestionUseCase {
     } catch (error: any) {
       logger("SuggestionUseCase.createSuggestion | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -63,7 +73,12 @@ export default class SuggestionUseCase {
     } catch (error: any) {
       logger("SuggestionUseCase.deleteSuggestion | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 }

@@ -33,7 +33,12 @@ export default class MemoUseCase {
     } catch (error: any) {
       logger("MemoUseCase.get | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -54,7 +59,12 @@ export default class MemoUseCase {
     } catch (error: any) {
       logger("MemoUseCase.find | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -88,7 +98,12 @@ export default class MemoUseCase {
     } catch (error: any) {
       logger("MemoUseCase.post | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -129,7 +144,12 @@ export default class MemoUseCase {
     } catch (error: any) {
       logger("MemoUseCase.upgradeMemo | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -150,7 +170,12 @@ export default class MemoUseCase {
     } catch (error: any) {
       logger("MemoUseCase.delete | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 
@@ -174,7 +199,12 @@ export default class MemoUseCase {
     } catch (error: any) {
       logger("MemoUseCase.printMemo | error =>", error);
 
-      throw error;
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
     }
   }
 }
