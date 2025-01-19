@@ -50,6 +50,7 @@ export default class CertificateUseCase {
       certData.append("additional_comment", props.data.additional_comment);
       certData.append("status", "active");
       certData.append("type", "Sertifikat");
+      certData.append("_method", "PUT");
 
       Object.entries(props.data.attributes).forEach(([key, value]) => {
         certData.append(`attributes[${key}]`, value as any);

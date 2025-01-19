@@ -74,7 +74,7 @@ class CertificateService implements ICertificateService {
   async editCertificate(
     props: IPutRequest<FormData>
   ): Promise<ICertificateCreateResponse> {
-    const response: AxiosResponse<ICertificateCreateResponse> = await API.put(
+    const response: AxiosResponse<ICertificateCreateResponse> = await API.post(
       apiEndpoints.master.base + "/" + props.id,
       props.data,
       {
