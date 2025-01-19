@@ -53,8 +53,6 @@ export default class CertificateUseCase {
       certData.append("_method", "PUT");
 
       Object.entries(props.data.attributes).forEach(([key, value]) => {
-        // when image is htpps://example.com/image.jpg
-        // it will be converted to File object
         if (typeof value === "string" && value.startsWith("http")) {
           fetch(value)
             .then((res) => res.blob())
