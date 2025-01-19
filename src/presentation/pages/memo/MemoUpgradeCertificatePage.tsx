@@ -118,13 +118,13 @@ const MemoUpgradeCertificatePage = () => {
 
   useEffect(() => {
     if (state.id) {
-      findMemo();
+      detailMemo();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.id]);
 
-  const findMemo = async () => {
-    await memoViewModel.findMemo(state, setState, setValue);
+  const detailMemo = async () => {
+    await memoViewModel.detailMemo(state, setState, setValue);
   };
 
   const onSubmit: SubmitHandler<IMemoFormData> = async (data) => {

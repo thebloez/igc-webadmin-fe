@@ -198,7 +198,19 @@ export default class MemoUseCase {
       certData.append("type", "Memo");
 
       Object.entries(props.data.attributes).forEach(([key, value]) => {
-        certData.append(`attributes[${key}]`, value ?? "");
+        if (typeof value === "string" && value.startsWith("http")) {
+          fetch(value)
+            .then((res) => res.blob())
+            .then((blob) => {
+              const file = new File([blob], "image.jpg", {
+                type: "image/jpeg",
+              });
+              certData.append(`attributes[${key}]`, file);
+            });
+          return;
+        } else {
+          certData.append(`attributes[${key}]`, value as any);
+        }
       });
 
       logger("MemoUseCase.upgradeMemo | payload =>", certData);

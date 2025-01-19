@@ -132,6 +132,7 @@ class MemoViewModel {
 
       if (response) {
         setValue("attributes", response.data.attributes as any);
+        setValue("attributes.origins", response.data.attributes.origins.name);
         setValue("id", response.data.master.id);
         const split = response.data.master.id.split("-")[1];
         if(split == "M2") {
