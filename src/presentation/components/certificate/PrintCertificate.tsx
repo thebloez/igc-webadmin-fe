@@ -140,13 +140,13 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
         </div>
 
         <div className=" tw-py-4 tw-pl-[50px] tw-flex tw-justify-between">
-          <div className="tw-w-[50%]">
+          <div className="tw-w-[50%] tw-pr-2">
             <div className="tw-flex tw-justify-start tw-items-start tw-pb-4 tw-gap-2">
               <div className="tw-py-3">
                 <DotIcon className="tw-text-[#E7375A]" />
               </div>
-              <div className="tw-w-full">
-                <h1 className="tw-text-lg tw-font-semibold tw-text-gray-900">
+              <div className="tw-w-full tw-font-bold">
+                <h1 className="tw-text-lg tw-text-gray-900">
                   Certificate
                 </h1>
                 <div className="tw-flex tw-justify-between tw-gap-2 tw-text-base">
@@ -230,22 +230,22 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 <p className="tw-text-sm tw-text-[#444444]">
                   "Based on our gemological analysis and equipment, we believe
                   that this sapphire is originated from{" "}
-                  <span className="tw-font-semibold">
+                  <span className="tw-font-semibold tw-text-base">
                     {data.attributes?.origins?.name}
                   </span>
                 </p>
               </div>
             </div>
           </div>
-          <div className="tw-flex tw-items-center tw-w-[50%] tw-flex-col tw-justify-center tw-gap-10 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
+          <div className="tw-flex tw-items-center tw-w-[50%] tw-flex-col tw-justify-center tw-gap-2 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
             <div className="tw-w-full tw-flex tw-justify-center tw-items-center tw-gap-2 tw-flex-col">
-              <div className="tw-w-[220px] tw-h-[130px]"></div>
+              <div className="tw-w-[220px] tw-h-[150px] tw-border"></div>
               <p className="tw-text-center tw-text-[#444444] tw-text-2xl tw-font-bold tw-py-2">
                 {data.attributes?.final_identification}
               </p>
             </div>
             <div className="tw-justify-center tw-items-center tw-gap-4 tw-flex tw-w-full">
-              <div className="tw-w-[100%] tw-flex tw-flex-col tw-items-center">
+              <div className="tw-flex tw-flex-col tw-items-center">
                 <QRCode
                   value={
                     `${config.qrHost}certificate?code=` +
@@ -260,13 +260,13 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 <p className="tw-font-semibold">E-Certificate</p>
               </div>
 
-              <div className="tw-w-[100%]">
-                <p className="tw-text-sm tw-text-center tw-font-bold tw-mt-2">
+              <div className="tw-w-[100%] tw-flex tw-justify-center tw-items-end tw-gap-2 tw-flex-col">
+                <p className="tw-text-sm tw-text-center tw-font-bold tw-mt-2 tw-pr-2">
                   Mohammad Idris B.CSc., G.C.S.(GIA)
                 </p>
               </div>
             </div>
-            <div>
+            <div className="tw-mt-[40px]">
               <p className="tw-text-xs tw-text-[#444444] tw-px-4 tw-text-center">
                 This certification and the information written in it reflects
                 upon the identification and the characteristics of the gemstone

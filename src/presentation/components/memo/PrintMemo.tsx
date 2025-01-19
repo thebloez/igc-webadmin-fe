@@ -25,34 +25,38 @@ const PrintMemo: React.FC<IPrintMemo> = ({
   onAfterPrint,
   onClose,
 }) => {
-  
   const identifier = randomString();
 
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({
-      contentRef,
-      onAfterPrint: () => {
-        onAfterPrint(identifier);
-      },
-      pageStyle: `
-        @page {
-          size: 1016px 638px;
-          margin: 0;
-          padding: 0;
-          border-radius: 10px;
-        }
-        @media print {
-          body {
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-          }
-        }
-        body {
-          font-family: Arial, sans-serif;
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
-        }
-      `,
+    contentRef,
+    onAfterPrint: () => {
+      onAfterPrint(identifier);
+    },
+    pageStyle: `
+            @page {
+              size: 1016px 638px;
+              margin: 0;
+              padding: 0;
+              border-radius: 10px;
+            }
+            @media print {
+              body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+              }
+            }
+            body {
+              font-family: Arial, sans-serif;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              margin: 0;
+            }
+          `,
   });
   const { t } = useLanguage();
 
