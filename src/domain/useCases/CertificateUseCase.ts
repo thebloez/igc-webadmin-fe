@@ -53,7 +53,21 @@ export default class CertificateUseCase {
       certData.append("_method", "PUT");
 
       Object.entries(props.data.attributes).forEach(([key, value]) => {
-        certData.append(`attributes[${key}]`, value as any);
+        // when image is htpps://example.com/image.jpg
+        // it will be converted to File object
+        if (typeof value === "string" && value.startsWith("http")) {
+          fetch(value)
+            .then((res) => res.blob())
+            .then((blob) => {
+              const file = new File([blob], "image.jpg", {
+                type: "image/jpeg",
+              });
+              certData.append(`attributes[${key}]`, file);
+            });
+          return;
+        } else {
+          certData.append(`attributes[${key}]`, value as any);
+        }
       });
 
       logger("CertificateUseCase.payload | response =>", certData);
@@ -195,6 +209,33 @@ export default class CertificateUseCase {
       return result;
     } catch (error: any) {
       logger("CertificateUseCase.find | error =>", error);
+
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
+    }
+  }
+  async detailCertificate(props: IGetRequest) {
+    try {
+      const result = await this.certificateService.detailCertificate({
+        token: props.token,
+        params: props.params,
+      });
+
+      logger("CertificateUseCase.detail | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(
+          result?.meta?.message ?? "Failed to detail certificate"
+        );
+      }
+
+      return result;
+    } catch (error: any) {
+      logger("CertificateUseCase.detail | error =>", error);
 
       const customError = {
         message: error?.response?.data?.meta?.message,

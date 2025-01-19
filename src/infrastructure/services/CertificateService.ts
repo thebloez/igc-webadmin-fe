@@ -21,6 +21,7 @@ export interface ICertificateService {
   deleteCertificate(props: IDeleteRequest): Promise<ICertificateResponse>;
   printCertificate(props: IGetRequest): Promise<ICertificateResponse>;
   findCertificate(props: IGetRequest): Promise<ICertificateResponse>;
+  detailCertificate(props: IGetRequest): Promise<ICertificateResponse>;
   editCertificate(
     props: IPutRequest<FormData>
   ): Promise<ICertificateCreateResponse>;
@@ -43,6 +44,19 @@ class CertificateService implements ICertificateService {
   async findCertificate(props: IGetRequest): Promise<ICertificateResponse> {
     const response: AxiosResponse<ICertificateResponse> = await API.get(
       apiEndpoints.master.find,
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+        params: props.params,
+      }
+    );
+
+    return response.data;
+  }
+  async detailCertificate(props: IGetRequest): Promise<ICertificateResponse> {
+    const response: AxiosResponse<ICertificateResponse> = await API.get(
+      apiEndpoints.master.detail,
       {
         headers: {
           Authorization: `Bearer ${props.token}`,

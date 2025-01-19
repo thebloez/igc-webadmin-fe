@@ -242,6 +242,54 @@ class CertificateViewModel {
       }));
     }
   }
+  async detailCertificate(
+    state: ICertificateEditState,
+    setTable: (value: SetStateAction<ICertificateEditState>) => void,
+    setValue: UseFormSetValue<ICertificateFormData>
+  ) {
+    try {
+      setTable((prevState) => ({
+        ...prevState,
+        isLoading: true,
+      }));
+
+      const response = await this.certificateUseCase.detailCertificate({
+        token: this.token,
+        params: {
+          id: state.id,
+        },
+      });
+
+      logger("CertificateViewModel.detailCertificate | response => ", response);
+
+      if (response) {
+        setValue("attributes", response.data.attributes as any);
+        setValue("attributes.origins", response.data.attributes.origins.name);
+        setValue("additional_comment", response.data.additional_comment);
+        setValue("id", response.data.master.id);
+        setValue("member_phone_number", response.data.member.mobile_phone);
+        setValue("type", response.data.master.type);
+      }
+    } catch (error: any) {
+      logger("CertificateViewModel.detailCertificate | error => ", error);
+
+      if (error?.status === 401) {
+        this.clearToken();
+      }
+      setTable((prevState) => ({
+        ...prevState,
+        error: {
+          status: true,
+          message: error.message,
+        },
+      }));
+    } finally {
+      setTable((prevState) => ({
+        ...prevState,
+        isLoading: false,
+      }));
+    }
+  }
 }
 
 export default CertificateViewModel;

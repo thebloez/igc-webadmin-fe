@@ -21,6 +21,10 @@ export interface ICertificateData {
   additional_data: string;
   attributes: Attributes;
   member: Member;
+  master: {
+    id: string;
+    type: string;
+  }
 }
 
 export interface ICertificateFormData {

@@ -124,7 +124,7 @@ const CertificateEditPage = () => {
   }, [state.id]);
 
   const findCertificate = async () => {
-    await certificateViewModel.findCertificate(state, setState, setValue);
+    await certificateViewModel.detailCertificate(state, setState, setValue);
   };
 
   const onSubmit: SubmitHandler<IMemoFormData> = async (data) => {

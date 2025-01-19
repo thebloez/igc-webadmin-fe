@@ -16,6 +16,7 @@ const APIEndpoints = {
   master: {
     base: "api/masters",
     find: "api/masters/search",
+    detail: "api/masters/detail",
     delete: "api/masters/delete",
     trash: "api/masters/thrash",
     "trash/restore": "api/masters/thrash/restore",
