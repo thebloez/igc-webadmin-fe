@@ -75,7 +75,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
           )}
         </div>
         <div className="tw-flex tw-items-center tw-w-[50%] tw-flex-col tw-justify-center tw-gap-4 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
-          <div className="tw-border-[2px] tw-rounded-xl tw-border-[#F5AE26] tw-bg-white tw-w-[95%] tw-h-[200px]">
+          <div className="tw-border-[2px] tw-rounded-xl tw-w-[95%] tw-h-[200px]">
             <img
               src={data.attributes.object_image as any}
               alt="Gem"
@@ -109,21 +109,23 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
           </div>
         </div>
       </div>
-      <svg width="100%" height="40px" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="black" />
-        <text
-          x="50%"
-          y="50%"
-          font-size="12"
-          fill="white"
-          font-weight="bold"
-          text-anchor="middle"
-          dominant-baseline="middle"
-        >
-          All Information represent the opinion of
-          <tspan fill="#F6AE28">IGC Lab</tspan> at the time of testing
-        </text>
-      </svg>
+      <div className="tw-w-full tw-bg-black">
+        <svg width="100%" height="39px" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100%" height="100%" fill="black" />
+          <text
+            x="50%"
+            y="50%"
+            font-size="12"
+            fill="white"
+            font-weight="bold"
+            text-anchor="middle"
+            dominant-baseline="middle"
+          >
+            All Information represent the opinion of {" "}
+            <tspan fill="#F6AE28">IGC Lab</tspan> at the time of testing
+          </text>
+        </svg>
+      </div>
     </div>
   );
 };
