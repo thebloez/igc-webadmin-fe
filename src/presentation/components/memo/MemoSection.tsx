@@ -109,13 +109,21 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
           </div>
         </div>
       </div>
-      <div className="tw-bg-black tw-px-4 tw-py-2">
-        <p className="tw-text-sm tw-text-white tw-font-bold tw-text-center">
-          All Information represent the opinion of{" "}
-          <span className="tw-text-[#F6AE28]">IGC Lab</span> at the time of
-          testing
-        </p>
-      </div>
+      <svg width="100%" height="40px" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100%" height="100%" fill="black" />
+        <text
+          x="50%"
+          y="50%"
+          font-size="12"
+          fill="white"
+          font-weight="bold"
+          text-anchor="middle"
+          dominant-baseline="middle"
+        >
+          All Information represent the opinion of
+          <tspan fill="#F6AE28">IGC Lab</tspan> at the time of testing
+        </text>
+      </svg>
     </div>
   );
 };
