@@ -15,7 +15,7 @@ interface MemoSectionProps {
 const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
   return (
     <div
-      className="tw-bg-white tw-rounded-lg tw-shadow-lg tw-font-sans tw-flex tw-flex-col tw-justify-between"
+      className="tw-bg-white tw-rounded-lg tw-overflow-hidden tw-shadow-lg tw-font-sans tw-flex tw-flex-col tw-justify-between"
       style={{
         height: "639px", // Page width in cm
         width: "1017px", // Page height in cm

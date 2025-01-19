@@ -103,10 +103,10 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
     >
       <div
         ref={contentRef}
-        className="tw-shadow-lg tw-font-sans tw-relative"
+        className="tw-shadow-lg tw-font-sans tw-relative tw-overflow-hidden"
         style={{
-          width: "calc(29.7cm - 15px)", // A4 width for landscape with 15px margin on each side
-          height: "calc(21cm - 15px)", // A4 height for landscape with 15px margin on each side
+          width: "calc(29.7cm - 20px)", // A4 width for landscape with 20px margin on each side
+          height: "calc(21cm - 20px)", // A4 height for landscape with 20px margin on each side
           boxSizing: "border-box",
         }}
       >
@@ -139,8 +139,8 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
           <UnderlineIcon height={2} className="tw-w-full" />
         </div>
 
-        <div className=" tw-py-4 tw-pl-[50px] tw-flex tw-justify-between">
-          <div className="tw-w-[50%] tw-pr-2">
+        <div className="tw-py-4 tw-flex tw-justify-between">
+          <div className="tw-w-[50%] tw-pl-[50px]  tw-pr-2">
             <div className="tw-flex tw-justify-start tw-items-start tw-pb-4 tw-gap-2">
               <div className="tw-py-3">
                 <DotIcon className="tw-text-[#E7375A]" />
@@ -217,7 +217,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 color="#4261AB"
               />
             </div>
-            <div className="tw-flex tw-w-full tw-items-center tw-justify-between tw-gap-2">
+            <div className="tw-flex tw-w-full tw-items-center tw-justify-between tw-gap-2 tw-pt-6">
               <div>
                 <WorldMap
                   lat={data.attributes?.origins?.additional_data?.lat}
@@ -228,14 +228,15 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 <p className="tw-text-sm tw-text-[#444444]">
                   "Based on our gemological analysis and equipment, we believe
                   that this gemstone is originated from{" "}
+                  <br/>
                   <span className="tw-font-semibold tw-text-base">
                     {data.attributes?.origins?.name}
-                  </span>
+                  </span>"
                 </p>
               </div>
             </div>
           </div>
-          <div className="tw-flex tw-items-center tw-w-[50%] tw-flex-col tw-justify-center tw-gap-2 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
+          <div className="tw-flex tw-items-center tw-pl-[50px] tw-w-[50%] tw-flex-col tw-justify-center tw-gap-2 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
             <div className="tw-w-full tw-flex tw-justify-center tw-items-center tw-gap-2 tw-flex-col">
               <div className="tw-w-[220px] tw-h-[150px] tw-border"></div>
               <p className="tw-text-center tw-text-[#444444] tw-text-2xl tw-font-bold tw-py-2">
@@ -264,7 +265,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 </p>
               </div>
             </div>
-            <div className="tw-mt-[40px]">
+            <div className="tw-mt-[20px]">
               <p className="tw-text-xs tw-text-[#444444] tw-px-4 tw-text-center">
                 This certification and the information written in it reflects
                 upon the identification and the characteristics of the gemstone
