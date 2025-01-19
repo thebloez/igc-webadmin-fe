@@ -21,6 +21,10 @@ export interface IMemoData {
   additional_data: string;
   attributes: Attributes;
   member: Member;
+  master: {
+    id: string;
+    type: string;
+  };
 }
 
 export interface IMemoFormData {
@@ -51,6 +55,7 @@ export interface IMemoTableState extends IBaseState {
 export interface IMemoUpgradeState {
   isLoading: boolean;
   id: string;
+  isShowOrigin?: boolean;
   error: {
     status: boolean;
     message: string;

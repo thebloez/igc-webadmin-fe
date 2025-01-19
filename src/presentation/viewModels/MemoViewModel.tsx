@@ -109,6 +109,60 @@ class MemoViewModel {
       }));
     }
   }
+  
+  async detailMemo(
+    state: IMemoUpgradeState,
+    setTable: (value: SetStateAction<IMemoUpgradeState>) => void,
+    setValue: UseFormSetValue<IMemoFormData>
+  ) {
+    try {
+      setTable((prevState) => ({
+        ...prevState,
+        isLoading: true,
+      }));
+
+      const response = await this.memoUseCase.detailMemo({
+        token: this.token,
+        params: {
+          id: state.id,
+        },
+      });
+
+      logger("MemoViewModel.findMemo | response => ", response);
+
+      if (response) {
+        setValue("attributes", response.data.attributes as any);
+        setValue("id", response.data.master.id);
+        const split = response.data.master.id.split("-")[1];
+        if(split == "M2") {
+          setTable((prevState) => ({
+            ...prevState,
+            isShowOrigin: false,
+          }));
+        }
+        setValue("type", response.data.master.type);
+        setValue("member_phone_number", response.data.member.mobile_phone);
+      }
+    } catch (error: any) {
+      logger("MemoViewModel.findMemo | error => ", error);
+
+      if (error?.status === 401) {
+        this.clearToken();
+      }
+      setTable((prevState) => ({
+        ...prevState,
+        error: {
+          status: true,
+          message: error.message,
+        },
+      }));
+    } finally {
+      setTable((prevState) => ({
+        ...prevState,
+        isLoading: false,
+      }));
+    }
+  }
 
   createMemo = async (
     data: IMemoFormData,
@@ -127,15 +181,47 @@ class MemoViewModel {
         message.success("Memo berhasil dibuat");
         reset();
       }
+
+      return response;
     } catch (error: any) {
       if (error?.status === 401) {
         this.clearToken();
       }
 
       logger("MemoViewModel.createMemo | error => ", error);
-      message.error("Gagal membuat sertifikat");
+      message.error("Gagal membuat Memo");
+
+      throw error;
     }
   };
+
+  async editMemo(
+    data: IMemoFormData,
+    message: any,
+    navigate: NavigateFunction
+  ) {
+    try {
+      const response = await this.memoUseCase.edit({
+        token: this.token,
+        data,
+        id: data.id,
+      });
+
+      logger("CertificateViewModel.editCertificate | response => ", response);
+
+      if (response) {
+        message.success("Memo berhasil diubah");
+        navigate("/certificate");
+      }
+    } catch (error: any) {
+      logger("CertificateViewModel.editCertificate | error => ", error);
+      if (error?.status === 401) {
+        this.clearToken();
+      }
+      message.error("Gagal mengubah memo");
+    }
+  }
+
 
   upgradeMemo = async (
     data: IMemoFormData,

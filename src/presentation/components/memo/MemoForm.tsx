@@ -17,6 +17,7 @@ export interface IMemoFormProps {
   type?: "add" | "upgrade";
   onAddNew: (name: string) => void;
   onDelete?: (option: IOption, type: string) => void;
+  showOrigins?: boolean;
 }
 
 const MemoForm: React.FC<IMemoFormProps> = ({
@@ -27,6 +28,7 @@ const MemoForm: React.FC<IMemoFormProps> = ({
   type = "add",
   onAddNew,
   onDelete,
+  showOrigins = true,
 }) => {
   const { t } = useLanguage();
 
@@ -142,24 +144,26 @@ const MemoForm: React.FC<IMemoFormProps> = ({
           onDelete={onDelete}
         />
 
-        <FormSelect
-          name="attributes.origins"
-          label={t("memo.form.origins.label")}
-          placeholder={t("memo.form.origins.placeholder")}
-          options={suggestions.data.origin}
-          loading={suggestions.isLoading}
-          control={control}
-          allowClear
-          rules={{
-            required: {
-              value: type === "upgrade" ? true : false,
-              message: t("memo.form.origins.required"),
-            },
-          }}
-          error={errors.attributes?.origins}
-          onAddNew={() => onAddNew("origin")}
-          onDelete={onDelete}
-        />
+        {showOrigins && (
+          <FormSelect
+            name="attributes.origins"
+            label={t("memo.form.origins.label")}
+            placeholder={t("memo.form.origins.placeholder")}
+            options={suggestions.data.origin}
+            loading={suggestions.isLoading}
+            control={control}
+            allowClear
+            rules={{
+              required: {
+                value: type === "upgrade" ? true : false,
+                message: t("memo.form.origins.required"),
+              },
+            }}
+            error={errors.attributes?.origins}
+            onAddNew={() => onAddNew("origin")}
+            onDelete={onDelete}
+          />
+        )}
 
         <FormTextArea
           name="additional_comment"

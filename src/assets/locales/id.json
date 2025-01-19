@@ -200,6 +200,14 @@
         "submit": "Simpan"
       }
     },
+    "edit": {
+      "title": "Edit Memo",
+      "description": "Edit memo yang telah dibuat",
+      "button": {
+        "preview": "Pratinjau",
+        "submit": "Simpan"
+      }
+    },
     "upgrade-to-certificate": {
       "title": "Upgrade ke Sertifikat",
       "button": {

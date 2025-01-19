@@ -1,6 +1,6 @@
 import HeaderContent from "@components/dashboard/layout/HeaderContent";
 import { Button, Form, message } from "antd";
-import { IMemoFormData } from "@domain/entities/MemoEntity";
+import { IMemoFormData, IMemoUpgradeState } from "@domain/entities/MemoEntity";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { selectToken } from "@redux/user/userReduxSelector";
 import { useEffect, useState } from "react";
@@ -18,36 +18,43 @@ import { ICustomerOption } from "@domain/entities/CustomerEntity";
 import ArrowLeftIcon from "@components/icon/ArrowLeftIcon";
 import useMemoViewModel from "@lib/hooks/useMemoViewModel";
 import { setUserToken } from "@redux/user/userReduxReducer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import SpinnerLoading from "@components/loader/SpinnerLoading";
 import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
 import SuggestionModal from "@components/suggestion/SuggestionModal";
 import QuestionModal from "@components/modal/QuestionModal";
 import { IOption } from "@domain/entities/SharedEntity";
+import NotFoundMessage from "@components/not-found/NotFoundMessage";
 
-const MemoAddPage = () => {
+const MemoEditPage = () => {
   // get language and t function to change language
   const { t } = useLanguage();
 
+  const { id: paramId } = useParams<{ id: string }>();
+
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const token = useSelector(selectToken);
+
   // get token from redux
   const clearToken = () => dispatch(setUserToken(""));
 
-  const navigate = useNavigate();
+  const [state, setState] = useState<IMemoUpgradeState>({
+    isLoading: true,
+    id: paramId as string,
+    isShowOrigin: true,
+    error: {} as IMemoUpgradeState["error"],
+  });
 
   const {
     handleSubmit,
     control,
-    reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<IMemoFormData>({
     mode: "onChange",
-  });
-
-  const [modal, setModal] = useState<ISuggestionModalState>({
-    visible: false,
-    type: "final_identification",
   });
 
   const [suggestions, setSuggestions] = useState<ISuggestionsState>({
@@ -78,6 +85,11 @@ const MemoAddPage = () => {
     data: [],
   });
 
+  const [modal, setModal] = useState<ISuggestionModalState>({
+    visible: false,
+    type: "final_identification",
+  });
+
   const memoViewModel = useMemoViewModel(token, clearToken);
 
   const suggestionsViewModel = new SuggestionViewModel(
@@ -105,8 +117,21 @@ const MemoAddPage = () => {
     await customerViewModel.getCustomerOption(setCustomers);
   };
 
+  useEffect(() => {
+    if (state.id) {
+      detailMemo();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.id]);
+
+  const detailMemo = async () => {
+    await memoViewModel.detailMemo(state, setState, setValue);
+  };
+
   const onSubmit: SubmitHandler<IMemoFormData> = async (data) => {
-    await memoViewModel.createMemo(data, message, reset);
+    await memoViewModel.editMemo(data, message, navigate).then(() => {
+      goBack();
+    });
   };
 
   const goBack = () => {
@@ -207,29 +232,44 @@ const MemoAddPage = () => {
         <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
           <HeaderContent
             leftIcon={<ArrowLeftIcon onClick={goBack} />}
-            title={t("memo.add.title")}
-            description={t("memo.add.description")}
+            title={t("memo.edit.title")}
+            description={state.id ?? "-"}
           >
-            <div className="tw-w-full tw-flex tw-justify-end tw-items-center">
-              <Button
-                htmlType="submit"
-                type="primary"
-                loading={isSubmitting}
-                className="!tw-h-[40px] tw-w-full sm:tw-w-auto tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
-              >
-                {t("memo.add.button.submit")}
-              </Button>
-            </div>
+            {!state.isLoading && (
+              <div className="tw-w-full tw-flex tw-justify-end tw-items-center">
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  loading={isSubmitting}
+                  className="!tw-h-[40px] tw-rounded-md tw-shadow tw-font-semibold tw-text-white"
+                >
+                  {t("memo.edit.button.submit")}
+                </Button>
+              </div>
+            )}
           </HeaderContent>
           <div className="tw-p-4">
-            <MemoForm
-              onAddNew={onAddNew as any}
-              control={control}
-              errors={errors}
-              suggestions={suggestions}
-              customers={customers}
-              onDelete={onDelete}
-            />
+            {state.isLoading ? (
+              <div className="tw-w-full tw-flex tw-justify-center tw-h-[200px] tw-items-center">
+                <SpinnerLoading width={32} height={32} type="primary-spinner" />
+              </div>
+            ) : !state.error.status ? (
+              <MemoForm
+                onAddNew={onAddNew as any}
+                type="upgrade"
+                control={control}
+                errors={errors}
+                showOrigins={state.isShowOrigin}
+                suggestions={suggestions}
+                customers={customers}
+                onDelete={onDelete}
+              />
+            ) : (
+              <NotFoundMessage
+                title="Memo Not Found"
+                message="Memo not found or has been deleted"
+              />
+            )}
           </div>
         </div>
       </Form>
@@ -237,4 +277,4 @@ const MemoAddPage = () => {
   );
 };
 
-export default MemoAddPage;
+export default MemoEditPage;

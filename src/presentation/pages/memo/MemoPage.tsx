@@ -77,7 +77,7 @@ const MemoPage = () => {
   };
 
   const onEdit = (record: any) => {
-    console.log("onEdit", record);
+    navigate(`/memo/edit/${record.id}`);
   };
 
   const onDelete = (record: any) => {
@@ -183,7 +183,7 @@ const MemoPage = () => {
         type={modal.type}
         showPrint
         title={modal.type === "print" ? "Print Memo" : ""}
-        onEdit={() => {}}
+        onEdit={onEdit}
       />
 
       <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">

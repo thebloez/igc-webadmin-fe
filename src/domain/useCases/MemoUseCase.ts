@@ -6,6 +6,7 @@ import {
   IDeleteRequest,
   IGetRequest,
   IPostRequest,
+  IPutRequest,
 } from "@domain/entities/ResponseEntity";
 import { UpgradeType } from "@api/apiEndpoints";
 
@@ -97,6 +98,85 @@ export default class MemoUseCase {
       return result;
     } catch (error: any) {
       logger("MemoUseCase.post | error =>", error);
+
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
+    }
+  }
+
+  async detailMemo(props: IGetRequest) {
+    try {
+      const result = await this.memoService.detailMemo({
+        token: props.token,
+        params: props.params,
+      });
+
+      logger("MemoUseCase.detail | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(result?.meta?.message ?? "Failed to detail memo");
+      }
+
+      return result;
+    } catch (error: any) {
+      logger("MemoUseCase.detail | error =>", error);
+
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
+    }
+  }
+
+  async edit(props: IPutRequest<IMemoFormData>) {
+    try {
+      const certData = new FormData();
+
+      certData.append("member_phone_number", props.data.member_phone_number);
+      certData.append("additional_comment", props.data.additional_comment);
+      certData.append("status", "active");
+      certData.append("type", "Memo");
+      certData.append("_method", "PUT");
+
+      Object.entries(props.data.attributes).forEach(([key, value]) => {
+        if (typeof value === "string" && value.startsWith("http")) {
+          fetch(value)
+            .then((res) => res.blob())
+            .then((blob) => {
+              const file = new File([blob], "image.jpg", {
+                type: "image/jpeg",
+              });
+              certData.append(`attributes[${key}]`, file);
+            });
+          return;
+        } else {
+          certData.append(`attributes[${key}]`, value as any);
+        }
+      });
+
+      logger("CertificateUseCase.payload | response =>", certData);
+
+      const result = await this.memoService.editMemo({
+        token: props.token,
+        data: certData,
+        id: props.id,
+      });
+
+      logger("CertificateUseCase.edit | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(result?.meta?.message ?? "Failed to certificate edit");
+      }
+
+      return result;
+    } catch (error: any) {
+      logger("CertificateUseCase.edit | error =>", error);
 
       const customError = {
         message: error?.response?.data?.meta?.message,

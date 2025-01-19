@@ -5,6 +5,7 @@ import CustomerPage from "@pages/customer/CustomerPage";
 import DashboardPage from "@pages/dashboard/DashboardPage";
 import LoginPage from "@pages/login/LoginPage";
 import MemoAddPage from "@pages/memo/MemoAddPage";
+import MemoEditPage from "@pages/memo/MemoEditPage";
 import MemoPage from "@pages/memo/MemoPage";
 import MemoUpgradeCertificatePage from "@pages/memo/MemoUpgradeCertificatePage";
 import MemoUpgradeOriginPage from "@pages/memo/MemoUpgradeOriginPage";
@@ -47,6 +48,11 @@ const routes: TRoutes = [
     path: "/memo",
     isAuth: true,
     element: <MemoPage />,
+  },
+  {
+    path: "/memo/edit/:id",
+    isAuth: true,
+    element: <MemoEditPage />,
   },
   {
     path: "/memo/upgrade/certificate/:id",

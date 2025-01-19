@@ -80,14 +80,6 @@ const MemoDetail = (props: IMemoDetail) => {
               />
             </div>
             <div>
-              <p className="tw-text-gray-500 tw-text-sm">Nama Objek</p>
-              <p className="tw-font-medium">
-                {isNullOrEmpty(props.data.attributes?.object_name)
-                  ? "-"
-                  : props.data.attributes?.object_name}
-              </p>
-            </div>
-            <div>
               <p className="tw-text-gray-500 tw-text-sm">Identification</p>
               <p className="tw-font-medium">
                 {isNullOrEmpty(props.data.attributes?.final_identification)

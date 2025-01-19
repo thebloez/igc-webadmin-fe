@@ -10,6 +10,7 @@ import {
   IDeleteRequest,
   IGetRequest,
   IPostRequest,
+  IPutRequest,
 } from "@domain/entities/ResponseEntity";
 
 export interface IMemoService {
@@ -24,7 +25,9 @@ export interface IMemoService {
     type: UpgradeType
   ): Promise<IMemoCreateResponse>;
   deleteMemo(props: IDeleteRequest): Promise<IMemoResponse>;
+  detailMemo(props: IGetRequest): Promise<IMemoResponse>;
   printMemo(props: IGetRequest): Promise<IMemoResponse>;
+  editMemo(props: IPutRequest<FormData>): Promise<IMemoCreateResponse>;
 }
 
 class MemoService implements IMemoService {
@@ -53,6 +56,35 @@ class MemoService implements IMemoService {
           Authorization: `Bearer ${props.token}`,
         },
         params: props.params,
+      }
+    );
+
+    return response.data;
+  }
+
+  async detailMemo(props: IGetRequest): Promise<IMemoResponse> {
+    const response: AxiosResponse<IMemoResponse> = await API.get(
+      apiEndpoints.master.detail,
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+        params: props.params,
+      }
+    );
+
+    return response.data;
+  }
+
+  async editMemo(props: IPutRequest<FormData>): Promise<IMemoCreateResponse> {
+    const response: AxiosResponse<IMemoCreateResponse> = await API.post(
+      apiEndpoints.master.base + "/" + props.id,
+      props.data,
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+          "Content-Type": "Multipart/form-data",
+        },
       }
     );
 

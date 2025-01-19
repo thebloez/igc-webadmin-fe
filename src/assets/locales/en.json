@@ -192,6 +192,14 @@
         "submit": "Save"
       }
     },
+    "edit": {
+      "title": "Edit Memo",
+      "description": "Edit this memo",
+      "button": {
+        "preview": "Preview",
+        "submit": "Save"
+      }
+    },
     "upgrade-to-certificate": {
       "title": "Upgrade to Certificate",
       "button": {
