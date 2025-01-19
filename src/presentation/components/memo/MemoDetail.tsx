@@ -42,7 +42,7 @@ const MemoDetail = (props: IMemoDetail) => {
                   props.data.identifier ? "-" + props.data.identifier : ""
                 }`}
               </h2>
-              {!isNullOrEmpty(props.data.attributes.origins) ? (
+              {!isNullOrEmpty(props.data.attributes?.origins) ? (
                 <Tag className="tw-rounded-full tw-font-semibold" color="green">
                   Memo Origin
                 </Tag>
@@ -73,8 +73,8 @@ const MemoDetail = (props: IMemoDetail) => {
             <div>
               <p className="tw-text-gray-500 tw-text-sm">Gambar</p>
               <img
-                onClick={() => window.open(props.data.attributes.object_image)}
-                src={props.data.attributes.object_image}
+                onClick={() => window.open(props.data.attributes?.object_image)}
+                src={props.data.attributes?.object_image}
                 alt="Logo"
                 className="tw-w-20 tw-h-20 tw-object-contain tw-cursor-pointer"
               />
@@ -82,17 +82,17 @@ const MemoDetail = (props: IMemoDetail) => {
             <div>
               <p className="tw-text-gray-500 tw-text-sm">Nama Objek</p>
               <p className="tw-font-medium">
-                {isNullOrEmpty(props.data.attributes.object_name)
+                {isNullOrEmpty(props.data.attributes?.object_name)
                   ? "-"
-                  : props.data.attributes.object_name}
+                  : props.data.attributes?.object_name}
               </p>
             </div>
             <div>
               <p className="tw-text-gray-500 tw-text-sm">Identification</p>
               <p className="tw-font-medium">
-                {isNullOrEmpty(props.data.attributes.final_identification)
+                {isNullOrEmpty(props.data.attributes?.final_identification)
                   ? "-"
-                  : props.data.attributes.final_identification}
+                  : props.data.attributes?.final_identification}
               </p>
             </div>
 
@@ -115,9 +115,9 @@ const MemoDetail = (props: IMemoDetail) => {
             <div>
               <p className="tw-text-gray-500 tw-text-sm">Origins</p>
               <p className="tw-font-medium">
-                {isNullOrEmpty(props.data.attributes.origins.name)
+                {isNullOrEmpty(props.data.attributes?.origins?.name)
                   ? "-"
-                  : props.data.attributes.origins.name}
+                  : props.data.attributes?.origins?.name}
               </p>
             </div>
           </div>
@@ -126,25 +126,25 @@ const MemoDetail = (props: IMemoDetail) => {
             <div>
               <p className="tw-text-gray-500 tw-text-sm">Color</p>
               <p className="tw-font-medium">
-                {isNullOrEmpty(props.data.attributes.color)
+                {isNullOrEmpty(props.data.attributes?.color)
                   ? "-"
-                  : props.data.attributes.color}
+                  : props.data.attributes?.color}
               </p>
             </div>
             <div>
               <p className="tw-text-gray-500 tw-text-sm">Weight</p>
               <p className="tw-font-medium">
-                {isNullOrEmpty(props.data.attributes.weight)
+                {isNullOrEmpty(props.data.attributes?.weight)
                   ? "-"
-                  : props.data.attributes.weight + " carat"}
+                  : props.data.attributes?.weight + " carat"}
               </p>
             </div>
             <div>
               <p className="tw-text-gray-500 tw-text-sm">Measurement</p>
               <p className="tw-font-medium">
-                {isNullOrEmpty(props.data.attributes.measurement)
+                {isNullOrEmpty(props.data.attributes?.measurement)
                   ? "-"
-                  : props.data.attributes.measurement + " (mm)"}
+                  : props.data.attributes?.measurement + " (mm)"}
               </p>
             </div>
 
