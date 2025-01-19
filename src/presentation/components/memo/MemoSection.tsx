@@ -17,11 +17,11 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
     <div
       className="tw-bg-white tw-rounded-lg tw-overflow-hidden tw-shadow-lg tw-font-sans tw-flex tw-flex-col tw-justify-between"
       style={{
-        height: "639px", // Page width in cm
-        width: "1017px", // Page height in cm
+        height: "645px", // Page width in cm
+        width: "1025px", // Page height in cm
         padding: "0", // Optional padding
         boxSizing: "border-box",
-        borderRadius: "10px", // Optional border radius
+        borderRadius: "20px", // Optional border radius
         overflow: "hidden",
       }}
     >
@@ -31,7 +31,9 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
         }}
         className="tw-flex tw-py-0 tw-px-6 tw-w-full tw-items-center tw-justify-between"
       >
-        <LogoWhiteIcon width={180} height={130} />
+        <div className="tw-w-[180px] tw-h-[130px] tw-overflow-hidden">
+          <LogoWhiteIcon className="tw-w-full tw-h-full" />
+        </div>
         <div className="tw-w-[80%] tw-flex tw-items-center tw-justify-center tw-px-2">
           <h1 className="tw-text-4xl tw-text-[#F5AE26] tw-font-bold tw-text-center">
             {data.attributes.final_identification}
@@ -121,7 +123,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
             text-anchor="middle"
             dominant-baseline="middle"
           >
-            All Information represent the opinion of {" "}
+            All Information represent the opinion of{" "}
             <tspan fill="#F6AE28">IGC Lab</tspan> at the time of testing
           </text>
         </svg>

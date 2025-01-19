@@ -35,10 +35,11 @@ const PrintMemo: React.FC<IPrintMemo> = ({
     },
     pageStyle: `
       @page {
-        size: 1017px 639px;
+        size: 1020px 642px;
+        resolution: 300dpi 1200dpi;
         margin: 0;
         padding: 0;
-        border-radius: 10px;
+        border-radius: 20px;
       }
       body {
         font-family: Arial, sans-serif;
