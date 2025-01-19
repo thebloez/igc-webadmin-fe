@@ -32,9 +32,11 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
         className="tw-flex tw-py-2 tw-px-6 tw-w-full tw-items-center tw-justify-between"
       >
         <LogoWhiteIcon width={180} height={180} />
-        <h1 className="tw-text-4xl tw-text-[#F5AE26] tw-font-bold">
-          {data.attributes.final_identification}
-        </h1>
+        <div className="tw-w-[80%] tw-flex tw-items-center tw-justify-center tw-px-2">
+          <h1 className="tw-text-4xl tw-text-[#F5AE26] tw-font-bold tw-text-center">
+            {data.attributes.final_identification}
+          </h1>
+        </div>
         <div className="tw-w-1/6" />
       </div>
       <div
