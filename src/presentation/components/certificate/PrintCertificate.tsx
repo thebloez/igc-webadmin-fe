@@ -105,8 +105,8 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
         ref={contentRef}
         className="tw-shadow-lg tw-font-sans tw-relative"
         style={{
-          width: "calc(29.7cm - 10px)", // A4 width for landscape with 10px margin on each side
-          height: "calc(21cm - 10px)", // A4 height for landscape with 10px margin on each side
+          width: "calc(29.7cm - 15px)", // A4 width for landscape with 15px margin on each side
+          height: "calc(21cm - 15px)", // A4 height for landscape with 15px margin on each side
           boxSizing: "border-box",
         }}
       >
