@@ -136,7 +136,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
         </div>
         {/* underline */}
         <div className="tw-w-full w-flex tw-justify-center tw-items-center">
-          <UnderlineIcon className="tw-w-full" />
+          <UnderlineIcon height={2} className="tw-w-full" />
         </div>
 
         <div className=" tw-py-4 tw-pl-[50px] tw-flex tw-justify-between">
