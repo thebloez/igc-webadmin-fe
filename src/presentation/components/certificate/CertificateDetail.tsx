@@ -107,9 +107,9 @@ const CertificateDetail = (props: ICertificateDetail) => {
             <div>
               <p className="tw-text-gray-500 tw-text-sm">Origins</p>
               <p className="tw-font-medium">
-                {isNullOrEmpty(props.data.attributes.origins.name)
+                {isNullOrEmpty(props.data.attributes.origins?.name)
                   ? "-"
-                  : props.data.attributes.origins.name}
+                  : props.data.attributes.origins?.name}
               </p>
             </div>
           </div>

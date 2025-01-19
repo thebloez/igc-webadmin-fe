@@ -163,49 +163,49 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
             <div className="tw-mt-2 tw-w-full">
               <PrintItemCertificate
                 title="Object"
-                value={data.attributes.object_name}
+                value={data.attributes?.object_name}
                 color="#3CB687"
               />
               <PrintItemCertificate
                 title="Measurements"
-                value={`${data.attributes.measurement} (mm)`}
+                value={`${data.attributes?.measurement} (mm)`}
                 color="#D7BF2A"
               />
               <PrintItemCertificate
                 title="Shape"
-                value={data.attributes.shape}
+                value={data.attributes?.shape}
                 color="#E7375A"
               />
               <PrintItemCertificate
                 title="Clarity"
-                value={data.attributes.clarity}
+                value={data.attributes?.clarity}
                 color="#4261AB"
               />
               <PrintItemCertificate
                 title="Transparency"
-                value={data.attributes.transparency}
+                value={data.attributes?.transparency}
                 color="#3CB687"
               />
             </div>
             <div className="tw-mt-2 tw-w-full">
               <PrintItemCertificate
                 title="Cut"
-                value={data.attributes.cut}
+                value={data.attributes?.cut}
                 color="#E7375A"
               />
               <PrintItemCertificate
                 title="Color"
-                value={data.attributes.color}
+                value={data.attributes?.color}
                 color="#3CB687"
               />
               <PrintItemCertificate
                 title="Weight"
-                value={`${data.attributes.weight} carat`}
+                value={`${data.attributes?.weight} carat`}
                 color="#D7BF2A"
               />
               <PrintItemCertificate
                 title="Comment"
-                value={data.attributes.comments}
+                value={data.attributes?.comments}
                 color="#E7375A"
               />
               <PrintItemCertificate
@@ -218,8 +218,8 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
             <div className="tw-flex tw-w-full tw-items-center tw-justify-between tw-gap-2">
               <div>
                 <WorldMap
-                  lat={data.attributes.origins.additional_data.lat}
-                  lng={data.attributes.origins.additional_data.long}
+                  lat={data.attributes?.origins?.additional_data?.lat}
+                  lng={data.attributes?.origins?.additional_data?.long}
                 />
               </div>
               <div>
@@ -227,7 +227,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                   "Based on our gemological analysis and equipment, we believe
                   that this sapphire is originated from{" "}
                   <span className="tw-font-semibold">
-                    {data.attributes.origins.name}
+                    {data.attributes?.origins?.name}
                   </span>
                 </p>
               </div>
@@ -237,7 +237,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
             <div className="tw-w-full tw-flex tw-justify-center tw-items-center tw-gap-2 tw-flex-col">
               <div className="tw-w-[220px] tw-h-[130px]"></div>
               <p className="tw-text-center tw-text-[#444444] tw-text-2xl tw-font-bold tw-py-2">
-                {data.attributes.final_identification}
+                {data.attributes?.final_identification}
               </p>
             </div>
             <div className="tw-justify-center tw-items-center tw-gap-4 tw-flex tw-w-full">
@@ -245,7 +245,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 <QRCode
                   value={
                     `${config.qrHost}certificate?code=` +
-                    data.attributes.id_master +
+                    data.attributes?.id_master +
                     "-" +
                     identifier
                   }

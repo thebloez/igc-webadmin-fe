@@ -148,6 +148,10 @@ const CertificatePage = () => {
     }));
   };
 
+  const onEdit = (record: any) => {
+    navigate(`/certificate/edit/${record.id}`);
+  };
+
   const onDetail = (record: any) => {
     setModal((prevState) => ({
       ...prevState,
@@ -169,7 +173,7 @@ const CertificatePage = () => {
         type={modal.type}
         showPrint
         title={modal.type === "print" ? "Print Memo" : ""}
-        onEdit={() => {}}
+        onEdit={onEdit}
       />
       <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
         <HeaderContent
