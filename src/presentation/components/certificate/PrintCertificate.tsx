@@ -42,15 +42,20 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
       onAfterPrint(identifier);
     },
     pageStyle: `
-      @page {
-        size: A4 landscape;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        font-family: Arial, sans-serif;
-      }
-    `,
+          @page {
+            size: A4 landscape;
+            margin: 0;
+            padding: 0;
+          }
+          body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+          }
+        `,
   });
 
   const { t } = useLanguage();
@@ -100,9 +105,8 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
         ref={contentRef}
         className="tw-shadow-lg tw-font-sans tw-relative"
         style={{
-          background: "linear-gradient(180deg, #F1F1F1 43%, #BABCBE 100%)",
-          width: "29.7cm", // A4 width for landscape
-          height: "21cm", // A4 height for landscape
+          width: "calc(29.7cm - 10px)", // A4 width for landscape with 10px margin on each side
+          height: "calc(21cm - 10px)", // A4 height for landscape with 10px margin on each side
           boxSizing: "border-box",
         }}
       >

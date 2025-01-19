@@ -1,5 +1,6 @@
 import PencilIcon from "@components/icon/PencilIcon";
 import { IMemoData } from "@domain/entities/MemoEntity";
+import downloadLib from "@lib/utils/download";
 import isNullOrEmpty from "@lib/utils/isNullOrEmpty";
 import { Button, Modal, Tag } from "antd";
 
@@ -78,6 +79,19 @@ const MemoDetail = (props: IMemoDetail) => {
                 alt="Logo"
                 className="tw-w-20 tw-h-20 tw-object-contain tw-cursor-pointer"
               />
+              {!isNullOrEmpty(props.data?.attributes.object_image) && (
+                <button
+                  onClick={() => {
+                    downloadLib(
+                      props.data?.attributes.object_image,
+                      props?.data
+                    );
+                  }}
+                  className="tw-px-4 tw-py-2 tw-bg-blue-500 tw-text-white tw-rounded"
+                >
+                  Download Image
+                </button>
+              )}
             </div>
             <div>
               <p className="tw-text-gray-500 tw-text-sm">Identification</p>

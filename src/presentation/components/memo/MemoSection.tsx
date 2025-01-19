@@ -17,8 +17,8 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
     <div
       className="tw-bg-white tw-rounded-lg tw-shadow-lg tw-font-sans tw-flex tw-flex-col tw-justify-between"
       style={{
-        height: "637.80px", // Page width in cm
-        width: "1003.94px", // Page height in cm
+        height: "638px", // Page width in cm
+        width: "1016px", // Page height in cm
         padding: "0", // Optional padding
         boxSizing: "border-box",
         borderRadius: "10px", // Optional border radius
@@ -91,7 +91,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
                   "-" +
                   identifier
                 }
-                size={102}
+                size={120}
                 bgColor="#FFFFFF"
                 fgColor="#000000"
               />

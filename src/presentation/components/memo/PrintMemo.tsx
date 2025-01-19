@@ -36,7 +36,7 @@ const PrintMemo: React.FC<IPrintMemo> = ({
       },
       pageStyle: `
         @page {
-          size: 1003.94px 637.80px;
+          size: 1016px 638px;
           margin: 0;
           padding: 0;
           border-radius: 10px;
