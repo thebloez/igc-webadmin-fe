@@ -75,7 +75,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
           )}
         </div>
         <div className="tw-flex tw-items-center tw-w-[50%] tw-flex-col tw-justify-center tw-gap-4 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
-          <div className="tw-border-[2px] tw-rounded-xl tw-w-[95%] tw-h-[200px]">
+          <div className="tw-border-[2px] tw-border-[#F5AE26] tw-rounded-xl tw-w-[95%] tw-h-[200px]">
             <img
               src={data.attributes.object_image as any}
               alt="Gem"
