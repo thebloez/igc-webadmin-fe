@@ -78,8 +78,8 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
         padding: "10px",
       }}
       title={
-        <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-gap-2 tw-relative">
-          <div className="tw-p-4 tw-border-b tw-flex tw-items-start tw-flex-col tw-justify-between tw-w-1/2">
+        <div className="tw-w-full tw-border-b  tw-flex tw-justify-between tw-items-center tw-gap-2 tw-relative">
+          <div className="tw-p-4 tw-flex tw-items-start tw-flex-col tw-justify-between tw-w-1/2">
             <h2 className="tw-text-lg tw-font-bold">{title}</h2>
             <p className="tw-text-xxs tw-text-gray-600 tw-p-2 tw-bg-primary-500 tw-bg-opacity-10 tw-rounded-md">
               Print Version:{" "}
@@ -146,9 +146,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 <DotIcon className="tw-text-[#E7375A]" />
               </div>
               <div className="tw-w-full tw-font-bold">
-                <h1 className="tw-text-lg tw-text-gray-900">
-                  Certificate
-                </h1>
+                <h1 className="tw-text-lg tw-text-gray-900">Certificate</h1>
                 <div className="tw-flex tw-justify-between tw-gap-2 tw-text-base">
                   <div className="tw-w-1/2">
                     <p>{`${data.id}-${identifier}`}</p>
@@ -229,7 +227,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
               <div>
                 <p className="tw-text-sm tw-text-[#444444]">
                   "Based on our gemological analysis and equipment, we believe
-                  that this sapphire is originated from{" "}
+                  that this gemstone is originated from{" "}
                   <span className="tw-font-semibold tw-text-base">
                     {data.attributes?.origins?.name}
                   </span>
