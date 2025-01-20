@@ -111,9 +111,9 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
           </div>
         </div>
       </div>
-      <div className="tw-w-full tw-bg-black">
+      <div className="tw-w-full tw-bg-[#262626]">
         <svg width="100%" height="39px" xmlns="http://www.w3.org/2000/svg">
-          <rect width="100%" height="100%" fill="black" />
+          <rect width="100%" height="100%" fill="#262626" />
           <text
             x="50%"
             y="50%"

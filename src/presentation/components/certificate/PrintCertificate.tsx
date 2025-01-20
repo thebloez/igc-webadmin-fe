@@ -243,7 +243,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 {data.attributes?.final_identification}
               </p>
             </div>
-            <div className="tw-justify-center tw-items-center tw-gap-4 tw-flex tw-w-full tw-px-4">
+            <div className="tw-justify-center tw-items-end tw-gap-4 tw-flex tw-w-full tw-px-4">
               <div className="tw-flex tw-flex-col tw-items-center">
                 <QRCode
                   value={
@@ -259,14 +259,14 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 <p className="tw-font-semibold">E-Certificate</p>
               </div>
 
-              <div className="tw-w-[100%] tw-flex tw-justify-center tw-items-end tw-gap-2 tw-flex-col">
+              <div className="tw-w-[100%] tw-flex tw-justify-end tw-items-end tw-gap-2 tw-flex-col">
                 <p className="tw-text-sm tw-text-center tw-font-bold tw-mt-2 tw-pr-2">
                   Mohammad Idris B.CSc., G.C.S.(GIA)
                 </p>
               </div>
             </div>
             <div className="tw-mt-[20px]">
-              <p className="tw-text-xs tw-text-[#444444] tw-px-4 tw-text-center">
+              <p className="tw-text-xxs tw-text-[#444444] tw-px-4 tw-text-center">
                 This certification and the information written in it reflects
                 upon the identification and the characteristics of the gemstone
                 at the time of checking. The verification process strictly
