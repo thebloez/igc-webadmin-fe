@@ -243,7 +243,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 {data.attributes?.final_identification}
               </p>
             </div>
-            <div className="tw-justify-center tw-items-center tw-gap-4 tw-flex tw-w-full">
+            <div className="tw-justify-center tw-items-center tw-gap-4 tw-flex tw-w-full tw-px-4">
               <div className="tw-flex tw-flex-col tw-items-center">
                 <QRCode
                   value={
