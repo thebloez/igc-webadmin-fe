@@ -40,7 +40,7 @@ class InsightViewModel {
       }
     } catch (error: any) {
       logger("InsightViewModel.getInsight | error => ", error);
-      if (error.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
 

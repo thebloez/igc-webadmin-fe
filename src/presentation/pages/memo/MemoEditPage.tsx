@@ -163,15 +163,19 @@ const MemoEditPage = () => {
   };
 
   const onSubmitDeleteSuggestion = async () => {
-    const typeSplit =
+    let typeSplit =
       modalDelete.type?.split(".")[modalDelete.type.split(".").length - 1];
 
-    const type = typeSplit === "origins" ? "origin" : typeSplit;
+    if (typeSplit === "origins") {
+      typeSplit = "origin";
+    } else if (typeSplit === "comments") {
+      typeSplit = "comment";
+    }
 
     await suggestionsViewModel
       .deleteSuggestion(
         modalDelete.data.title as string,
-        type,
+        typeSplit,
         message,
         setModalDelete
       )

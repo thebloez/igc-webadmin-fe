@@ -48,7 +48,7 @@ class TrashViewModel {
     } catch (error: any) {
       logger("TrashViewModel.getTrash | error => ", error);
 
-      if (error.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       }
 
@@ -93,7 +93,7 @@ class TrashViewModel {
     } catch (error: any) {
       logger("TrashViewModel.restoreTrash | error => ", error);
 
-      if (error.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       } else {
         message.error(error.message ?? "Failed to restore");
@@ -140,7 +140,7 @@ class TrashViewModel {
     } catch (error: any) {
       logger("TrashViewModel.restoreTrash | error => ", error);
 
-      if (error.response?.status === 401) {
+      if (error?.status === 401) {
         this.clearToken();
       } else {
         message.error(error?.message ?? "Failed to restore");
