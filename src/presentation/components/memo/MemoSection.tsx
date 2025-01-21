@@ -48,7 +48,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
             "linear-gradient(90deg, #E7E7E7 12%, #FCFCFC 39%, #F8F8F8 56%, #EEEEEE 69%, #DDDDDD 82%, #C6C6C6 94%, #BDBDBD 98%)",
         }}
       >
-        <div className="tw-w-[60%]">
+        <div className="tw-w-[65%]">
           <PrintMemoItem label="Color" value={data.attributes.color} />
 
           <PrintMemoItem
@@ -76,8 +76,8 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
             />
           )}
         </div>
-        <div className="tw-flex tw-items-center tw-w-[50%] tw-flex-col tw-justify-center tw-gap-4 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
-          <div className="tw-border-[2px] tw-border-black tw-bg-white tw-rounded-xl tw-w-[95%] tw-h-[200px]">
+        <div className="tw-flex tw-items-center tw-w-[35%] tw-flex-col tw-justify-center tw-gap-4 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
+          <div className="tw-border-[2px] tw-border-black tw-bg-white tw-rounded-xl tw-w-[250px] tw-h-[200px]">
             <img
               src={data.attributes.object_image as any}
               alt="Gem"
