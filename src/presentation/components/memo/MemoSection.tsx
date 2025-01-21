@@ -66,7 +66,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
 
           <PrintMemoItem
             label="Comments"
-            value={`${data.attributes.cut ?? "-"}`}
+            value={`${data.attributes.comments ?? "-"}`}
           />
 
           {data.attributes.origins && (
