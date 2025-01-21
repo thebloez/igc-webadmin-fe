@@ -29,9 +29,9 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
         style={{
           background: "#262626",
         }}
-        className="tw-flex tw-py-0 tw-px-6 tw-w-full tw-items-center tw-justify-between"
+        className="tw-flex tw-py-2 tw-px-6 tw-w-full tw-items-center tw-justify-between"
       >
-        <div className="tw-w-[180px] tw-h-[130px] tw-overflow-hidden">
+        <div className="tw-w-[300px] tw-h-[200po] tw-overflow-hidden">
           <LogoWhiteIcon className="tw-w-full tw-h-full" />
         </div>
         <div className="tw-w-[80%] tw-flex tw-items-center tw-justify-center tw-px-2">
@@ -77,7 +77,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
           )}
         </div>
         <div className="tw-flex tw-items-center tw-w-[50%] tw-flex-col tw-justify-center tw-gap-4 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
-          <div className="tw-border-[2px] tw-border-[#F5AE26] tw-rounded-xl tw-w-[95%] tw-h-[200px]">
+          <div className="tw-border-[2px] tw-border-black tw-bg-white tw-rounded-xl tw-w-[95%] tw-h-[200px]">
             <img
               src={data.attributes.object_image as any}
               alt="Gem"

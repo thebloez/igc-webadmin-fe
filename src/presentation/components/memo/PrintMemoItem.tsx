@@ -10,7 +10,7 @@ export const PrintMemoItem: React.FC<PrintMemoItemProps> = ({
   value,
 }) => {
   return (
-    <div className="tw-flex tw-justify-between tw-font-bold tw-py-[2px]">
+    <div className="tw-flex tw-justify-between tw-font-bold tw-py-[10px]">
       <div className="tw-w-[30%]">
         <p className="tw-text-xl">{label}</p>
       </div>
