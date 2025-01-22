@@ -238,7 +238,8 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
           </div>
           <div className="tw-flex tw-items-center tw-pl-[50px] tw-w-[50%] tw-flex-col tw-justify-center tw-gap-2 tw-mt-6 tw-relative tw-overflow-hidden tw-px-2">
             <div className="tw-w-full tw-flex tw-justify-center tw-items-center tw-gap-2 tw-flex-col">
-              <div className="tw-w-[220px] tw-h-[150px] tw-border"></div>
+            {/* 5.01 x 4.01  */}
+              <div className="tw-w-[5.01cm] tw-h-[4.01cm] tw-border"></div>
               <p className="tw-text-center tw-text-[#444444] tw-text-2xl tw-font-bold tw-py-2">
                 {data.attributes?.final_identification}
               </p>
