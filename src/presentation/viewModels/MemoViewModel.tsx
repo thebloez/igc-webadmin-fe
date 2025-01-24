@@ -109,7 +109,7 @@ class MemoViewModel {
       }));
     }
   }
-  
+
   async detailMemo(
     state: IMemoUpgradeState,
     setTable: (value: SetStateAction<IMemoUpgradeState>) => void,
@@ -135,7 +135,7 @@ class MemoViewModel {
         setValue("attributes.origins", response.data.attributes.origins.name);
         setValue("id", response.data.master.id);
         const split = response.data.master.id.split("-")[1];
-        if(split == "M2") {
+        if (split == "M2") {
           setTable((prevState) => ({
             ...prevState,
             isShowOrigin: false,
@@ -143,6 +143,7 @@ class MemoViewModel {
         }
         setValue("type", response.data.master.type);
         setValue("member_phone_number", response.data.member.mobile_phone);
+        setValue("additional_comment", response.data.master.additional_comment);
       }
     } catch (error: any) {
       logger("MemoViewModel.findMemo | error => ", error);
@@ -222,7 +223,6 @@ class MemoViewModel {
       message.error("Gagal mengubah memo");
     }
   }
-
 
   upgradeMemo = async (
     data: IMemoFormData,

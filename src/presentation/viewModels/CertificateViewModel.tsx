@@ -268,6 +268,7 @@ class CertificateViewModel {
         setValue("additional_comment", response.data.additional_comment);
         setValue("id", response.data.master.id);
         setValue("member_phone_number", response.data.member.mobile_phone);
+        setValue("additional_comment", response.data.master.additional_comment);
         setValue("type", response.data.master.type);
       }
     } catch (error: any) {

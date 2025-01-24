@@ -24,6 +24,7 @@ export interface IMemoData {
   master: {
     id: string;
     type: string;
+    additional_comment: string;
   };
 }
 
