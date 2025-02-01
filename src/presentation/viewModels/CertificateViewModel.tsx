@@ -4,7 +4,9 @@ import {
   ICertificateModalState,
   ICertificateTableState,
 } from "@domain/entities/CertificateEntity";
+import { Attributes } from "@domain/entities/SharedEntity";
 import CertificateUseCase from "@domain/useCases/CertificateUseCase";
+import isNullOrEmpty from "@lib/utils/isNullOrEmpty";
 import logger from "@lib/utils/logger";
 import { SetStateAction } from "react";
 import { UseFormReset, UseFormSetValue } from "react-hook-form";
@@ -263,7 +265,14 @@ class CertificateViewModel {
       logger("CertificateViewModel.detailCertificate | response => ", response);
 
       if (response) {
-        setValue("attributes", response.data.attributes as any);
+        const attributes = response.data.attributes as Attributes<any>;
+        (Object.keys(attributes) as Array<keyof Attributes>).forEach((key) => {
+          if (isNullOrEmpty(attributes[key])) {
+            attributes[key] = "";
+          }
+        });
+
+        setValue("attributes", attributes);
         setValue("attributes.origins", response.data.attributes.origins.name);
         setValue("additional_comment", response.data.additional_comment);
         setValue("id", response.data.master.id);

@@ -5,7 +5,9 @@ import {
   IMemoTableState,
   IMemoUpgradeState,
 } from "@domain/entities/MemoEntity";
+import { Attributes } from "@domain/entities/SharedEntity";
 import MemoUseCase from "@domain/useCases/MemoUseCase";
+import isNullOrEmpty from "@lib/utils/isNullOrEmpty";
 import logger from "@lib/utils/logger";
 import { SetStateAction } from "react";
 import { UseFormReset, UseFormSetValue } from "react-hook-form";
@@ -131,7 +133,13 @@ class MemoViewModel {
       logger("MemoViewModel.findMemo | response => ", response);
 
       if (response) {
-        setValue("attributes", response.data.attributes as any);
+        const attributes = response.data.attributes as Attributes<any>;
+        (Object.keys(attributes) as Array<keyof Attributes>).forEach((key) => {
+          if (isNullOrEmpty(attributes[key])) {
+            attributes[key] = "";
+          }
+        });
+        setValue("attributes", attributes);
         setValue("attributes.origins", response.data.attributes.origins.name);
         setValue("id", response.data.master.id);
         const split = response.data.master.id.split("-")[1];
