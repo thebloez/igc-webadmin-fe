@@ -56,6 +56,13 @@ const FormSelect: React.FC<FormSelectProps> = ({
             allowClear={allowClear}
             loading={loading}
             {...field}
+            filterOption={(input, option) => {
+              const valueForSearch =
+                option?.value?.toString().toLowerCase() +
+                " " +
+                option?.key?.toString().toLowerCase();
+              return valueForSearch.includes(input.toLowerCase());
+            }}
             suffixIcon={
               loading ? (
                 <SpinnerLoading width={12} height={12} type="primary-spinner" />
@@ -66,7 +73,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
             placeholder={placeholder}
           >
             {options.map((option) => (
-              <Option key={option.value} value={option.value}>
+              <Option key={option.label} value={option.value}>
                 <div className="tw-flex tw-justify-between tw-items-center tw-w-full">
                   <span>{option.label}</span>
                   {onDelete &&
