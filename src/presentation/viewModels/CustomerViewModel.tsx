@@ -38,7 +38,7 @@ class CustomerViewModel {
         setTable((prevState) => ({
           ...prevState,
           data: response.data,
-          total: response.meta?.pagination?.total,
+          total: response.data?.length,
         }));
       }
     } catch (error: any) {
