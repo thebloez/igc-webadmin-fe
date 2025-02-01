@@ -6,7 +6,7 @@ import useCustomerViewModel from "@lib/hooks/useCustomerViewModel";
 import { useLanguage } from "@lib/hooks/useLanguage";
 import { setUserToken } from "@redux/user/userReduxReducer";
 import { selectToken } from "@redux/user/userReduxSelector";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const CustomerPage = () => {
@@ -40,6 +40,14 @@ const CustomerPage = () => {
     await customerViewModel.getCustomer(setTable);
   };
 
+  const onChange = useCallback((props: any) => {
+    setTable((prevState) => ({
+      ...prevState,
+      currentPage: props.current,
+      pageSize: props.pageSize,
+    }));
+  }, []);
+
   return (
     <div className="tw-m-0 tw-p-6 ">
       <div className="min-h-screen-with-header tw-bg-white tw-rounded tw-shadow">
@@ -54,6 +62,7 @@ const CustomerPage = () => {
           pageSize={table.pageSize}
           total={table.total}
           columns={CustomerColumn()}
+          onChange={onChange}
         />
       </div>
     </div>
