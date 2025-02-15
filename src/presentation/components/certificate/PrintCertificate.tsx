@@ -211,7 +211,7 @@ const PrintCertificate: React.FC<IPrintCertificate> = ({
                 color="#E7375A"
               />
               <PrintItemCertificate
-                title="Origins"
+                title="Origin"
                 value={``}
                 direction="col"
                 color="#4261AB"
