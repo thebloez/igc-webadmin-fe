@@ -91,7 +91,7 @@ const PrintMemo: React.FC<IPrintMemo> = ({
       }
       className="tw-font-sans"
     >
-      <div ref="contentRef">
+      <div ref={contentRef}>
         <MemoSection data={data} identifier={identifier} />
       </div>
     </Modal>

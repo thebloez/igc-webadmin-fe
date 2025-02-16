@@ -104,7 +104,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
             <img
               src={data.attributes.object_image as any}
               alt="Gem"
-              className="tw-border-[2px] tw-bg-white tw-border-black tw-w-[250px] tw-h-[200px] tw-overflow-hidden tw-object-cover tw-rounded-md"
+              className="tw-border-[2px] tw-bg-white tw-border-black tw-w-[250px] tw-h-[200px] tw-overflow-hidden tw-object-scale-down tw-rounded-md"
             />
             <div className="tw-justify-start tw-items-center tw-gap-2 tw-flex tw-flex-col tw-w-full">
               <div className="">
