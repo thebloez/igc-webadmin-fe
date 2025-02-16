@@ -62,7 +62,10 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
               </h1>
             </div>
           </div>
-          <div className="tw-w-full tw-flex tw-flex-col tw-justify-center tw-items-center " style={{ height: "90%", overflow: "hidden" }}>
+          <div
+            className="tw-w-full tw-flex tw-flex-col tw-justify-center tw-items-center "
+            style={{ height: "90%", overflow: "hidden" }}
+          >
             <PrintMemoItem label="Color" value={data.attributes.color} />
 
             <PrintMemoItem
@@ -92,7 +95,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
           </div>
         </div>
         <div className="tw-flex tw-items-end tw-w-[35%] tw-h-[477px] tw-flex-col tw-justify-center tw-relative tw-overflow-hidden tw-px-1">
-          <div className="tw-flex tw-flex-col tw-justify-center tw-items-center">
+          <div className="tw-flex tw-flex-col tw-justify-center tw-items-center tw-gap-4">
             <p className="tw-text-lg tw-font-bold">
               {format(new Date(data.created_at), "d MMM yyyy", {
                 locale: id,
