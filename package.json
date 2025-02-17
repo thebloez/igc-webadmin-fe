@@ -7,7 +7,7 @@
     "dev": "vite --config vite.config.ts",
     "build-with-max:ts": "cross-env NODE_OPTIONS=--max_old_space_size=4096 tsc -b",
     "build-with-max:vite": "cross-env NODE_OPTIONS=--max_old_space_size=4096 vite build",
-    "build-with-max": "npm run build:ts && npm run build:vite",
+    "build-with-max": "npm run build-with-max:ts && build-with-max:vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
