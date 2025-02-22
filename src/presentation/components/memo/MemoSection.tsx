@@ -30,12 +30,12 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
         style={{
           background: "#262626",
         }}
-        className="tw-flex tw-px-6 tw-w-full tw-items-center tw-justify-between tw-h-full"
+        className="tw-flex tw-px-6 tw-w-full tw-items-center tw-justify-between"
       >
-        <div className="tw-w-[300px] tw-overflow-hidden">
+        <div className="tw-w-[320px] tw-overflow-hidden">
           <LogoWhiteIcon className="tw-w-full tw-h-full" />
         </div>
-        <div className="tw-w-[100%] tw-flex tw-items-end tw-justify-start tw-pb-1 tw-h-full">
+        <div className="tw-w-[100%] tw-flex tw-items-center tw-pt-5 tw-pl-1 tw-justify-start tw-pb-0 tw-h-full">
           <h1 className="tw-text-4xl tw-text-white">
             International Gemological Certification
           </h1>
@@ -47,11 +47,11 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
         style={{ height: "477px" }}
       >
         <div
-          className="tw-w-full tw-relative tw-px-1 "
+          className="tw-w-full tw-relative tw-block tw-px-1"
           style={{ height: "477px" }}
         >
           <div className="tw-w-full tw-flex tw-justify-center tw-items-center">
-            <div className="tw-w-[100%]">
+            <div className="tw-w-[100%] tw-pt-2">
               <h1
                 className="tw-text-3xl tw-text-black tw-font-extrabold tw-text-center tw-px-4"
                 style={{
@@ -63,8 +63,8 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
             </div>
           </div>
           <div
-            className="tw-w-full tw-flex tw-flex-col tw-justify-center tw-items-center "
-            style={{ height: "90%", overflow: "hidden" }}
+            className="tw-w-full tw-flex-1 tw-flex tw-flex-col tw-justify-center tw-items-center"
+            style={{ minHeight: "90%", overflow: "hidden" }}
           >
             <PrintMemoItem label="Color" value={data.attributes.color} />
 
@@ -94,21 +94,30 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
             )}
           </div>
         </div>
-        <div className="tw-flex tw-items-end tw-w-[35%] tw-h-[477px] tw-flex-col tw-justify-center tw-relative tw-overflow-hidden tw-px-1">
-          <div className="tw-flex tw-flex-col tw-justify-center tw-items-center tw-gap-4">
-            <p className="tw-text-lg tw-font-bold">
+        <div className="tw-flex tw-items-end tw-w-[40%] tw-h-[477px] tw-flex-col tw-justify-start tw-relative tw-overflow-hidden tw-px-1">
+          <div className="tw-h-[10px] tw-w-full">
+            <p className="tw-text-xl tw-font-bold tw-text-center">
               {format(new Date(data.created_at), "d MMM yyyy", {
                 locale: id,
               })}
             </p>
-            <img
-              src={data.attributes.object_image as any}
-              alt="Gem"
-              className="tw-border-[2px] tw-bg-white tw-border-black tw-w-[2.6in] tw-h-[2.1in] tw-overflow-hidden tw-object-scale-down tw-rounded-md"
-            />
+          </div>
+          <div className="tw-flex tw-flex-col tw-justify-center tw-h-full tw-items-center tw-gap-4">
+            <div className="tw-w-[3in] tw-h-[2.4in] tw-bg-white tw-border-[2px] tw-border-black tw-overflow-hidden tw-rounded-md">
+              <img
+                src={data.attributes.object_image as any}
+                alt="Gem"
+                style={{
+                  height: "100%",
+                  width: "100%",
+                }}
+                className="tw-overflow-hidden tw-object-cover"
+              />
+            </div>
+
             <div className="tw-justify-start tw-items-center tw-gap-2 tw-flex tw-flex-col tw-w-full">
               <div className="">
-                <p className="tw-text-base tw-font-bold">
+                <p className="tw-text-lg tw-font-bold">
                   {data.attributes.id_master}-{identifier}
                 </p>
               </div>
