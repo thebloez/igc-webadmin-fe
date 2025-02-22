@@ -16,7 +16,10 @@ export interface IPrintMemo {
   data: IMemoData;
   onClose: () => void;
 }
-
+const size = {
+  width: "1025px",
+  height: "645px",
+}
 const PrintMemo: React.FC<IPrintMemo> = ({
   title,
   data,
@@ -35,7 +38,7 @@ const PrintMemo: React.FC<IPrintMemo> = ({
     },
     pageStyle: `
       @page {
-        size: 1020px 642px;
+        size: ${size.width} ${size.height};
         resolution: 300dpi 1200dpi;
         margin: 0;
         padding: 0;
@@ -91,8 +94,17 @@ const PrintMemo: React.FC<IPrintMemo> = ({
       }
       className="tw-font-sans"
     >
-      <div ref={contentRef}>
-        <MemoSection data={data} identifier={identifier} />
+      <div ref={contentRef} style={{
+        height: size.height,
+        width: size.width,
+        padding: "0",
+        boxSizing: "border-box",
+        borderRadius: "20px",
+        overflow: "hidden",
+        position: "relative",
+        backgroundColor: "#fff",
+      }}>
+        <MemoSection data={data} size={size} identifier={identifier} />
       </div>
     </Modal>
   );

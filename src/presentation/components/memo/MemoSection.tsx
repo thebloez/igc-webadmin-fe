@@ -10,15 +10,19 @@ import config from "@config/app.config";
 interface MemoSectionProps {
   data: IMemoData;
   identifier: string;
+  size: {
+    width: string;
+    height: string;
+  };
 }
 
-const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
+const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier, size }) => {
   return (
     <div
       className="tw-bg-white tw-rounded-lg tw-overflow-hidden tw-shadow-lg tw-font-sans tw-flex tw-flex-col tw-justify-between"
       style={{
-        height: "645px", // Page width in cm
-        width: "1025px", // Page height in cm
+        height: size.height, // Page width in cm
+        width: size.width, // Page height in cm
         padding: "0", // Optional padding
         boxSizing: "border-box",
         borderRadius: "20px", // Optional border radius
@@ -32,11 +36,11 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
         }}
         className="tw-flex tw-px-6 tw-w-full tw-items-center tw-justify-between"
       >
-        <div className="tw-w-[320px] tw-overflow-hidden">
+        <div className="tw-w-[380px] tw-overflow-hidden">
           <LogoWhiteIcon className="tw-w-full tw-h-full" />
         </div>
         <div className="tw-w-[100%] tw-flex tw-items-center tw-pt-5 tw-pl-1 tw-justify-start tw-pb-0 tw-h-full">
-          <h1 className="tw-text-4xl tw-text-white">
+          <h1 className="tw-text-3xl tw-text-white">
             International Gemological Certification
           </h1>
         </div>
@@ -44,11 +48,11 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
       </div>
       <div
         className="tw-flex tw-justify-between tw-items-start tw-w-full"
-        style={{ height: "477px" }}
+        style={{ height: "460px" }}
       >
         <div
           className="tw-w-full tw-relative tw-block tw-px-1"
-          style={{ height: "477px" }}
+          style={{ height: "460px" }}
         >
           <div className="tw-w-full tw-flex tw-justify-center tw-items-center">
             <div className="tw-w-[100%] tw-pt-2">
@@ -94,7 +98,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
             )}
           </div>
         </div>
-        <div className="tw-flex tw-items-end tw-w-[40%] tw-h-[477px] tw-flex-col tw-justify-start tw-relative tw-overflow-hidden tw-px-1">
+        <div className="tw-flex tw-items-end tw-w-[40%] tw-h-[460px] tw-flex-col tw-justify-start tw-relative tw-overflow-hidden tw-px-1">
           <div className="tw-h-[10px] tw-w-full">
             <p className="tw-text-xl tw-font-bold tw-text-center">
               {format(new Date(data.created_at), "d MMM yyyy", {
@@ -103,7 +107,7 @@ const MemoSection: React.FC<MemoSectionProps> = ({ data, identifier }) => {
             </p>
           </div>
           <div className="tw-flex tw-flex-col tw-justify-center tw-h-full tw-items-center tw-gap-4">
-            <div className="tw-w-[3in] tw-h-[2.4in] tw-bg-white tw-border-[2px] tw-border-black tw-overflow-hidden tw-rounded-md">
+            <div className="tw-w-full tw-h-[2.4in] tw-bg-white tw-border-[2px] tw-border-black tw-overflow-hidden tw-rounded-md">
               <img
                 src={data.attributes.object_image as any}
                 alt="Gem"
