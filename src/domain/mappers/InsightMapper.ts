@@ -1,4 +1,9 @@
-import { IInsightData } from "@domain/entities/InsightEntity";
+import {
+  IInsightData,
+  ITopMembersDomain,
+  ITopMembersPresentation,
+  TopMemberCategory,
+} from "@domain/entities/InsightEntity";
 
 class InsightMapper {
   static toPresentation(domain: IInsightData) {
@@ -34,6 +39,24 @@ class InsightMapper {
           ...item,
           ...styles[index],
         })),
+    };
+  }
+
+  static toTopMembersPresentation(
+    domain: ITopMembersDomain
+  ): ITopMembersPresentation {
+    const categories: TopMemberCategory[] = ["memo_m1", "memo_m2", "sertifikat"];
+
+    const groups = categories.map((key) => ({
+      key,
+      members: (domain.top_members?.[key] ?? []).sort(
+        (a, b) => b.count - a.count
+      ),
+    }));
+
+    return {
+      period: domain.period,
+      groups,
     };
   }
 }

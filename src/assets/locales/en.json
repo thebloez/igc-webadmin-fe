@@ -30,7 +30,23 @@
   },
   "dashboard": {
     "title": "Summary",
-    "description": "View the summary of your transactions and business activities."
+    "description": "View the summary of your transactions and business activities.",
+    "top_members": {
+      "title": "Top Members",
+      "description": "Most active members by product type.",
+      "period_label": "Period",
+      "empty": "No members found",
+      "filters": {
+        "3m": "Last 3 months",
+        "6m": "Last 6 months",
+        "12m": "Last 12 months"
+      },
+      "categories": {
+        "memo_m1": "Memo M1",
+        "memo_m2": "Memo M2",
+        "sertifikat": "Certificate"
+      }
+    }
   },
   "certificate": {
     "list": {

@@ -1,4 +1,7 @@
-import { IInsightService } from "@services/InsightService";
+import {
+  IGetTopMembersRequest,
+  IInsightService,
+} from "@services/InsightService";
 import isNullOrEmpty from "../../infrastructure/lib/utils/isNullOrEmpty";
 import logger from "@lib/utils/logger";
 import { IGetRequest } from "@domain/entities/ResponseEntity";
@@ -6,6 +9,7 @@ import InsightMapper from "@domain/mappers/InsightMapper";
 
 export interface IInsightUseCase {
   get(props: IGetRequest): Promise<any>;
+  getTopMembers(props: IGetTopMembersRequest): Promise<any>;
 }
 
 export default class InsightUseCase implements IInsightUseCase {
@@ -26,13 +30,46 @@ export default class InsightUseCase implements IInsightUseCase {
       }
 
       const presentationData = InsightMapper.toPresentation(result.data);
-      
+
       return {
         data: presentationData,
         meta: result.meta,
       };
     } catch (error: any) {
       logger("InsightUseCase.get | error =>", error);
+
+      const customError = {
+        message: error?.response?.data?.meta?.message,
+        status: error?.status,
+      };
+
+      throw error?.response?.data?.meta?.message ? customError : error;
+    }
+  }
+
+  async getTopMembers(props: IGetTopMembersRequest) {
+    try {
+      const result = await this.insightService.getTopMembers({
+        token: props.token,
+        params: props.params,
+      });
+
+      logger("InsightUseCase.getTopMembers | response =>", result);
+
+      if (isNullOrEmpty(result?.data)) {
+        throw new Error(result?.meta?.message ?? "Failed to get top members");
+      }
+
+      const presentationData = InsightMapper.toTopMembersPresentation(
+        result.data
+      );
+
+      return {
+        data: presentationData,
+        meta: result.meta,
+      };
+    } catch (error: any) {
+      logger("InsightUseCase.getTopMembers | error =>", error);
 
       const customError = {
         message: error?.response?.data?.meta?.message,

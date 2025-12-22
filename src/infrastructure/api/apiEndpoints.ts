@@ -32,6 +32,7 @@ const APIEndpoints = {
       `api/suggestion/${type}/${name}`,
   },
   insight: "api/insight",
+  insightTopMembers: "api/insight/top-members",
 };
 
 export default APIEndpoints;

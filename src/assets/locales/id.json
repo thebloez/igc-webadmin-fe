@@ -30,7 +30,23 @@
   },
   "dashboard": {
     "title": "Ringkasan",
-    "description": "Lihat ringkasan transaksi dan aktivitas bisnis Anda."
+    "description": "Lihat ringkasan transaksi dan aktivitas bisnis Anda.",
+    "top_members": {
+      "title": "Top Member",
+      "description": "Member paling aktif berdasarkan jenis produk.",
+      "period_label": "Periode",
+      "empty": "Belum ada data member",
+      "filters": {
+        "3m": "3 bulan terakhir",
+        "6m": "6 bulan terakhir",
+        "12m": "12 bulan terakhir"
+      },
+      "categories": {
+        "memo_m1": "Memo M1",
+        "memo_m2": "Memo M2",
+        "sertifikat": "Sertifikat"
+      }
+    }
   },
   "certificate": {
     "list": {
