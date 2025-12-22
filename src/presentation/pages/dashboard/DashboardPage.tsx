@@ -96,18 +96,20 @@ const DashboardPage = () => {
       <div className="tw-flex tw-flex-col tw-gap-4 tw-w-full">
         <div className="tw-flex tw-justify-between tw-w-full tw-gap-4">
           <div className="tw-w-full tw-bg-white tw-p-4 tw-rounded-md tw-shadow tw-overflow-hidden">
-            <div className="tw-mb-4 tw-flex tw-justify-between tw-items-start tw-gap-2">
-              <div>
-                <p className="tw-text-xl tw-font-semibold">
+            <div className="tw-mb-4 tw-flex tw-flex-col md:tw-flex-row tw-items-start md:tw-items-center tw-justify-between tw-gap-3">
+              <div className="tw-space-y-1">
+                <p className="tw-text-lg md:tw-text-xl tw-font-semibold">
                   {t("dashboard.title")}
                 </p>
-                <p>{t("dashboard.description")}</p>
+                <p className="tw-text-sm tw-text-gray-600">
+                  {t("dashboard.description")}
+                </p>
               </div>
 
               <Select
                 suffixIcon
                 value={filter}
-                className="tw-w-[200px]"
+                className="tw-w-full md:tw-w-[220px]"
                 options={dashboardFilters}
                 onChange={handleChangeFilter}
               />
@@ -133,9 +135,9 @@ const DashboardPage = () => {
           </div>
         </div>
         <div className="tw-w-full tw-bg-white tw-p-4 tw-rounded-md tw-shadow tw-overflow-hidden">
-          <div className="tw-mb-4 tw-flex tw-justify-between tw-items-start tw-gap-2">
-            <div>
-              <p className="tw-text-xl tw-font-semibold">
+          <div className="tw-mb-4 tw-flex tw-flex-col md:tw-flex-row tw-items-start md:tw-items-center tw-justify-between tw-gap-3">
+            <div className="tw-space-y-1">
+              <p className="tw-text-lg md:tw-text-xl tw-font-semibold">
                 {t("dashboard.top_members.title")}
               </p>
               <p className="tw-text-sm tw-text-gray-600">
@@ -150,7 +152,7 @@ const DashboardPage = () => {
             <Select
               suffixIcon
               value={topMemberPeriod}
-              className="tw-w-[200px]"
+              className="tw-w-full md:tw-w-[220px]"
               options={topMemberOptions}
               onChange={handleChangeTopMemberPeriod}
             />
@@ -184,8 +186,8 @@ const DashboardPage = () => {
                         renderItem={(item, memberIndex) => (
                           <List.Item>
                             <div className="tw-flex tw-items-center tw-justify-between tw-w-full">
-                              <div className="tw-flex tw-items-center tw-gap-3">
-                                <span className="tw-font-semibold">
+                              <div className="tw-flex tw-items-center tw-gap-3 tw-text-sm">
+                                <span className="tw-font-semibold tw-text-base">
                                   {memberIndex + 1}.
                                 </span>
                                 <div>
@@ -197,7 +199,12 @@ const DashboardPage = () => {
                                   </p>
                                 </div>
                               </div>
-                              <Tag color="blue">{item.count}</Tag>
+                              <Tag
+                                color="blue"
+                                className="tw-text-xs tw-px-2 tw-py-1 tw-rounded-full"
+                              >
+                                {item.count}
+                              </Tag>
                             </div>
                           </List.Item>
                         )}
