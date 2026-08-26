@@ -1,6 +1,6 @@
 import { Empty, List, Select, Skeleton, Tag } from "antd";
 import { useLanguage } from "@lib/hooks/useLanguage";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import dashboardFilters from "@lib/utils/dashboardFilters";
 import {
   IInsightsState,
@@ -21,7 +21,7 @@ const DashboardPage = () => {
   const { t } = useLanguage();
 
   const dispatch = useDispatch();
-  const clearToken = () => dispatch(setUserToken(""));
+  const clearToken = useCallback(() => dispatch(setUserToken("")), [dispatch]);
   const token = useSelector(selectToken);
 
   const [state, setState] = useState<IInsightsState>({
@@ -69,21 +69,21 @@ const DashboardPage = () => {
     [t]
   );
 
+  const getInsight = useCallback(async () => {
+    await insightViewModel.getInsight();
+  }, [insightViewModel]);
+
+  const getTopMembers = useCallback(async () => {
+    await insightViewModel.getTopMembers(setTopMembers, topMemberPeriod);
+  }, [insightViewModel, topMemberPeriod]);
+
   useEffect(() => {
     getInsight();
-  }, [filter]);
+  }, [filter, getInsight]);
 
   useEffect(() => {
     getTopMembers();
-  }, [topMemberPeriod]);
-
-  const getInsight = async () => {
-    await insightViewModel.getInsight();
-  };
-
-  const getTopMembers = async () => {
-    await insightViewModel.getTopMembers(setTopMembers, topMemberPeriod);
-  };
+  }, [getTopMembers]);
 
   const formatDate = (value?: string) => {
     if (!value) return "-";
