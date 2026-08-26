@@ -1,15 +1,21 @@
 import { Form, Input } from "antd";
-import { Control, Controller, FieldError } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldError,
+  FieldPath,
+  FieldValues,
+} from "react-hook-form";
 import EyeIcon from "@components/icon/EyeIcon";
 import EyeOffIcon from "@components/icon/EyeOff";
 
-interface FormInputProps {
-  name: string;
+interface FormInputProps<TFieldValues extends FieldValues = FieldValues> {
+  name: FieldPath<TFieldValues>;
   label: string;
   disabled?: boolean;
   placeholder?: string;
   type?: string;
-  control: Control<any>;
+  control: Control<TFieldValues>;
   rules?: Record<string, any>;
   error?: FieldError;
   allowClear?: boolean;
@@ -17,7 +23,7 @@ interface FormInputProps {
   suffix?: React.ReactNode;
 }
 
-const FormInput: React.FC<FormInputProps> = ({
+const FormInput = <TFieldValues extends FieldValues = FieldValues>({
   name,
   label,
   placeholder,
@@ -29,7 +35,7 @@ const FormInput: React.FC<FormInputProps> = ({
   allowClear = false,
   note,
   suffix
-}) => {
+}: FormInputProps<TFieldValues>) => {
   return (
     <Form.Item
       label={label}

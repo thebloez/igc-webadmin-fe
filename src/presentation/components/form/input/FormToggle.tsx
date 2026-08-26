@@ -1,24 +1,29 @@
-import React from "react";
 import { Form, Switch } from "antd";
-import { Control, Controller, FieldError } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldError,
+  FieldPath,
+  FieldValues,
+} from "react-hook-form";
 
-interface FormToggleProps {
-  name: string;
+interface FormToggleProps<TFieldValues extends FieldValues = FieldValues> {
+  name: FieldPath<TFieldValues>;
   label: string;
-  control: Control<any>;
+  control: Control<TFieldValues>;
   rules?: Record<string, any>;
   checkedChildren?: string;
   unCheckedChildren?: string;
   error?: FieldError;
 }
 
-const FormToggle: React.FC<FormToggleProps> = ({
+const FormToggle = <TFieldValues extends FieldValues = FieldValues>({
   name,
   label,
   control,
   rules,
   error,
-}) => (
+}: FormToggleProps<TFieldValues>) => (
   <Form.Item
     label={label}
     validateStatus={error ? "error" : "success"}

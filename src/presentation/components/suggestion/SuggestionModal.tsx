@@ -6,7 +6,7 @@ import {
 import { useLanguage } from "@lib/hooks/useLanguage";
 import suggestionForm from "@lib/utils/suggestionForm";
 import { Button, Form, Modal } from "antd";
-import { useForm } from "react-hook-form";
+import { FieldPath, useForm } from "react-hook-form";
 
 interface ISuggestionModal {
   visible: boolean;
@@ -63,7 +63,7 @@ const SuggestionModal = ({
               <FormInput
                 key={index}
                 type={item.type}
-                name={item.name}
+                name={item.name as FieldPath<ISuggestionFormData>}
                 label={item.label}
                 placeholder={item.placeholder}
                 control={control}

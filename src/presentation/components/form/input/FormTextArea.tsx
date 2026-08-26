@@ -1,14 +1,19 @@
-import React from "react";
 import { Form, Input } from "antd";
-import { Control, Controller, FieldError } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldError,
+  FieldPath,
+  FieldValues,
+} from "react-hook-form";
 
 const { TextArea } = Input;
 
-interface FormTextAreaProps {
-  name: string;
+interface FormTextAreaProps<TFieldValues extends FieldValues = FieldValues> {
+  name: FieldPath<TFieldValues>;
   label: string;
   placeholder?: string;
-  control: Control<any>;
+  control: Control<TFieldValues>;
   rules?: Record<string, any>;
   error?: FieldError;
   rows?: number;
@@ -16,7 +21,7 @@ interface FormTextAreaProps {
   allowClear?: boolean;
 }
 
-const FormTextArea: React.FC<FormTextAreaProps> = ({
+const FormTextArea = <TFieldValues extends FieldValues = FieldValues>({
   name,
   label,
   placeholder,
@@ -26,7 +31,7 @@ const FormTextArea: React.FC<FormTextAreaProps> = ({
   rows = 4,
   maxLength,
   allowClear = false,
-}) => (
+}: FormTextAreaProps<TFieldValues>) => (
   <Form.Item
     label={label}
     validateStatus={error ? "error" : "success"}
@@ -36,7 +41,6 @@ const FormTextArea: React.FC<FormTextAreaProps> = ({
     <Controller
       name={name}
       control={control}
-      defaultValue={""}
       rules={rules}
       render={({ field }) => (
         <TextArea

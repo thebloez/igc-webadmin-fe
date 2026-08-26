@@ -1,6 +1,12 @@
 import React from "react";
 import { Form, Select } from "antd";
-import { Control, Controller, FieldError } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldError,
+  FieldPath,
+  FieldValues,
+} from "react-hook-form";
 import { get } from "lodash";
 import "./FormSelect.style.css";
 import ArrowDownIcon from "@components/icon/ArrowDownIcon";
@@ -10,12 +16,12 @@ import { IOption } from "@domain/entities/SharedEntity";
 
 const { Option } = Select;
 
-interface FormSelectProps {
-  name: string;
+interface FormSelectProps<TFieldValues extends FieldValues = FieldValues> {
+  name: FieldPath<TFieldValues>;
   label: string;
   placeholder?: string;
   options: IOption[];
-  control: Control<any>;
+  control: Control<TFieldValues>;
   rules?: Record<string, any>;
   error?: FieldError;
   loading?: boolean;
@@ -24,7 +30,7 @@ interface FormSelectProps {
   onDelete?: (option: IOption, type: string) => void; // Add this line to the existing code
 }
 
-const FormSelect: React.FC<FormSelectProps> = ({
+const FormSelect = <TFieldValues extends FieldValues = FieldValues>({
   name,
   label,
   placeholder,
@@ -36,7 +42,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
   allowClear = false,
   onAddNew,
   onDelete,
-}) => {
+}: FormSelectProps<TFieldValues>) => {
   const uniqueOptions = React.useMemo(() => {
     const seen = new Set<string>();
     return options.filter((option) => {

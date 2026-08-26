@@ -94,7 +94,7 @@ const CertificatePage = () => {
       .deleteCertificate(id, message, setModal)
       .then(() => {
         getCertificate();
-        closeModal;
+        closeModal();
       });
   };
 

@@ -1,15 +1,21 @@
-import React, { useState } from "react";
-import { Control, Controller, FieldError } from "react-hook-form";
+import { useState } from "react";
+import {
+  Control,
+  Controller,
+  FieldError,
+  FieldPath,
+  FieldValues,
+} from "react-hook-form";
 import { Upload, Button, Form } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { get } from "lodash";
 
-interface FormUploadProps {
-  name: string;
+interface FormUploadProps<TFieldValues extends FieldValues = FieldValues> {
+  name: FieldPath<TFieldValues>;
   label: string;
   placeholder?: string;
   type?: string;
-  control: Control<any>;
+  control: Control<TFieldValues>;
   rules?: Record<string, any>;
   error?: FieldError;
 }
@@ -34,19 +40,19 @@ interface FormUploadProps {
  * @param {FormUploadProps} props Component props
  * @param {string} props.name - Field name for the form control
  * @param {string} props.label - Label text to display above the upload field
- * @param {Control<any>} props.control - React Hook Form control instance
+ * @param {Control} props.control - React Hook Form control instance
  * @param {Record<string,any>} [props.rules] - Validation rules for the field
  * @param {FieldError} [props.error] - Field error object from React Hook Form
  *
  * @returns {JSX.Element} FormUpload component
  */
-const FormUpload: React.FC<FormUploadProps> = ({
+const FormUpload = <TFieldValues extends FieldValues = FieldValues>({
   name,
   label,
   control,
   rules,
   error,
-}) => {
+}: FormUploadProps<TFieldValues>) => {
   const getValue = get(control._formValues, name);
 
   const [previewImage, setPreviewImage] = useState<string | undefined>(
