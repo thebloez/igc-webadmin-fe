@@ -33,7 +33,7 @@
     "react-leaflet": "^4.2.1",
     "react-qr-code": "^2.2.0",
     "react-redux": "^9.3.0",
-    "react-router-dom": "^6.30.6",
+    "react-router-dom": "^7.18.2",
     "react-to-print": "^3.3.0",
     "redux-persist": "^6.0.0",
     "tailwind-merge": "^2.6.1",
